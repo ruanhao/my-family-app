@@ -6,17 +6,20 @@
  * @flow
  */
 
-import { YellowBox } from 'react-native';
-YellowBox.ignoreWarnings(['Remote debugger']);
+
+
 
 import React, {Fragment} from 'react';
+
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
+    YellowBox,
+    SafeAreaView,
+    StyleSheet,
+    ScrollView,
+    View,
+    Text,
+    StatusBar,
+    AppState,
 } from 'react-native';
 
 import {
@@ -27,11 +30,20 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {info, error, debug, warn} from "./MyLog.js";
-info("Starting ...");
-import Geolocation from '@react-native-community/geolocation';
-Geolocation.getCurrentPosition(information => info(information));
+YellowBox.ignoreWarnings(['Remote debugger']);
 
+import {info, error, debug, warn} from "./MyLog.js";
+info("Starting ... " + AppState.currentState);
+import Geolocation from '@react-native-community/geolocation';
+import BackgroundTimer from 'react-native-background-timer';
+
+BackgroundTimer.runBackgroundTimer(() => {
+    Geolocation.getCurrentPosition(information => info(information));
+    info("app state: " + AppState.currentState);
+},
+3000);
+
+BackgroundTimer.start();
 
 
 
