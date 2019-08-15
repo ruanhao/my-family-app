@@ -6,6 +6,9 @@
  * @flow
  */
 
+import { YellowBox } from 'react-native';
+YellowBox.ignoreWarnings(['Remote debugger']);
+
 import React, {Fragment} from 'react';
 import {
   SafeAreaView,
