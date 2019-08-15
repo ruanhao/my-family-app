@@ -24,9 +24,13 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import {info, error, debug, warn} from "./MyLog.js";
+info("Starting ...");
 import Geolocation from '@react-native-community/geolocation';
+Geolocation.getCurrentPosition(information => info(information));
 
-Geolocation.getCurrentPosition(info => console.log(info));
+
+
 
 const App = () => {
   return (
