@@ -31,6 +31,8 @@ target 'MyFamilyApp' do
 
   pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
 
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
   target 'MyFamilyAppTests' do
     inherit! :search_paths
     # Pods for testing
