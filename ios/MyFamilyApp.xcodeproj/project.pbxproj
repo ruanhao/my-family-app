@@ -20,6 +20,7 @@
 		338F929728660E5F3667BAC9 /* libPods-MyFamilyApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D31B7A7D606ADA30E617D852 /* libPods-MyFamilyApp-tvOSTests.a */; };
 		6E27C8CF8EBEFADE75C52753 /* libPods-MyFamilyAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A2FB6D0FF8AF175AD5AF587 /* libPods-MyFamilyAppTests.a */; };
 		986018D38C3C4E38DE350571 /* libPods-MyFamilyApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F2A7D4875B73B4D9903720 /* libPods-MyFamilyApp.a */; };
+		B5EE878D230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5EE878C230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		AC32BA27331E965D5FCD6C52 /* Pods-MyFamilyAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyFamilyAppTests.release.xcconfig"; path = "Target Support Files/Pods-MyFamilyAppTests/Pods-MyFamilyAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		B356617FB9FC85EBAF02E605 /* Pods-MyFamilyApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyFamilyApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-MyFamilyApp-tvOS/Pods-MyFamilyApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		B43F427140DC8BB911E9D406 /* libPods-MyFamilyApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyFamilyApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5EE878C230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
 		D31B7A7D606ADA30E617D852 /* libPods-MyFamilyApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyFamilyApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D699A4BAD46331311786D4E7 /* Pods-MyFamilyApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyFamilyApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-MyFamilyApp-tvOSTests/Pods-MyFamilyApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -140,6 +142,7 @@
 		13B07FAE1A68108700A75B9A /* MyFamilyApp */ = {
 			isa = PBXGroup;
 			children = (
+				B5EE878C230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -535,6 +538,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5EE878D230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);

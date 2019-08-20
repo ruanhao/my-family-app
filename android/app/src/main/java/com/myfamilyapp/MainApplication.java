@@ -8,7 +8,6 @@ import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
 import com.facebook.react.bridge.JavaScriptExecutorFactory;
 import com.facebook.react.ReactApplication;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.ocetnik.timer.BackgroundTimerPackage;
 import com.reactnativecommunity.geolocation.GeolocationPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;

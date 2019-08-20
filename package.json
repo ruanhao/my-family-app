@@ -10,7 +10,7 @@
     "@react-native-community/geolocation": "^1.4.2",
     "react": "16.8.6",
     "react-native": "0.60.5",
-    "react-native-background-timer": "^2.1.1",
+    "react-native-background-fetch": "^2.7.0",
     "react-native-maps": "0.25.0"
   },
   "devDependencies": {
