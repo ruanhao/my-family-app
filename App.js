@@ -48,12 +48,14 @@ import BackgroundFetch from "react-native-background-fetch";
 // BackgroundTimer.start();
 
 
-
-
 import BackgroundGeolocation from "react-native-background-geolocation";
+import geo_adjust from "./utils/GeoUtil";
 
 
-BackgroundGeolocation.onLocation((loc) => { info(loc); }, (err) => { error(err); });
+BackgroundGeolocation.onLocation((loc) => {
+    geo_adjust(loc);
+    info(loc);
+}, (err) => { error(err); });
 
 BackgroundGeolocation.ready({
     reset: true,
@@ -103,7 +105,7 @@ BackgroundFetch.configure({
     requiresStorageNotLow: false  // Default
 }, () => {
     info("[js] Received background-fetch event");
-    // Geolocation.getCurrentPosition(information => info(information)); // report my geolocation info
+    Geolocation.getCurrentPosition(information => info(information)); // report my geolocation info
     // Required: Signal completion of your task to native code
     // If you fail to do this, the OS can terminate your app
     // or assign battery-blame for consuming too much background-time

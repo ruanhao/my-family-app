@@ -3,17 +3,31 @@ import { StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import { info, error } from "../MyLog";
+import geo_adjust from "../utils/GeoUtil";
 export default class MyMapView extends Component {
 
-    state = {
-        lat: 0,
-        lng: 0,
+    constructor() {
+        super();
+        Geolocation.getCurrentPosition(information => {
+            geo_adjust(information);
+            info("[Periodically]: " + JSON.stringify(information));
+            this.setState({
+                lat: information.coords.latitude,
+                lng: information.coords.longitude,
+            });
+        });
     }
+
+    // state = {
+    //     lat: 0,
+    //     lng: 0,
+    // }
 
     componentDidMount() {
         info("Getting current position when MyMapView mounted ...");
         this.timoutInterval = setInterval(() => {
             Geolocation.getCurrentPosition(information => {
+                geo_adjust(information);
                 info("[Periodically]: " + JSON.stringify(information));
                 this.setState({
                     lat: information.coords.latitude,
@@ -27,10 +41,13 @@ export default class MyMapView extends Component {
     }
 
     render() {
+        if (this.state === null) {
+            return null;
+        }
         return (
             < MapView
                 style={styles.map}
-                region={{
+                initialRegion={{
                     latitude: this.state.lat,
                     longitude: this.state.lng,
                     latitudeDelta: 0.0922,
