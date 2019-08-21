@@ -80,7 +80,7 @@
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -88,7 +88,7 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES"
+      allowLocationSimulation = "NO"
       launchAutomaticallySubstyle = "1">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
@@ -103,7 +103,7 @@
       <AdditionalOptions>
       </AdditionalOptions>
       <LocationScenarioReference
-         identifier = "Hong Kong, China"
+         identifier = "London, England"
          referenceType = "1">
       </LocationScenarioReference>
    </LaunchAction>

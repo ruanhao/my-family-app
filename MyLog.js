@@ -1,6 +1,6 @@
 
-const url = "http://localhost:8080/remote/log";
-// const url = "http://13.114.34.198:8080/remote/log";
+// const url = "http://localhost:8080/remote/log";
+const url = "http://13.114.34.198:8080/remote/log";
 
 export function info(content) {
     doLog("INFO", content);

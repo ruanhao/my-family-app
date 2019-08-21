@@ -1,12 +1,29 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-
-import { info } from "../MyLog";
+import Geolocation from '@react-native-community/geolocation';
+import { info, error } from "../MyLog";
 export default class MyMapView extends Component {
 
+    state = {
+        lat: 0,
+        lng: 0,
+    }
+
     componentDidMount() {
-        info("My map view mounted ============");
+        info("Getting current position when MyMapView mounted ...");
+        this.timoutInterval = setInterval(() => {
+            Geolocation.getCurrentPosition(information => {
+                info(information);
+                this.setState({
+                    lat: information.coords.latitude,
+                    lng: information.coords.longitude,
+                });
+            }, (e) => {
+                error(e.message);
+            }, { enableHighAccuracy: true, timeout: 10000 }
+            );
+        }, 15000);
     }
 
     render() {
@@ -14,16 +31,16 @@ export default class MyMapView extends Component {
             < MapView
                 style={styles.map}
                 initialRegion={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
+                    latitude: this.state.lat,
+                    longitude: this.state.lng,
                     latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421,
                 }}
             >
 
                 <Marker
-                    coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
-                    title="hallo"
+                    coordinate={{ latitude: this.state.lat, longitude: this.state.lng }}
+                    title="hello"
                     description="my desc"
                     image={require("../assets/pin.png")}
                 >
