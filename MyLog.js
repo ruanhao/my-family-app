@@ -1,6 +1,10 @@
+import DeviceInfo from 'react-native-device-info';
 
-// const url = "http://localhost:8080/remote/log";
-const url = "http://13.114.34.198:8080/remote/log";
+
+const url = "http://localhost:8080/remote/log";
+// const url = "http://13.114.34.198:8080/remote/log";
+
+const deviceName = DeviceInfo.getDeviceName();
 
 export function info(content) {
     doLog("INFO", content);
@@ -27,7 +31,7 @@ function doLog(level, content) {
         },
         body: JSON.stringify({
             level: level,
-            content: typeof content === 'string' ? content : JSON.stringify(content)
+            content: `[${deviceName}] ` + (typeof content === 'string' ? content : JSON.stringify(content))
         }),
 
     }).catch((error) => {

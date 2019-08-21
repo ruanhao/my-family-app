@@ -66,6 +66,7 @@
 		B356617FB9FC85EBAF02E605 /* Pods-MyFamilyApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyFamilyApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-MyFamilyApp-tvOS/Pods-MyFamilyApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		B43F427140DC8BB911E9D406 /* libPods-MyFamilyApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyFamilyApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5EE878C230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
+		B5EE8795230D190100E64F75 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9994B2AF46648FB88A33695 /* TSLocationManager.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = SDKROOT; };
 		D31B7A7D606ADA30E617D852 /* libPods-MyFamilyApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyFamilyApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D699A4BAD46331311786D4E7 /* Pods-MyFamilyApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyFamilyApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-MyFamilyApp-tvOSTests/Pods-MyFamilyApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -160,6 +161,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5EE8795230D190100E64F75 /* libRNDeviceInfo.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				29F2A7D4875B73B4D9903720 /* libPods-MyFamilyApp.a */,

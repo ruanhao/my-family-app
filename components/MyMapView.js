@@ -30,7 +30,7 @@ export default class MyMapView extends Component {
         return (
             < MapView
                 style={styles.map}
-                initialRegion={{
+                region={{
                     latitude: this.state.lat,
                     longitude: this.state.lng,
                     latitudeDelta: 0.0922,
