@@ -14,7 +14,7 @@ export default class MyMapView extends Component {
         info("Getting current position when MyMapView mounted ...");
         this.timoutInterval = setInterval(() => {
             Geolocation.getCurrentPosition(information => {
-                info(information);
+                info("[Periodically]: " + JSON.stringify(information));
                 this.setState({
                     lat: information.coords.latitude,
                     lng: information.coords.longitude,

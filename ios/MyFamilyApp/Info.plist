@@ -38,9 +38,15 @@
 		</dict>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string></string>
+	<string>CHANGEME: Location required in background</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>CHANGEME: Location Always Usage Description</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>CHANGEME: Location required when app is in use
+CHANGEME: Location required when app is in use
+</string>
+	<key>NSMotionUsageDescription</key>
+	<string>CHANGEME: Motion updates increase battery efficiency by intelligently toggling location-services when device is detected to be moving</string>
 	<key>UIApplicationExitsOnSuspend</key>
 	<false/>
 	<key>UIBackgroundModes</key>

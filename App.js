@@ -48,6 +48,49 @@ import BackgroundFetch from "react-native-background-fetch";
 // BackgroundTimer.start();
 
 
+
+
+import BackgroundGeolocation from "react-native-background-geolocation";
+
+
+BackgroundGeolocation.onLocation((loc) => { info(loc); }, (err) => { error(err); });
+
+BackgroundGeolocation.ready({
+    reset: true,
+    // Geolocation Config
+    desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
+    distanceFilter: 10,
+    // Activity Recognition
+    stopTimeout: 1,
+    // Application config
+    debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
+    logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+    stopOnTerminate: false,   // <-- Allow the background-service to continue tracking when user closes the app.
+    startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
+    // HTTP / SQLite config
+    url: 'http://yourserver.com/locations',
+    batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
+    autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
+    headers: {              // <-- Optional HTTP headers
+        "X-FOO": "bar"
+    },
+    params: {               // <-- Optional HTTP params
+        "auth_token": "maybe_your_server_authenticates_via_token_YES?"
+    }
+}, (state) => {
+    info("- BackgroundGeolocation is configured and ready: ", state.enabled);
+
+    if (!state.enabled) {
+        ////
+        // 3. Start tracking!
+        //
+        BackgroundGeolocation.start(function() {
+            info("- Start success");
+        });
+    }
+});
+
+
 BackgroundFetch.configure({
     minimumFetchInterval: 15,     // <-- minutes (15 is minimum allowed)
     // Android options
@@ -60,7 +103,7 @@ BackgroundFetch.configure({
     requiresStorageNotLow: false  // Default
 }, () => {
     info("[js] Received background-fetch event");
-    Geolocation.getCurrentPosition(information => info(information)); // report my geolocation info
+    // Geolocation.getCurrentPosition(information => info(information)); // report my geolocation info
     // Required: Signal completion of your task to native code
     // If you fail to do this, the OS can terminate your app
     // or assign battery-blame for consuming too much background-time
