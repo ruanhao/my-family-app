@@ -1,11 +1,11 @@
 import DeviceInfo from 'react-native-device-info';
-import { LOG_URL } from './utils/Constants';
+import { LOG_URL, DEVICE_NAME } from './utils/Constants';
 
 const url = LOG_URL;
 // const url = "http://localhost:8080/remote/log";
 // const url = "http://13.114.34.198:8080/remote/log";
 
-const deviceName = DeviceInfo.getDeviceName();
+const deviceName = DEVICE_NAME;
 
 export function info(content) {
     doLog("INFO", content);

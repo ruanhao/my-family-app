@@ -50,7 +50,11 @@ import BackgroundFetch from "react-native-background-fetch";
 
 import BackgroundGeolocation from "react-native-background-geolocation";
 import geo_adjust from "./utils/GeoUtil";
-
+import {
+    LOCATION_UPDATE_URL,
+    USER_ID,
+    DEVICE_NAME
+} from "./utils/Constants";
 
 BackgroundGeolocation.onLocation((loc) => {
     geo_adjust(loc);
@@ -59,35 +63,33 @@ BackgroundGeolocation.onLocation((loc) => {
 
 BackgroundGeolocation.ready({
     reset: true,
-    // Geolocation Config
     desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
     distanceFilter: 10,
-    // Activity Recognition
     stopTimeout: 1,
-    // Application config
-    debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
+    debug: false,
     logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
-    stopOnTerminate: false,   // <-- Allow the background-service to continue tracking when user closes the app.
-    startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
+    stopOnTerminate: false,
+    startOnBoot: true,
     // HTTP / SQLite config
-    url: 'http://yourserver.com/locations',
-    batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
-    autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
-    headers: {              // <-- Optional HTTP headers
-        "X-FOO": "bar"
+    url: LOCATION_UPDATE_URL,
+    batchSync: false,
+    autoSync: true,
+    headers: {
+        "USER-ID": USER_ID,
+        "DEVICE-NAME": DEVICE_NAME
     },
-    params: {               // <-- Optional HTTP params
-        "auth_token": "maybe_your_server_authenticates_via_token_YES?"
+    params: {
+        // "auth_token": "maybe_your_server_authenticates_via_token_YES?"
     }
 }, (state) => {
-    info("- BackgroundGeolocation is configured and ready: ", state.enabled);
+    info("BackgroundGeolocation is configured and ready: ", state.enabled);
 
     if (!state.enabled) {
         ////
         // 3. Start tracking!
         //
         BackgroundGeolocation.start(function() {
-            info("- Start success");
+            info("BackgroundGeolocation started successfully");
         });
     }
 });

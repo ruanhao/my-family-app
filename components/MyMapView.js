@@ -4,6 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import { info, error } from "../MyLog";
 import geo_adjust from "../utils/GeoUtil";
+import { LOCATION_UPDATE_URL, USER_ID } from "../utils/Constants";
 export default class MyMapView extends Component {
 
     constructor() {
@@ -28,7 +29,16 @@ export default class MyMapView extends Component {
         this.timoutInterval = setInterval(() => {
             Geolocation.getCurrentPosition(information => {
                 geo_adjust(information);
-                info("[Periodically]: " + JSON.stringify(information));
+                fetch(LOCATION_UPDATE_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "USER-ID": USER_ID
+                    },
+                    body: JSON.stringify({ location: information }),
+                }).catch((e) => {
+                    error(e);
+                });
                 this.setState({
                     lat: information.coords.latitude,
                     lng: information.coords.longitude,
