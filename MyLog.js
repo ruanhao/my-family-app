@@ -36,6 +36,6 @@ function doLog(level, content) {
         }),
 
     }).catch((error) => {
-        console[level.toLowerCase()](content);
+        console.info(content);
     });
 }
