@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import { info, error } from "../MyLog";
@@ -15,7 +15,7 @@ export default class MyMapView extends Component {
         super();
         Geolocation.getCurrentPosition(information => {
             geo_adjust(information);
-            info("[Periodically]: " + JSON.stringify(information));
+            info("[Initially]: " + JSON.stringify(information));
             this.setState({
                 lat: information.coords.latitude,
                 lng: information.coords.longitude,
@@ -30,7 +30,7 @@ export default class MyMapView extends Component {
     // }
 
     componentDidMount() {
-        info("Getting current position when MyMapView mounted ...");
+        info("Periodically getting current position when MyMapView mounted ...");
         this.timoutInterval = setInterval(() => {
             Geolocation.getCurrentPosition(information => { // update self geo
                 geo_adjust(information);
@@ -63,7 +63,7 @@ export default class MyMapView extends Component {
                 .catch((e) => {
                     error(e);
                 });
-        }, 15000);
+        }, 5000);
     }
 
     render() {
@@ -83,20 +83,28 @@ export default class MyMapView extends Component {
                 <Marker
                     coordinate={{ latitude: this.state.lat, longitude: this.state.lng }}
                     title="我"
-                    image={require("../assets/pin.png")}
-                ></Marker>
+                >
+                    <Image
+                        source={require("../assets/pin.png")}
+                        style={{ height: 50, width: 50 }}
+                    />
+                </Marker>
 
                 {this.state.friends.map((friend) => {
-                    if (friend.location === null) {
+                    if (!('location' in friend)) {
                         return null;
                     }
-                    info(`rendering ${friend.name} (${friend.location.latitude}, ${friend.location.longitude})`);
+                    // info(`rendering ${friend.name} (${friend.location.latitude}, ${friend.location.longitude})`);
                     return <Marker
                         key={friend.id}
                         coordinate={{ latitude: friend.location.latitude, longitude: friend.location.longitude }}
                         title={friend.name}
-                        image={require("../assets/pin.png")}
+                    //                        image={require("../assets/pin.png")}
                     >
+                        <Image
+                            source={require("../assets/pin.png")}
+                            style={{ height: 35, width: 35 }}
+                        />
                     </Marker>;
 
                 })}

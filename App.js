@@ -57,9 +57,9 @@ import {
 } from "./utils/Constants";
 
 BackgroundGeolocation.onLocation((loc) => {
-    geo_adjust(loc);
-    info(loc);
-}, (err) => { error(err); });
+    // geo_adjust(loc);
+    // info(loc);
+}, (err) => { error("Error in BackgroundGeolocation.onLocation: " + err); });
 
 BackgroundGeolocation.ready({
     reset: true,
@@ -70,7 +70,6 @@ BackgroundGeolocation.ready({
     logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
     stopOnTerminate: false,
     startOnBoot: true,
-    // HTTP / SQLite config
     url: LOCATION_UPDATE_URL,
     batchSync: false,
     autoSync: true,
@@ -83,7 +82,6 @@ BackgroundGeolocation.ready({
     }
 }, (state) => {
     info("BackgroundGeolocation is configured and ready: ", state.enabled);
-
     if (!state.enabled) {
         ////
         // 3. Start tracking!
@@ -107,7 +105,7 @@ BackgroundFetch.configure({
     requiresStorageNotLow: false  // Default
 }, () => {
     info("[js] Received background-fetch event");
-    Geolocation.getCurrentPosition(information => info(information)); // report my geolocation info
+    // Geolocation.getCurrentPosition(information => info(information));
     // Required: Signal completion of your task to native code
     // If you fail to do this, the OS can terminate your app
     // or assign battery-blame for consuming too much background-time
