@@ -86,7 +86,7 @@ export default class MyMapView extends Component {
                 >
                     <Image
                         source={require("../assets/pin.png")}
-                        style={{ height: 50, width: 50 }}
+                        style={{ height: 35, width: 35 }}
                     />
                 </Marker>
 
@@ -103,7 +103,7 @@ export default class MyMapView extends Component {
                     >
                         <Image
                             source={require("../assets/pin.png")}
-                            style={{ height: 35, width: 35 }}
+                            style={{ height: 25, width: 25 }}
                         />
                     </Marker>;
 
