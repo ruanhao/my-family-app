@@ -64,7 +64,7 @@ BackgroundGeolocation.onLocation((loc) => {
 BackgroundGeolocation.ready({
     reset: true,
     desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
-    distanceFilter: 10,
+    distanceFilter: 20,
     stopTimeout: 1,
     debug: false,
     logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
@@ -127,7 +127,6 @@ BackgroundFetch.status((status) => {
             break;
     }
 });
-
 
 const App = () => {
     return (
