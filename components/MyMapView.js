@@ -66,6 +66,15 @@ export default class MyMapView extends Component {
                 this.updateFriendsLocation();
             }
         }, 10000);
+        AppState.addEventListener('change', this._handleAppStateChange);
+    }
+
+    _handleAppStateChange = (nextState) => {
+        // info("become " + AppState.currentState);
+        if (nextState === 'active') {
+            this.updateSelfLocation();
+            this.updateFriendsLocation();
+        }
     }
 
     render() {
