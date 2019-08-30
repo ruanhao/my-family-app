@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, AppState } from 'react-native';
+import { StyleSheet, Image, AppState, View, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import { info, error } from "../MyLog";
@@ -70,11 +70,28 @@ export default class MyMapView extends Component {
     }
 
     _handleAppStateChange = (nextState) => {
-        // info("become " + AppState.currentState);
         if (nextState === 'active') {
             this.updateSelfLocation();
             this.updateFriendsLocation();
         }
+    }
+
+    _fitMe = () => {
+        this.map.animateCamera({ center: this.state.location });
+    }
+
+    _fitAll = () => {
+        let markers = this.state.friends.map((friend) => {
+            return {
+                latitude: friend.location.latitude,
+                longitude: friend.location.longitude,
+            };
+        });
+        markers.push(this.state.location);
+        this.map.fitToCoordinates(markers, {
+            edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+            animated: true,
+        });
     }
 
     render() {
@@ -82,45 +99,65 @@ export default class MyMapView extends Component {
             return null;
         }
         return (
-            < MapView
-                style={styles.map}
-                initialRegion={{
-                    latitude: this.state.location.latitude,
-                    longitude: this.state.location.longitude,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                }}
-            >
-                <Marker
-                    coordinate={{ latitude: this.state.location.latitude, longitude: this.state.location.longitude }}
-                    title="我"
+            <View style={styles.container}>
+                < MapView
+                    ref={ref => { this.map = ref; }}
+                    style={styles.map}
+                    initialRegion={{
+                        latitude: this.state.location.latitude,
+                        longitude: this.state.location.longitude,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
                 >
-                    <Image
-                        source={require("../assets/pin.png")}
-                        style={{ height: 35, width: 35 }}
-                    />
-                </Marker>
-
-                {this.state.friends.map((friend) => {
-                    if (!('location' in friend)) {
-                        return null;
-                    }
-                    // info(`rendering ${friend.name} (${friend.location.latitude}, ${friend.location.longitude})`);
-                    return <Marker
-                        key={friend.id}
-                        coordinate={{ latitude: friend.location.latitude, longitude: friend.location.longitude }}
-                        title={friend.name}
-                    //                        image={require("../assets/pin.png")}
+                    <Marker
+                        coordinate={{ latitude: this.state.location.latitude, longitude: this.state.location.longitude }}
+                        title="我"
                     >
                         <Image
                             source={require("../assets/pin.png")}
+                            style={{ height: 35, width: 35 }}
+                        />
+                    </Marker>
+
+                    {this.state.friends.map((friend) => {
+                        if (!('location' in friend)) {
+                            return null;
+                        }
+                        return <Marker
+                            key={friend.id}
+                            coordinate={{ latitude: friend.location.latitude, longitude: friend.location.longitude }}
+                            title={friend.name}
+                        >
+                            <Image
+                                source={require("../assets/pin.png")}
+                                style={{ height: 25, width: 25 }}
+                            />
+                        </Marker>;
+
+                    })}
+                </MapView >
+
+                <View style={styles.buttonContainer} >
+                    <TouchableOpacity
+                        onPress={() => { this._fitMe() }}
+                        style={[styles.bubble, styles.button]}
+                    >
+                        <Image
+                            source={require("../assets/myloc.png")}
                             style={{ height: 25, width: 25 }}
                         />
-                    </Marker>;
-
-                })}
-
-            </MapView >
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this._fitAll()}
+                        style={[styles.bubble, styles.button]} >
+                        <Image
+                            source={require("../assets/radar.png")}
+                            style={{ height: 25, width: 25 }}
+                        />
+                    </TouchableOpacity>
+                </View>
+            </View>
         );
     }
 
@@ -129,7 +166,30 @@ export default class MyMapView extends Component {
 
 
 const styles = StyleSheet.create({
+    container: {
+        ...StyleSheet.absoluteFillObject,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
     map: {
         ...StyleSheet.absoluteFillObject,
+    },
+    buttonContainer: {
+        // flexDirection: 'row',
+        marginVertical: 50,
+        backgroundColor: 'transparent',
+        alignSelf: "flex-end",
+    },
+    bubble: {
+        backgroundColor: 'rgba(255,255,255,0.7)',
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: 20,
+    },
+    button: {
+        marginTop: 5,
+        paddingHorizontal: 12,
+        alignItems: 'center',
+        marginHorizontal: 10,
     },
 });
