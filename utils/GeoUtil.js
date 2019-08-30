@@ -47,13 +47,8 @@ function gps84_to_gcj02(lat, lon) {
     return { latitude: mgLat, longitude: mgLon };
 }
 
-export default function geo_adjust(location) {
-    originLat = location.coords.latitude;
-    originLng = location.coords.longitude;
-    adjusted = gps84_to_gcj02(originLat, originLng);
-    location.coords.latitude = adjusted.latitude;
-    location.coords.longitude = adjusted.longitude;;
-    return location;
+export default function geo_adjust(originLat, originLng) {
+    return gps84_to_gcj02(originLat, originLng);
 }
 
 // console.log(gps84_to_gcj02(31.173036552494477, 121.39370258731522));

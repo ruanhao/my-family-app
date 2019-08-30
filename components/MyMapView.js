@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image, AppState, View, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import Geolocation from '@react-native-community/geolocation';
-import { info, error } from "../MyLog";
-import geo_adjust from "../utils/GeoUtil";
 import {
-    LOCATION_UPDATE_URL,
     FETCH_FRIENDS_URL,
-    USER_ID
 } from "../utils/Constants";
+import { updateLocation } from '../utils/Utils';
+import geo_adjust from "../utils/GeoUtil";
+
 export default class MyMapView extends Component {
 
     state = {
@@ -22,28 +20,15 @@ export default class MyMapView extends Component {
     }
 
     updateSelfLocation = () => {
-        Geolocation.getCurrentPosition(location => {
-            geo_adjust(location);
-            fetch(LOCATION_UPDATE_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "USER-ID": USER_ID
-                },
-                body: JSON.stringify({ location: location }),
-            }).catch((e) => {
-                error(e);
-            });
+        updateLocation((location) => {
+            adjustedLoc = geo_adjust(location.coords.latitude, location.coords.longitude);
             this.setState({
                 location: {
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
+                    latitude: adjustedLoc.latitude,
+                    longitude: adjustedLoc.longitude,
                 }
             });
-        }, (e) => {
-            error(e.message);
-        }, { enableHighAccuracy: true, timeout: 10000 }
-        );
+        });
     }
 
     updateFriendsLocation = () => {
@@ -52,10 +37,17 @@ export default class MyMapView extends Component {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({ friends: responseJson });
+                adjustedResponseJson = responseJson.map(friend => {
+                    if (!('location' in friend)) {
+                        return friend;
+                    }
+                    friend.location = geo_adjust(friend.location.latitude, friend.location.longitude);
+                    return friend;
+                });
+                this.setState({ friends: adjustedResponseJson });
             })
             .catch((e) => {
-                error(e);
+                error("Error when fetching friends: " + e.message);
             });
     }
 
@@ -160,8 +152,6 @@ export default class MyMapView extends Component {
             </View>
         );
     }
-
-
 }
 
 
