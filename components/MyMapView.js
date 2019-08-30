@@ -5,7 +5,6 @@ import {
     FETCH_FRIENDS_URL,
 } from "../utils/Constants";
 import { updateLocation } from '../utils/Utils';
-import geo_adjust from "../utils/GeoUtil";
 
 export default class MyMapView extends Component {
 
@@ -21,12 +20,8 @@ export default class MyMapView extends Component {
 
     updateSelfLocation = () => {
         updateLocation((location) => {
-            adjustedLoc = geo_adjust(location.coords.latitude, location.coords.longitude);
             this.setState({
-                location: {
-                    latitude: adjustedLoc.latitude,
-                    longitude: adjustedLoc.longitude,
-                }
+                location: location
             });
         });
     }
@@ -37,14 +32,7 @@ export default class MyMapView extends Component {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                adjustedResponseJson = responseJson.map(friend => {
-                    if (!('location' in friend)) {
-                        return friend;
-                    }
-                    friend.location = geo_adjust(friend.location.latitude, friend.location.longitude);
-                    return friend;
-                });
-                this.setState({ friends: adjustedResponseJson });
+                this.setState({ friends: responseJson });
             })
             .catch((e) => {
                 error("Error when fetching friends: " + e.message);

@@ -15,10 +15,12 @@ export function updateLocation(callback = (location) => { }) {
                     "USER-ID": USER_ID
                 },
                 body: JSON.stringify({ location: location }),
-            }).catch((e) => {
-                error("Error when update self location: " + e.message);
-            });
-            callback(location);
+            })
+                .then(response => response.json())
+                .then(adjustedLocation => callback(adjustedLocation))
+                .catch((e) => {
+                    error("Error when update self location: " + e.message);
+                });
         },
         (e) => {
             error("Error when getting current position: " + e.message);
