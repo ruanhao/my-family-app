@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Image, AppState, View, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { updateForgroundLocation } from '../utils/Utils';
+// import { info } from "../utils/LogUtils";
 
 export default class FamilyMapView extends Component {
 

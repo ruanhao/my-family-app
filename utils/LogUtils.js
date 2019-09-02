@@ -1,11 +1,5 @@
-import DeviceInfo from 'react-native-device-info';
-import { LOG_URL, DEVICE_NAME } from './Constants';
-
-const url = LOG_URL;
-// const url = "http://localhost:8080/remote/log";
-// const url = "http://13.114.34.198:8080/remote/log";
-
-const deviceName = DEVICE_NAME;
+// import DeviceInfo from 'react-native-device-info';
+import { LOG_URL, USER_ID } from './Constants';
 
 export function info(content) {
     doLog("INFO", content);
@@ -25,14 +19,15 @@ export function warn(content) {
 }
 
 function doLog(level, content) {
-    fetch(url, {
+    fetch(LOG_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "USER-ID": USER_ID,
         },
         body: JSON.stringify({
             level: level,
-            content: `[${deviceName}] ` + (typeof content === 'string' ? content : JSON.stringify(content))
+            content: (typeof content === 'string' ? content : JSON.stringify(content))
         }),
 
     }).catch((error) => {
