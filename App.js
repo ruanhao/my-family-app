@@ -32,11 +32,11 @@ import {
 
 YellowBox.ignoreWarnings(['Remote debugger']);
 
-import { info, error, debug, warn } from "./MyLog.js";
+import { info, error } from "./utils/LogUtils";
 info("Starting ... " + AppState.currentState);
 import Geolocation from '@react-native-community/geolocation';
 // import BackgroundTimer from 'react-native-background-timer';
-import MyMapView from "./components/MyMapView.js";
+import FamilyMapView from "./components/FamilyMapView.js";
 import BackgroundFetch from "react-native-background-fetch";
 import {
     updateBackgroundFetchLocation,
@@ -125,7 +125,7 @@ BackgroundFetch.status((status) => {
 
 const App = () => {
     return (
-        <MyMapView />
+        <FamilyMapView />
     );
 };
 

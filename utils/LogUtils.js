@@ -1,5 +1,5 @@
 import DeviceInfo from 'react-native-device-info';
-import { LOG_URL, DEVICE_NAME } from './utils/Constants';
+import { LOG_URL, DEVICE_NAME } from './Constants';
 
 const url = LOG_URL;
 // const url = "http://localhost:8080/remote/log";

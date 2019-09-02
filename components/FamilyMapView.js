@@ -3,7 +3,7 @@ import { StyleSheet, Image, AppState, View, TouchableOpacity, Text } from 'react
 import MapView, { Marker } from 'react-native-maps';
 import { updateForgroundLocation } from '../utils/Utils';
 
-export default class MyMapView extends Component {
+export default class FamilyMapView extends Component {
 
     state = {
         friends: []

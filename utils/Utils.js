@@ -3,7 +3,7 @@ import {
     LOCATION_UPDATE_URL,
     USER_ID
 } from "./Constants";
-import { info, error } from "../MyLog";
+import { info, error } from "./LogUtils";
 
 
 const FOREGROUND_UPDATE_TYPE = '/foreground';
