@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image, AppState, View, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import {
-    FETCH_FRIENDS_URL,
-} from "../utils/Constants";
-import { updateLocation } from '../utils/Utils';
+import { updateForgroundLocation } from '../utils/Utils';
 
 export default class MyMapView extends Component {
 
@@ -14,36 +11,36 @@ export default class MyMapView extends Component {
 
     constructor() {
         super();
-        this.updateSelfLocation();
-        this.updateFriendsLocation();
+        this.updateSelfLocationAndThenRender();
+        // this.updateFriendsLocation();
     }
 
-    updateSelfLocation = () => {
-        updateLocation((location) => {
+    updateSelfLocationAndThenRender = () => {
+        updateForgroundLocation((userLocations) => {
             this.setState({
-                location: location
+                location: userLocations[0].location,
+                friends: userLocations.slice(1),
             });
         });
     }
 
-    updateFriendsLocation = () => {
-        fetch(FETCH_FRIENDS_URL, {
-            method: "GET",
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({ friends: responseJson });
-            })
-            .catch((e) => {
-                error("Error when fetching friends: " + e.message);
-            });
-    }
+    /* updateFriendsLocation = () => {
+     *     fetch(FETCH_FRIENDS_URL, {
+     *         method: "GET",
+     *     })
+     *         .then((response) => response.json())
+     *         .then((responseJson) => {
+     *             this.setState({ friends: responseJson });
+     *         })
+     *         .catch((e) => {
+     *             error("Error when fetching friends: " + e.message);
+     *         });
+     * }*/
 
     componentDidMount() {
         this.timoutInterval = setInterval(() => {
             if (AppState.currentState === 'active') {
-                this.updateSelfLocation();
-                this.updateFriendsLocation();
+                this.updateSelfLocationAndThenRender();
             }
         }, 10000);
         AppState.addEventListener('change', this._handleAppStateChange);
@@ -51,8 +48,8 @@ export default class MyMapView extends Component {
 
     _handleAppStateChange = (nextState) => {
         if (nextState === 'active') {
-            this.updateSelfLocation();
-            this.updateFriendsLocation();
+            this.updateSelfLocationAndThenRender();
+            // this.updateFriendsLocation();
         }
     }
 
@@ -76,7 +73,7 @@ export default class MyMapView extends Component {
 
     render() {
         if (typeof this.state.location === "undefined") {
-            return null;
+            return <MapView style={styles.map} />;
         }
         return (
             <View style={styles.container}>

@@ -38,7 +38,10 @@ import Geolocation from '@react-native-community/geolocation';
 // import BackgroundTimer from 'react-native-background-timer';
 import MyMapView from "./components/MyMapView.js";
 import BackgroundFetch from "react-native-background-fetch";
-import { updateLocation } from "./utils/Utils";
+import {
+    updateBackgroundFetchLocation,
+    updateBackgroundLocation
+} from "./utils/Utils";
 
 // BackgroundTimer.runBackgroundTimer(() => {
 //     Geolocation.getCurrentPosition(information => info(information)); // report my geolocation info
@@ -58,8 +61,7 @@ import {
 } from "./utils/Constants";
 
 BackgroundGeolocation.onLocation((loc) => {
-    // geo_adjust(loc);
-    // info(loc);
+    updateBackgroundLocation();
 }, (err) => { error("Error in BackgroundGeolocation.onLocation: " + err); });
 
 BackgroundGeolocation.ready({
@@ -71,16 +73,8 @@ BackgroundGeolocation.ready({
     logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
     stopOnTerminate: false,
     startOnBoot: true,
-    url: LOCATION_UPDATE_URL,
     batchSync: false,
     autoSync: true,
-    headers: {
-        "USER-ID": USER_ID,
-        "DEVICE-NAME": DEVICE_NAME
-    },
-    params: {
-        // "auth_token": "maybe_your_server_authenticates_via_token_YES?"
-    }
 }, (state) => {
     info("BackgroundGeolocation is configured and ready: ", state.enabled);
     if (!state.enabled) {
@@ -106,7 +100,7 @@ BackgroundFetch.configure({
     requiresStorageNotLow: false  // Default
 }, () => {
     info("[js] Received background-fetch event");
-    updateLocation();
+    updateBackgroundFetchLocation();
     // Required: Signal completion of your task to native code
     // If you fail to do this, the OS can terminate your app
     // or assign battery-blame for consuming too much background-time
