@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, View, TouchableOpacity, Text } from 'react-native';
+import { Picker, StyleSheet, Image, View, TouchableOpacity, Text } from 'react-native';
 
 
 export default class FriendsScreen extends Component {
+
+    state = {
+        language: 'Python'
+    }
 
     constructor() {
         super();
@@ -11,7 +15,15 @@ export default class FriendsScreen extends Component {
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>Friends</Text>
+                <Picker
+                    selectedValue={this.state.language}
+                    style={{ height: 50, width: 100 }}
+                    onValueChange={(itemValue, itemIndex) =>
+                        this.setState({ language: itemValue })
+                    }>
+                    <Picker.Item label="Java" value="java" />
+                    <Picker.Item label="JavaScript" value="js" />
+                </Picker>
             </View>
         );
     }

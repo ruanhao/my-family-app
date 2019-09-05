@@ -11,6 +11,7 @@ const pinImage = require("../assets/pin.png");
 const menuImage = require("../assets/menu.png");
 const myLocImage = require("../assets/myloc.png");
 const radarImage = require("../assets/radar.png");
+const friendsImage = require("../assets/friends.png");
 
 
 export default class FamilyMapScreen extends Component {
@@ -21,7 +22,9 @@ export default class FamilyMapScreen extends Component {
     };
 
     state = {
-        friends: []
+        location: null,/* {latitude: 0, longitude: 0, altitude: 0} */
+        nextFriendIndex: 0,/* used to select friend round robin */
+        friends: [],/* [{location:{latitude: 0, longitude: 0, altitude: 0}, name: "", id: ""}] */
     }
 
     constructor() {
@@ -72,6 +75,16 @@ export default class FamilyMapScreen extends Component {
         this.map.animateCamera({ center: this.state.location, altitude: this.state.location.altitude + 1000 });
     }
 
+    _fitNextFriend = () => {
+        let len = this.state.friends.length;
+        if (len === 0) {
+            return;
+        }
+        let friend = this.state.friends[this.state.nextFriendIndex % len];
+        this.map.animateCamera({ center: friend.location, altitude: friend.location.altitude + 1000 });
+        this.state.nextFriendIndex += 1;
+    }
+
     _fitAll = () => {
         let markers = this.state.friends.map((friend) => {
             return {
@@ -95,7 +108,7 @@ export default class FamilyMapScreen extends Component {
     }
 
     render() {
-        if (typeof this.state.location === "undefined") {
+        if (this.state.location === null) {
             return <MapView style={styles.map} />;
         }
         return (
@@ -122,30 +135,21 @@ export default class FamilyMapScreen extends Component {
                         }}
                         title="我"
                     >
-                        <Image
-                            source={pinImage}
-                            style={{ height: 35, width: 35 }}
-                        />
+                        {/*<Image source={pinImage} style={{ height: 30, width: 25 }} />*/}
                     </Marker>
 
-                    {this.state.friends.map((friend) => {
-                        if (!('location' in friend)) {
-                            return null;
-                        }
-                        return <Marker
-                            key={friend.id}
-                            coordinate={{
-                                latitude: friend.location.latitude,
-                                longitude: friend.location.longitude
-                            }}
-                            title={friend.name}
-                        >
-                            <Image
-                                source={pinImage}
-                                style={{ height: 25, width: 25 }}
+                    {this.state.friends.map(friend => {
+                        return (
+                            <Marker
+                                key={friend.id}
+                                coordinate={{
+                                    latitude: friend.location.latitude,
+                                    longitude: friend.location.longitude
+                                }}
+                                title={friend.name}
+                                pinColor="green"
                             />
-                        </Marker>;
-
+                        );
                     })}
                 </MapView >
 
@@ -171,6 +175,19 @@ export default class FamilyMapScreen extends Component {
                             style={{ height: 25, width: 25 }}
                         />
                     </TouchableOpacity>
+
+                    {this.state.friends.length > 0 &&
+                        <TouchableOpacity
+                            onPress={() => { this._fitNextFriend() }}
+                            style={[styles.bubble, styles.button]}
+                        >
+                            <Image
+                                source={friendsImage}
+                                style={{ height: 25, width: 25 }}
+                            />
+                        </TouchableOpacity>
+                    }
+
                     <TouchableOpacity
                         onPress={() => this._fitAll()}
                         style={[styles.bubble, styles.button]} >
