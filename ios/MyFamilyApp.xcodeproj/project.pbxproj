@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* MyFamilyAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MyFamilyAppTests.m */; };
 		1345C3892CE7377AE610217D /* libPods-MyFamilyApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B43F427140DC8BB911E9D406 /* libPods-MyFamilyApp-tvOS.a */; };
@@ -21,7 +20,6 @@
 		6E27C8CF8EBEFADE75C52753 /* libPods-MyFamilyAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A2FB6D0FF8AF175AD5AF587 /* libPods-MyFamilyAppTests.a */; };
 		986018D38C3C4E38DE350571 /* libPods-MyFamilyApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F2A7D4875B73B4D9903720 /* libPods-MyFamilyApp.a */; };
 		B5EE878D230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5EE878C230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m */; };
-		E39EB9A73CD240F88D5D8047 /* TSLocationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9994B2AF46648FB88A33695 /* TSLocationManager.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +65,6 @@
 		B43F427140DC8BB911E9D406 /* libPods-MyFamilyApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyFamilyApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5EE878C230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
 		B5EE8795230D190100E64F75 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9994B2AF46648FB88A33695 /* TSLocationManager.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = TSLocationManager.framework; path = "../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation/TSLocationManager.framework"; sourceTree = SDKROOT; };
 		D31B7A7D606ADA30E617D852 /* libPods-MyFamilyApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyFamilyApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D699A4BAD46331311786D4E7 /* Pods-MyFamilyApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyFamilyApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-MyFamilyApp-tvOSTests/Pods-MyFamilyApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -88,7 +85,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				986018D38C3C4E38DE350571 /* libPods-MyFamilyApp.a in Frameworks */,
-				E39EB9A73CD240F88D5D8047 /* TSLocationManager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,7 +164,6 @@
 				B43F427140DC8BB911E9D406 /* libPods-MyFamilyApp-tvOS.a */,
 				D31B7A7D606ADA30E617D852 /* libPods-MyFamilyApp-tvOSTests.a */,
 				7A2FB6D0FF8AF175AD5AF587 /* libPods-MyFamilyAppTests.a */,
-				C9994B2AF46648FB88A33695 /* TSLocationManager.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -302,11 +297,6 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 7LQ6QANL4M;
-						SystemCapabilities = {
-							com.apple.BackgroundModes = {
-								enabled = true;
-							};
-						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;

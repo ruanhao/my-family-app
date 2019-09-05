@@ -1,18 +1,28 @@
 import React, { Fragment } from 'react';
 import {
+    Text,
     YellowBox,
     StyleSheet,
 } from 'react-native';
-YellowBox.ignoreWarnings(['Remote debugger']);
+YellowBox.ignoreWarnings(['Remote debugger', 'Warning: componentWillMount is deprecated']);
 import { info, error } from "./utils/LogUtils";
 import Geolocation from '@react-native-community/geolocation';
-import FamilyMapView from "./components/FamilyMapView.js";
+import FamilyMapScreen from "./components/FamilyMapScreen.js";
+import FriendsScreen from "./components/FriendsScreen";
+import MeScreen from "./components/MeScreen";
 import BackgroundFetch from "react-native-background-fetch";
 import {
     updateBackgroundFetchLocation,
     updateBackgroundLocation
 } from "./utils/Utils";
 import BackgroundGeolocation from "react-native-background-geolocation";
+
+import { createAppContainer } from 'react-navigation';
+import SafeAreaView from 'react-native-safe-area-view';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack';
+
+
 
 // import BackgroundTimer from 'react-native-background-timer';
 // BackgroundTimer.runBackgroundTimer(() => {
@@ -86,13 +96,25 @@ BackgroundFetch.status((status) => {
     }
 });
 
-const App = () => {
-    return (
-        <FamilyMapView />
-    );
-};
+/* const App = () => {
+ *     return (
+ *         <FamilyMapView />
+ *     );
+ * };
+ * export default App;*/
 
-const styles = StyleSheet.create({
-});
+const MenuTab = createBottomTabNavigator(
+    {
+        Friends: FriendsScreen,
+        Me: MeScreen
+    }
+);
 
-export default App;
+const RootStack = createStackNavigator(
+    {
+        Map: FamilyMapScreen,
+        Menu: MenuTab,
+    },
+);
+
+export default createAppContainer(RootStack);

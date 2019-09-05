@@ -91,7 +91,11 @@ PODS:
   - RNBackgroundGeolocation (3.2.0):
     - CocoaLumberjack (~> 3.5.1)
     - React
-  - RNDeviceInfo (2.3.2):
+  - RNGestureHandler (1.4.1):
+    - React
+  - RNReanimated (1.2.0):
+    - React
+  - RNScreens (1.0.0-alpha.23):
     - React
   - yoga (0.60.5.React)
 
@@ -120,7 +124,9 @@ DEPENDENCIES:
   - React-RCTWebSocket (from `../node_modules/react-native/Libraries/WebSocket`)
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
-  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNReanimated (from `../node_modules/react-native-reanimated`)
+  - RNScreens (from `../node_modules/react-native-screens`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -177,8 +183,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-background-fetch"
   RNBackgroundGeolocation:
     :path: "../node_modules/react-native-background-geolocation"
-  RNDeviceInfo:
-    :path: "../node_modules/react-native-device-info"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
+  RNReanimated:
+    :path: "../node_modules/react-native-reanimated"
+  RNScreens:
+    :path: "../node_modules/react-native-screens"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -209,9 +219,11 @@ SPEC CHECKSUMS:
   React-RCTWebSocket: cd932a16b7214898b6b7f788c8bddb3637246ac4
   RNBackgroundFetch: ca9c8740e944913474262b63022d95a2be5e003a
   RNBackgroundGeolocation: d3df8c4a8352a8ef4bcb0adc5b4eb9153b2a046c
-  RNDeviceInfo: bdc3e922b2ed0f086e9d9ab534e61bc316f08576
+  RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
+  RNReanimated: 1b52415c4302f198cb581282a0166690bad62c43
+  RNScreens: f28b48b8345f2f5f39ed6195518291515032a788
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
-PODFILE CHECKSUM: 53083d6b8b59d6966316fce148c1e34159ba897a
+PODFILE CHECKSUM: 7cd86ec1a90e1cd92b52fc65622ccd2e42dd9e30
 
 COCOAPODS: 1.7.5

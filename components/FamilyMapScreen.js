@@ -2,9 +2,20 @@ import React, { Component } from 'react';
 import { StyleSheet, Image, AppState, View, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { updateForgroundLocation } from '../utils/Utils';
-// import { info } from "../utils/LogUtils";
+import { info } from "../utils/LogUtils";
 
-export default class FamilyMapView extends Component {
+const pinImage = require("../assets/pin.png");
+const menuImage = require("../assets/menu.png");
+const myLocImage = require("../assets/myloc.png");
+const radarImage = require("../assets/radar.png");
+
+
+export default class FamilyMapScreen extends Component {
+
+    static navigationOptions = {
+        header: null,
+        title: 'Map'
+    };
 
     state = {
         friends: []
@@ -78,6 +89,8 @@ export default class FamilyMapView extends Component {
         }
         return (
             <View style={styles.container}>
+
+
                 < MapView
                     ref={ref => { this.map = ref; }}
                     style={styles.map}
@@ -89,11 +102,14 @@ export default class FamilyMapView extends Component {
                     }}
                 >
                     <Marker
-                        coordinate={{ latitude: this.state.location.latitude, longitude: this.state.location.longitude }}
+                        coordinate={{
+                            latitude: this.state.location.latitude,
+                            longitude: this.state.location.longitude
+                        }}
                         title="我"
                     >
                         <Image
-                            source={require("../assets/pin.png")}
+                            source={pinImage}
                             style={{ height: 35, width: 35 }}
                         />
                     </Marker>
@@ -104,11 +120,14 @@ export default class FamilyMapView extends Component {
                         }
                         return <Marker
                             key={friend.id}
-                            coordinate={{ latitude: friend.location.latitude, longitude: friend.location.longitude }}
+                            coordinate={{
+                                latitude: friend.location.latitude,
+                                longitude: friend.location.longitude
+                            }}
                             title={friend.name}
                         >
                             <Image
-                                source={require("../assets/pin.png")}
+                                source={pinImage}
                                 style={{ height: 25, width: 25 }}
                             />
                         </Marker>;
@@ -116,13 +135,25 @@ export default class FamilyMapView extends Component {
                     })}
                 </MapView >
 
+
+                <View style={styles.menu}>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('Menu')}>
+                        <Image
+                            source={menuImage}
+                            style={{ height: 20, width: 30 }}
+                        />
+                    </TouchableOpacity>
+                </View>
+
+
                 <View style={styles.buttonContainer} >
                     <TouchableOpacity
                         onPress={() => { this._fitMe() }}
                         style={[styles.bubble, styles.button]}
                     >
                         <Image
-                            source={require("../assets/myloc.png")}
+                            source={myLocImage}
                             style={{ height: 25, width: 25 }}
                         />
                     </TouchableOpacity>
@@ -130,12 +161,12 @@ export default class FamilyMapView extends Component {
                         onPress={() => this._fitAll()}
                         style={[styles.bubble, styles.button]} >
                         <Image
-                            source={require("../assets/radar.png")}
+                            source={radarImage}
                             style={{ height: 25, width: 25 }}
                         />
                     </TouchableOpacity>
                 </View>
-            </View>
+            </View >
         );
     }
 }
@@ -149,6 +180,13 @@ const styles = StyleSheet.create({
     },
     map: {
         ...StyleSheet.absoluteFillObject,
+    },
+    menu: {
+        ...StyleSheet.absoluteFillObject,
+        marginTop: 50,
+        marginLeft: 20,
+        height: 20,
+        width: 30,
     },
     buttonContainer: {
         // flexDirection: 'row',
