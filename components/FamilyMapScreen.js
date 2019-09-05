@@ -69,7 +69,7 @@ export default class FamilyMapScreen extends Component {
     }
 
     _fitMe = () => {
-        this.map.animateCamera({ center: this.state.location });
+        this.map.animateCamera({ center: this.state.location, altitude: this.state.location.altitude + 1000 });
     }
 
     _fitAll = () => {
