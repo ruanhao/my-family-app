@@ -4,10 +4,10 @@ import MapView, { Marker } from 'react-native-maps';
 import { updateForgroundLocation } from '../utils/Utils';
 import { info } from "../utils/LogUtils";
 import { NavigationEvents } from 'react-navigation';
+import Toast from 'react-native-root-toast';
 
 
-
-const pinImage = require("../assets/pin.png");
+// const pinImage = require("../assets/pin.png");
 const menuImage = require("../assets/menu.png");
 const myLocImage = require("../assets/myloc.png");
 const radarImage = require("../assets/radar.png");
@@ -83,6 +83,16 @@ export default class FamilyMapScreen extends Component {
         let friend = this.state.friends[this.state.nextFriendIndex % len];
         this.map.animateCamera({ center: friend.location, altitude: friend.location.altitude + 1000 });
         this.state.nextFriendIndex += 1;
+        Toast.show(friend.name, {
+            duration: Toast.durations.SHORT,
+            position: Toast.positions.BOTTOM,
+            shadow: true,
+            animation: true,
+            hideOnPress: true,
+            delay: 0,
+            backgroundColor: 'grey'
+        });
+
     }
 
     _fitAll = () => {
@@ -153,16 +163,19 @@ export default class FamilyMapScreen extends Component {
                     })}
                 </MapView >
 
-
-                <View style={styles.menu}>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('Menu')}>
-                        <Image
-                            source={menuImage}
-                            style={{ height: 20, width: 30 }}
-                        />
-                    </TouchableOpacity>
-                </View>
+                {
+                    /*
+                    <View style={styles.menu}>
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.navigate('Menu')}>
+                            <Image
+                                source={menuImage}
+                                style={{ height: 20, width: 30 }}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    */
+                }
 
 
                 <View style={styles.buttonContainer} >

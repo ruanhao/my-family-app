@@ -5,7 +5,7 @@ import { Picker, StyleSheet, Image, View, TouchableOpacity, Text } from 'react-n
 export default class FriendsScreen extends Component {
 
     state = {
-        language: 'Python'
+        language: 'java'
     }
 
     constructor() {
@@ -23,6 +23,7 @@ export default class FriendsScreen extends Component {
                     }>
                     <Picker.Item label="Java" value="java" />
                     <Picker.Item label="JavaScript" value="js" />
+                    <Picker.Item label="Python" value="python" />
                 </Picker>
             </View>
         );

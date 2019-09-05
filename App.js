@@ -4,7 +4,13 @@ import {
     YellowBox,
     StyleSheet,
 } from 'react-native';
-YellowBox.ignoreWarnings(['Remote debugger', 'Warning: componentWillMount is deprecated']);
+YellowBox.ignoreWarnings(
+    [
+        'Remote debugger',
+        'Warning: componentWillMount is deprecated', /* caused by react-native-reanimated */
+        'Accessing view manager configs directly off UIManager via UIManager', /* caused by react-native-root-toast */
+        'componentWillReceiveProps is deprecated and will be removed in the next major version', /* caused by react-native-root-toast */
+    ]);
 import { info, error } from "./utils/LogUtils";
 import Geolocation from '@react-native-community/geolocation';
 import FamilyMapScreen from "./components/FamilyMapScreen.js";
