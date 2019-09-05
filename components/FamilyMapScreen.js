@@ -3,6 +3,9 @@ import { StyleSheet, Image, AppState, View, TouchableOpacity, Text } from 'react
 import MapView, { Marker } from 'react-native-maps';
 import { updateForgroundLocation } from '../utils/Utils';
 import { info } from "../utils/LogUtils";
+import { NavigationEvents } from 'react-navigation';
+
+
 
 const pinImage = require("../assets/pin.png");
 const menuImage = require("../assets/menu.png");
@@ -24,7 +27,6 @@ export default class FamilyMapScreen extends Component {
     constructor() {
         super();
         this.updateSelfLocationAndThenRender();
-        // this.updateFriendsLocation();
     }
 
     updateSelfLocationAndThenRender = () => {
@@ -52,7 +54,8 @@ export default class FamilyMapScreen extends Component {
     componentDidMount() {
         this.timoutInterval = setInterval(() => {
             if (AppState.currentState === 'active') {
-                this.updateSelfLocationAndThenRender();
+                const { navigation } = this.props;
+                navigation.isFocused() && this.updateSelfLocationAndThenRender();
             }
         }, 10000);
         AppState.addEventListener('change', this._handleAppStateChange);
@@ -83,13 +86,24 @@ export default class FamilyMapScreen extends Component {
         });
     }
 
+    _onDidFocus = (payload) => {
+
+    }
+
+    _onDidBlur = (payload) => {
+
+    }
+
     render() {
         if (typeof this.state.location === "undefined") {
             return <MapView style={styles.map} />;
         }
         return (
             <View style={styles.container}>
-
+                <NavigationEvents
+                    onDidFocus={payload => this._onDidFocus(payload)}
+                    onDidBlur={payload => this._onDidBlur(payload)}
+                />
 
                 < MapView
                     ref={ref => { this.map = ref; }}
