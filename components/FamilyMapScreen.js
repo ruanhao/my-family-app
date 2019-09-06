@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image, AppState, View, TouchableOpacity, Text } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Callout } from 'react-native-maps';
 import { updateForgroundLocation } from '../utils/Utils';
 import { info } from "../utils/LogUtils";
 import { NavigationEvents } from 'react-navigation';
@@ -144,6 +144,13 @@ export default class FamilyMapScreen extends Component {
                             longitude: this.state.location.longitude
                         }}
                     >
+                        {/*
+                            There is a bug here: friends' callout behaves weird if title is not provided in user's Marker.
+                            Use `tooltip` to fix it.
+                          */
+                        }
+                        <Callout tooltip={true} />
+
                         {/*<Image source={pinImage} style={{ height: 30, width: 25 }} />*/}
                     </Marker>
 
@@ -155,9 +162,12 @@ export default class FamilyMapScreen extends Component {
                                     latitude: friend.location.latitude,
                                     longitude: friend.location.longitude
                                 }}
-                                title={friend.name}
                                 pinColor="royalblue"
-                            />
+                            >
+                                <Callout>
+                                    <Text>{friend.name}</Text>
+                                </Callout>
+                            </Marker>
                         );
                     })}
                 </MapView >
