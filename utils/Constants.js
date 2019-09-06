@@ -5,7 +5,6 @@
 // const USER_ID = "5d70af62bc9134a04d2bb34f"; // chen
 
 
-// const USER_ID = "5d5f491136e04f17aef28545"; // test
 const SERVER = "http://13.114.34.198:8080";
 const USER_ID = "5d5d61bc36e04f0dfc55aed4"; // hao
 // const USER_ID = "5d5d61f236e04f0dfc55aed5"; // fiona

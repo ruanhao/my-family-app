@@ -143,7 +143,6 @@ export default class FamilyMapScreen extends Component {
                             latitude: this.state.location.latitude,
                             longitude: this.state.location.longitude
                         }}
-                        title="我"
                     >
                         {/*<Image source={pinImage} style={{ height: 30, width: 25 }} />*/}
                     </Marker>
@@ -157,7 +156,7 @@ export default class FamilyMapScreen extends Component {
                                     longitude: friend.location.longitude
                                 }}
                                 title={friend.name}
-                                pinColor="green"
+                                pinColor="royalblue"
                             />
                         );
                     })}
