@@ -5,13 +5,16 @@ import { updateForgroundLocation } from '../utils/Utils';
 import { info } from "../utils/LogUtils";
 import { NavigationEvents } from 'react-navigation';
 import Toast from 'react-native-root-toast';
+import { getDistance } from 'geolib';
 
+const DISTANCE_TOLERANCE = 15;
 
-// const pinImage = require("../assets/pin.png");
+const pinImage = require("../assets/pin.png");
 const menuImage = require("../assets/menu.png");
 const myLocImage = require("../assets/myloc.png");
 const radarImage = require("../assets/radar.png");
 const friendsImage = require("../assets/friends.png");
+const refreshImage = require("../assets/refresh.png");
 
 
 export default class FamilyMapScreen extends Component {
@@ -32,10 +35,17 @@ export default class FamilyMapScreen extends Component {
         this.updateSelfLocationAndThenRender();
     }
 
-    updateSelfLocationAndThenRender = () => {
+    updateSelfLocationAndThenRender = (force = false) => {
         updateForgroundLocation((userLocations) => {
+            let myLastLocation = this.state.location;
+            let myCurrentLocation = userLocations[0].location;
+            if (!force && myLastLocation) {
+                if (getDistance(myLastLocation, myCurrentLocation) < DISTANCE_TOLERANCE) {
+                    myCurrentLocation = myLastLocation;
+                }
+            }
             this.setState({
-                location: userLocations[0].location,
+                location: myCurrentLocation,
                 friends: userLocations.slice(1),
             });
         });
@@ -144,14 +154,10 @@ export default class FamilyMapScreen extends Component {
                             longitude: this.state.location.longitude
                         }}
                     >
-                        {/*
-                            There is a bug here: friends' callout behaves weird if title is not provided in user's Marker.
-                            Use `tooltip` to fix it.
-                          */
-                        }
-                        <Callout tooltip={true} />
-
-                        {/*<Image source={pinImage} style={{ height: 30, width: 25 }} />*/}
+                        <Callout>
+                            <Text>我</Text>
+                        </Callout>
+                        {/*<Image source={pinImage} style={{ height: 30, width: 30 }} />*/}
                     </Marker>
 
                     {this.state.friends.map(friend => {
@@ -162,7 +168,7 @@ export default class FamilyMapScreen extends Component {
                                     latitude: friend.location.latitude,
                                     longitude: friend.location.longitude
                                 }}
-                                pinColor="royalblue"
+                                pinColor='dodgerblue'
                             >
                                 <Callout>
                                     <Text>{friend.name}</Text>
@@ -215,6 +221,16 @@ export default class FamilyMapScreen extends Component {
                         style={[styles.bubble, styles.button]} >
                         <Image
                             source={radarImage}
+                            style={{ height: 25, width: 25 }}
+                        />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={() => { this.updateSelfLocationAndThenRender(true) }}
+                        style={[styles.bubble, styles.button]}
+                    >
+                        <Image
+                            source={refreshImage}
                             style={{ height: 25, width: 25 }}
                         />
                     </TouchableOpacity>
