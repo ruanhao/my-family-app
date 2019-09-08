@@ -46,7 +46,7 @@ function updateLocation(type = FOREGROUND_UPDATE_TYPE, callback = (_) => { }) {
                     callback(adjustedUserLocations);
                 }
             } catch (e) {
-                error("Error when updating location: " + e.message);
+                error(`Error when updating location(${type}): ${e.message}`);
             }
 
             /* const responseFuture =

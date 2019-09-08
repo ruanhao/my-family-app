@@ -47,7 +47,7 @@ BackgroundGeolocation.onLocation((loc) => {
 BackgroundGeolocation.ready({
     reset: true,
     desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
-    distanceFilter: 20,
+    distanceFilter: 10,
     stopTimeout: 1,
     debug: false,
     logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
@@ -78,7 +78,7 @@ BackgroundFetch.configure({
     requiresBatteryNotLow: false, // Default
     requiresStorageNotLow: false  // Default
 }, () => {
-    info("[js] Received background-fetch event");
+    // info("[js] Received background-fetch event");
     updateBackgroundFetchLocation();
     // Required: Signal completion of your task to native code
     // If you fail to do this, the OS can terminate your app
