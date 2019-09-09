@@ -40,21 +40,39 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 info("Starting App... ");
 
-BackgroundGeolocation.onLocation((loc) => {
-    updateBackgroundLocation();
-}, (err) => { error("Error in BackgroundGeolocation.onLocation: " + err); });
+BackgroundGeolocation.on(
+    'location',
+    (_location) => {
+        updateBackgroundLocation();
+    },
+    (err) => {
+        error("Error in BackgroundGeolocation.onLocation: " + err);
+    });
+
+BackgroundGeolocation.on('heartbeat', (location) => {
+    info("heartbeat");
+});
+
+BackgroundGeolocation.on('activitychange', event => {
+    info("activityChange");
+});
+
+BackgroundGeolocation.on('providerchange', (provider) => {
+    info("providerchange");
+});
 
 BackgroundGeolocation.ready({
     reset: true,
     desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
-    distanceFilter: 10,
+    distanceFilter: 20,
     stopTimeout: 1,
     debug: false,
-    logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+    // logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
     stopOnTerminate: false,
     startOnBoot: true,
     batchSync: false,
     autoSync: true,
+    maxRecordsToPersist: 0,
 }, (state) => {
     info("BackgroundGeolocation is configured and ready: " + state.enabled);
     if (!state.enabled) {
