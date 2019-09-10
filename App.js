@@ -19,16 +19,12 @@ import MeScreen from "./components/MeScreen";
 import BackgroundFetch from "react-native-background-fetch";
 import {
     updateBackgroundFetchLocation,
-    updateBackgroundLocation
+    configBackgroundGeoLocation
 } from "./utils/Utils";
-import BackgroundGeolocation from "react-native-background-geolocation";
-
 import { createAppContainer } from 'react-navigation';
 import SafeAreaView from 'react-native-safe-area-view';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
-
-
 
 // import BackgroundTimer from 'react-native-background-timer';
 // BackgroundTimer.runBackgroundTimer(() => {
@@ -40,50 +36,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 info("Starting App... ");
 
-BackgroundGeolocation.on(
-    'location',
-    (_location) => {
-        updateBackgroundLocation();
-    },
-    (err) => {
-        error("Error in BackgroundGeolocation.onLocation: " + err);
-    });
-
-BackgroundGeolocation.on('heartbeat', (location) => {
-    info("heartbeat");
-});
-
-BackgroundGeolocation.on('activitychange', event => {
-    info("activityChange");
-});
-
-BackgroundGeolocation.on('providerchange', (provider) => {
-    info("providerchange");
-});
-
-BackgroundGeolocation.ready({
-    reset: true,
-    desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
-    distanceFilter: 20,
-    stopTimeout: 1,
-    debug: false,
-    // logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
-    stopOnTerminate: false,
-    startOnBoot: true,
-    batchSync: false,
-    autoSync: true,
-    maxRecordsToPersist: 0,
-}, (state) => {
-    info("BackgroundGeolocation is configured and ready: " + state.enabled);
-    if (!state.enabled) {
-        ////
-        // 3. Start tracking!
-        //
-        BackgroundGeolocation.start(function() {
-            info("BackgroundGeolocation started successfully");
-        });
-    }
-});
+configBackgroundGeoLocation();
 
 BackgroundFetch.configure({
     minimumFetchInterval: 15,     // <-- minutes (15 is minimum allowed)
@@ -102,8 +55,8 @@ BackgroundFetch.configure({
     // If you fail to do this, the OS can terminate your app
     // or assign battery-blame for consuming too much background-time
     BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
-}, (error) => {
-    info("[js] RNBackgroundFetch failed to start");
+}, (e) => {
+    error("[js] RNBackgroundFetch failed to start: " + e.message);
 });
 
 BackgroundFetch.status((status) => {
