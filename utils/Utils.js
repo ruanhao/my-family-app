@@ -13,18 +13,15 @@ const FOREGROUND_UPDATE_TYPE = '/foreground';
 const BACKGROUND_UPDATE_TYPE = '/background';
 const BACKGROUND_FETCH_UPDATE_TYPE = '/background-fetch';
 
-const BACKGROUND_UPDATE_INTERVAL = 15000;
-const ACTIVITY_UPDATE_INTERVAL = BACKGROUND_UPDATE_INTERVAL;
+const UPDATE_INTERVAL = 10000;
 
-let backgroundLastUpdate = new Date().getTime();
-let activityLastUpdate = new Date().getTime();
+let lastUpdate = new Date().getTime();
 
 export function updateActivityLocation(activity, confidence) {
     let current = new Date().getTime();
-    if (current - activityLastUpdate < ACTIVITY_UPDATE_INTERVAL) {
+    if (current - lastUpdate < UPDATE_INTERVAL) {
         return;
     }
-    activityLastUpdate = current;
     let url = `${ACTIVITY_UPDATE_TYPE}/${activity}/${confidence}`;
     updateLocation(url);
 }
@@ -39,10 +36,9 @@ export function updateBackgroundFetchLocation() {
 
 export function updateBackgroundLocation(location) {
     let current = new Date().getTime();
-    if (current - backgroundLastUpdate < BACKGROUND_UPDATE_INTERVAL) {
+    if (current - lastUpdate < UPDATE_INTERVAL) {
         return;
     }
-    backgroundLastUpdate = current;
     if (location) {
         const { coords: { latitude, longitude, speed, altitude, heading } } = location;
         fetch(LOCATION_UPDATE_URL + BACKGROUND_UPDATE_TYPE,
@@ -55,10 +51,13 @@ export function updateBackgroundLocation(location) {
                 body: JSON.stringify({
                     latitude, longitude, speed, altitude, heading
                 }),
-            }
-        ).catch(e => {
-            error("Error when updating background location: " + e.message);
-        });
+            })
+            .then((response) => {
+                lastUpdate = new Date().getTime();
+            })
+            .catch(e => {
+                error("Error when updating background location: " + e.message);
+            });
     } else {
         updateLocation(BACKGROUND_UPDATE_TYPE);
     }
@@ -82,6 +81,7 @@ function updateLocation(type = FOREGROUND_UPDATE_TYPE, callback = (_) => { }) {
                     },
                     body: JSON.stringify(payload),
                 });
+                lastUpdate = new Date().getTime();
                 if (type === FOREGROUND_UPDATE_TYPE) {
                     let adjustedUserLocations = await response.json();
                     callback(adjustedUserLocations);

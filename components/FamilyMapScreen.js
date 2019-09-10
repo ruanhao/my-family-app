@@ -70,7 +70,7 @@ export default class FamilyMapScreen extends Component {
                 const { navigation } = this.props;
                 navigation.isFocused() && this.updateSelfLocationAndThenRender();
             }
-        }, 10000);
+        }, 5000);
         AppState.addEventListener('change', this._handleAppStateChange);
     }
 
