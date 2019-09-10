@@ -1,4 +1,5 @@
 import Geolocation from '@react-native-community/geolocation';
+import BackgroundFetch from "react-native-background-fetch";
 import {
     LOCATION_UPDATE_URL,
     USER_ID
@@ -112,7 +113,42 @@ function updateLocation(type = FOREGROUND_UPDATE_TYPE, callback = (_) => { }) {
     );
 }
 
+export function configBackgroundFetch() {
+    BackgroundFetch.configure({
+        minimumFetchInterval: 15,     // <-- minutes (15 is minimum allowed)
+        // Android options
+        stopOnTerminate: false,
+        startOnBoot: true,
+        requiredNetworkType: BackgroundFetch.NETWORK_TYPE_NONE, // Default
+        requiresCharging: false,      // Default
+        requiresDeviceIdle: false,    // Default
+        requiresBatteryNotLow: false, // Default
+        requiresStorageNotLow: false  // Default
+    }, () => {
+        // info("[js] Received background-fetch event");
+        updateBackgroundFetchLocation();
+        // Required: Signal completion of your task to native code
+        // If you fail to do this, the OS can terminate your app
+        // or assign battery-blame for consuming too much background-time
+        BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
+    }, (e) => {
+        error("[js] RNBackgroundFetch failed to start: " + e.message);
+    });
 
+    BackgroundFetch.status((status) => {
+        switch (status) {
+            case BackgroundFetch.STATUS_RESTRICTED:
+                info("BackgroundFetch restricted");
+                break;
+            case BackgroundFetch.STATUS_DENIED:
+                info("BackgroundFetch denied");
+                break;
+            case BackgroundFetch.STATUS_AVAILABLE:
+                info("BackgroundFetch is enabled");
+                break;
+        }
+    });
+}
 
 export function configBackgroundGeoLocation() {
     BackgroundGeolocation.on('location',
