@@ -1,17 +1,15 @@
 import Geolocation from '@react-native-community/geolocation';
-import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import {
     LOCATION_UPDATE_URL,
     USER_ID
 } from "./Constants";
 import { info, error } from "./LogUtils";
 
+
 const FOREGROUND_UPDATE_TYPE = '/foreground';
 const BACKGROUND_UPDATE_TYPE = '/background';
-const STATIONARY_UPDATE_TYPE = '/stationary';
 const BACKGROUND_FETCH_UPDATE_TYPE = '/background-fetch';
 
-const BACKGROUND_LOCATION_UPDATE_INTERVAL = 10000; // 10s
 
 export function updateForgroundLocation(callback) {
     updateLocation(FOREGROUND_UPDATE_TYPE, callback);
@@ -19,10 +17,6 @@ export function updateForgroundLocation(callback) {
 
 export function updateBackgroundLocation() {
     updateLocation(BACKGROUND_UPDATE_TYPE);
-}
-
-export function updateStationaryLocation() {
-    updateLocation(STATIONARY_UPDATE_TYPE);
 }
 
 export function updateBackgroundFetchLocation() {
@@ -76,63 +70,4 @@ function updateLocation(type = FOREGROUND_UPDATE_TYPE, callback = (_) => { }) {
         },
         { enableHighAccuracy: true, timeout: 10000 }
     );
-}
-
-export function configBackgroundGeoLocation() {
-    let lastReportTime = new Date().getTime();
-    BackgroundGeolocation.on('location', (_location) => {
-        // handle your locations here
-        // to perform long running operation on iOS
-        // you need to create background task
-        BackgroundGeolocation.startTask(taskKey => {
-            // execute long running task
-            // eg. ajax post location
-            // IMPORTANT: task has to be ended by endTask
-            let current = new Date().getTime();
-            if (current - lastReportTime > BACKGROUND_LOCATION_UPDATE_INTERVAL) {
-                updateBackgroundLocation();
-                lastReportTime = current;
-            }
-            BackgroundGeolocation.endTask(taskKey);
-        });
-    });
-
-    BackgroundGeolocation.on('error', (e) => {
-        error('BackgroundGeolocation error: ' + e.message);
-    });
-
-    BackgroundGeolocation.on('stationary', (_stationaryLocation) => {
-        updateStationaryLocation();
-    });
-
-    BackgroundGeolocation.on('stop', () => {
-        info('BackgroundGeolocation service has been stopped');
-    });
-
-    BackgroundGeolocation.configure({
-        // desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
-        desiredAccuracy: 10,
-        stationaryRadius: 50,
-        distanceFilter: 50,/* https://github.com/mauron85/react-native-background-geolocation/blob/master/DISTANCE_FILTER_PROVIDER.md */
-        interval: 10000,
-        debug: false,
-        startOnBoot: true,
-        stopOnTerminate: false,
-        maxLocations: 0,
-        pauseLocationUpdates: true,
-        // interval: 10000,/* android only */
-        // fastestInterval: 5000,/* android only */
-        // activitiesInterval: 10000,/* android only */
-    });
-
-    BackgroundGeolocation.checkStatus(status => {
-        info('BackgroundGeolocation is running: ' + status.isRunning);
-        info('BackgroundGeolocation is enabled: ' + status.locationServicesEnabled);
-        info('BackgroundGeolocation is authorized: ' + status.authorization);
-        if (!status.isRunning) {
-            info("BackgroundGeolocation starting...");
-            BackgroundGeolocation.start();
-            info("BackgroundGeolocation started!");
-        }
-    });
 }
