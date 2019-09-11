@@ -169,11 +169,10 @@ export default class FamilyMapScreen extends Component {
                                     longitude: friend.location.longitude
                                 }}
                                 pinColor='dodgerblue'
-                            >
-                                <Callout>
-                                    <Text>{friend.name}</Text>
-                                </Callout>
-                            </Marker>
+                                title={friend.name}
+                                description={friend.location.updatedDate}
+                            />
+
                         );
                     })}
                 </MapView >
