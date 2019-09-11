@@ -177,19 +177,17 @@ export default class FamilyMapScreen extends Component {
                     })}
                 </MapView >
 
-                {
-                    /*
-                    <View style={styles.menu}>
-                        <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('Menu')}>
-                            <Image
-                                source={menuImage}
-                                style={{ height: 20, width: 30 }}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                    */
-                }
+
+                <View style={styles.menu}>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('Menu')}>
+                        <Image
+                            source={menuImage}
+                            style={{ height: 20, width: 30 }}
+                        />
+                    </TouchableOpacity>
+                </View>
+
 
 
                 <View style={styles.buttonContainer} >
