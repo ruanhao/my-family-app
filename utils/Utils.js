@@ -22,6 +22,7 @@ export function updateActivityLocation(activity, confidence) {
     if (current - lastUpdate < UPDATE_INTERVAL) {
         return;
     }
+    lastUpdate = current;
     let url = `${ACTIVITY_UPDATE_TYPE}/${activity}/${confidence}`;
     updateLocation(url);
 }
@@ -31,6 +32,11 @@ export function updateForgroundLocation(callback) {
 }
 
 export function updateBackgroundFetchLocation() {
+    let current = new Date().getTime();
+    if (current - lastUpdate < UPDATE_INTERVAL) {
+        return;
+    }
+    lastUpdate = current;
     updateLocation(BACKGROUND_FETCH_UPDATE_TYPE);
 }
 
@@ -39,6 +45,7 @@ export function updateBackgroundLocation(location) {
     if (current - lastUpdate < UPDATE_INTERVAL) {
         return;
     }
+    lastUpdate = current;
     if (location) {
         const { coords: { latitude, longitude, speed, altitude, heading } } = location;
         fetch(LOCATION_UPDATE_URL + BACKGROUND_UPDATE_TYPE,
@@ -53,7 +60,7 @@ export function updateBackgroundLocation(location) {
                 }),
             })
             .then((response) => {
-                lastUpdate = new Date().getTime();
+                // lastUpdate = new Date().getTime();
             })
             .catch(e => {
                 error("Error when updating background location: " + e.message);
@@ -81,7 +88,7 @@ function updateLocation(type = FOREGROUND_UPDATE_TYPE, callback = (_) => { }) {
                     },
                     body: JSON.stringify(payload),
                 });
-                lastUpdate = new Date().getTime();
+                // lastUpdate = new Date().getTime();
                 if (type === FOREGROUND_UPDATE_TYPE) {
                     let adjustedUserLocations = await response.json();
                     callback(adjustedUserLocations);
@@ -159,9 +166,9 @@ export function configBackgroundGeoLocation() {
             error("Error in BackgroundGeolocation.onLocation: " + e.message);
         });
 
-    BackgroundGeolocation.on('heartbeat', location => {
-        info("onHeartbeat");
-    });
+    /* BackgroundGeolocation.on('heartbeat', location => {
+     *     info("onHeartbeat");
+     * });*/
 
     BackgroundGeolocation.on('activitychange', ({ activity, confidence }) => {
         if (AppState.currentState !== 'active') {
@@ -170,30 +177,58 @@ export function configBackgroundGeoLocation() {
         }
     });
 
+    BackgroundGeolocation.on('motionchange', function(isMoving, location) {
+        if (AppState.currentState !== 'active') {
+            if (isMoving) {
+                updateActivityLocation('MOVING', 99);
+                BackgroundGeolocation.getState(state => {
+                    if (!state.enabled) {
+                        BackgroundGeolocation.start(function() {
+                            info("BackgroundGeolocation started AGAIN successfully");
+                        });
+                    }
+                });
+                // info('Just started MOVING');
+            } else {
+                updateActivityLocation('STATIONARY', 99);
+                // info('Just started STOPPED');
+            }
+        }
+    });
+
     /* BackgroundGeolocation.on('providerchange', provider => {
      *     info("onProviderchange");
      * });*/
 
-    BackgroundGeolocation.on('enabledchange', event => {
-        info("onEnabledchange: " + event.enabled);
+    BackgroundGeolocation.on('enabledchange', (enabled) => {
+        if (enabled) {
+            info("BackgroundGeolocation POWER ON");
+        } else {
+            info("BackgroundGeolocation POWER OFF");
+        }
     });
 
     BackgroundGeolocation.ready({
+        // Common
         reset: true,
         desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
         stationaryRadius: 30,
-        distanceFilter: 10,
+        distanceFilter: 15,
+        // stopOnStationary: true,
 
-        // Debug
+        // Logging
         debug: false,
         logMaxDays: 1,
         logLevel: BackgroundGeolocation.LOG_LEVEL_OFF,
 
-        // App
+        // Activity Recognition
+        minimumActivityRecognitionConfidence: 60,
+        stopTimeout: 3,
+        activityRecognitionInterval: 30000,
+
+        // Application
         stopOnTerminate: false,
         startOnBoot: true,
-        stopTimeout: 3,
-        stopOnStationary: true,
 
         // HTTP
         /* url: LOCATION_UPDATE_URL + BACKGROUND_UPDATE_TYPE,
