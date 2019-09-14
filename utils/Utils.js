@@ -157,7 +157,24 @@ export function configBackgroundFetch() {
     });
 }
 
-export function configBackgroundGeoLocation() {
+export function enableBackgroundGeoLocation(successFn = () => { }) {
+    configBackgroundGeoLocation(successFn);
+}
+
+export function disableBackgroundGeoLocation(successFn = () => { }) {
+    BackgroundGeolocation.removeListeners();
+    BackgroundGeolocation.stop(
+        () => { // success
+            info("BackgroundGeolocation SHUTDOWN successfully");
+            successFn();
+        },
+        e => { // failed
+            error("Failed to STOP BackgroundGeoLocation: " + e.message);
+        }
+    );
+}
+
+export function configBackgroundGeoLocation(successFn = () => { }) {
     BackgroundGeolocation.on('location',
         location => {
             updateBackgroundLocation(location);
@@ -242,10 +259,11 @@ export function configBackgroundGeoLocation() {
          * maxRecordsToPersist: 0,*/
 
     }, (state) => {
-        info("BackgroundGeolocation is enabled: " + state.enabled);
+        // info("BackgroundGeolocation is enabled: " + state.enabled);
         if (!state.enabled) {
             BackgroundGeolocation.start(function() {
-                info("BackgroundGeolocation started successfully");
+                info("BackgroundGeolocation STARTED successfully");
+                successFn();
             });
         }
     });

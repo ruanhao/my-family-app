@@ -17,6 +17,7 @@ import FamilyMapScreen from "./components/FamilyMapScreen.js";
 import FriendsScreen from "./components/FriendsScreen";
 import InfoScreen from "./components/InfoScreen";
 import MeScreen from "./components/MeScreen";
+import SettingsScreen from "./components/SettingsScreen";
 import {
     configBackgroundFetch,
     configBackgroundGeoLocation
@@ -51,6 +52,7 @@ const MenuTab = createBottomTabNavigator(
         // Friends: FriendsScreen,
         // Me: MeScreen,
         Info: InfoScreen,
+        Settings: SettingsScreen,
     }
 );
 
