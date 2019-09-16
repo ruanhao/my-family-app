@@ -245,7 +245,7 @@ export function configBackgroundGeoLocation(successFn = () => { }) {
         // Logging
         debug: false,
         logMaxDays: 1,
-        logLevel: BackgroundGeolocation.LOG_LEVEL_OFF,
+        logLevel: BackgroundGeolocation.LOG_LEVEL_INFO,
 
         // Activity Recognition
         minimumActivityRecognitionConfidence: 60,
