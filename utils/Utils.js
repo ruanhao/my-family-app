@@ -158,18 +158,27 @@ export function configBackgroundFetch() {
 }
 
 export function enableBackgroundGeoLocation(successFn = () => { }) {
-    configBackgroundGeoLocation(successFn);
+    BackgroundGeolocation.start(
+        () => {
+            info("BackgroundGeolocation ENABLED successfully");
+            successFn();
+        },
+        e => {
+            error("Failed to ENABLE BackgroundGeoLocation: " + e.message);
+        }
+    );
+    // configBackgroundGeoLocation(successFn);
 }
 
 export function disableBackgroundGeoLocation(successFn = () => { }) {
-    BackgroundGeolocation.removeListeners();
+    // BackgroundGeolocation.removeListeners();
     BackgroundGeolocation.stop(
         () => { // success
-            info("BackgroundGeolocation SHUTDOWN successfully");
+            info("BackgroundGeolocation DISABLED successfully");
             successFn();
         },
         e => { // failed
-            error("Failed to STOP BackgroundGeoLocation: " + e.message);
+            error("Failed to DISABLE BackgroundGeoLocation: " + e.message);
         }
     );
 }

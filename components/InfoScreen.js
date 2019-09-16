@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Button, Text, ScrollView } from 'react-native';
 import BackgroundGeolocation from "react-native-background-geolocation";
+import { info } from '../utils/Utils';
+import { NavigationEvents } from 'react-navigation';
 
 export default class InfoScreen extends Component {
 
@@ -15,6 +17,9 @@ export default class InfoScreen extends Component {
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <NavigationEvents
+                    onDidBlur={payload => this.setState({ info: "" })}
+                />
                 <Button
                     onPress={() => {
                         BackgroundGeolocation.getState(state => {

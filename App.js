@@ -59,6 +59,7 @@ const MenuTab = createBottomTabNavigator(
 const RootStack = createStackNavigator(
     {
         Map: FamilyMapScreen,
+        // Map: SettingsScreen,
         Menu: MenuTab,
     },
 );
