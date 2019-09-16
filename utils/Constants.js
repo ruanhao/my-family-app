@@ -15,6 +15,7 @@ const USER_ID = "5d5d61bc36e04f0dfc55aed4"; // hao
 const LOG_URL = `${SERVER}/remote/log`;
 const LOCATION_UPDATE_URL = `${SERVER}/location`;
 const FETCH_FRIENDS_URL = `${SERVER}/users/${USER_ID}/friends`;
+const FETCH_FOOTPRINT_URL = `${SERVER}/footprint`;
 
 
 // const DEVICE_NAME = DeviceInfo.getDeviceName();
@@ -25,4 +26,5 @@ export {
     LOG_URL,
     USER_ID,
     LOCATION_UPDATE_URL,
+    FETCH_FOOTPRINT_URL,
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Button, Text, ScrollView } from 'react-native';
 import BackgroundGeolocation from "react-native-background-geolocation";
-import { info } from '../utils/Utils';
+import { info, latestFootprints } from '../utils/Utils';
 // import { NavigationEvents } from 'react-navigation';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 
@@ -9,6 +9,7 @@ const msg = {
     debugTitle: '选择调试信息',
     backgroundLocationInfo: '后台位置更新信息',
     backgroundLocationLog: '后台位置更新日志',
+    latestFootprints: '我的足迹',
 };
 
 export default class InfoScreen extends Component {
@@ -28,7 +29,7 @@ export default class InfoScreen extends Component {
                     ref={ref => { this._menu = ref }}
                     button={<Button onPress={() => { this._menu.show() }} title={msg.debugTitle} />}
                 >
-                    <MenuItem onPress={(e) => {
+                    <MenuItem onPress={() => {
                         this._menu.hide();
                         BackgroundGeolocation.getState(state => {
                             this.setState({
@@ -39,7 +40,7 @@ export default class InfoScreen extends Component {
                         {msg.backgroundLocationInfo}
                     </MenuItem>
 
-                    <MenuItem onPress={(e) => {
+                    <MenuItem onPress={() => {
                         this._menu.hide();
                         BackgroundGeolocation.getLog(log => {
                             this.setState({
@@ -52,6 +53,18 @@ export default class InfoScreen extends Component {
 
                     <MenuDivider />
 
+                    <MenuItem onPress={async () => {
+                        this._menu.hide();
+                        let content = (await latestFootprints()).content;
+                        let footprintsStr = content.map(({ date, speed, heading, altitude, latitude, longitude }) => {
+                            // return `${date} - (${latitude}, ${longitude}), speed: ${speed}, altitude: ${altitude}, heading: ${heading}`;
+                            return `${date} - ${speed}`;
+                        }).join('\n');
+                        this.setState({ info: footprintsStr });
+                    }}>
+                        {msg.latestFootprints}
+                    </MenuItem>
+
                 </Menu>
 
                 <ScrollView
@@ -60,7 +73,7 @@ export default class InfoScreen extends Component {
                         this._scrollView.scrollToEnd({ animated: true });
                     }}
                 >
-                    <Text>{this.state.info}</Text>
+                    <Text selectable>{this.state.info}</Text>
                 </ScrollView>
             </View>
         );

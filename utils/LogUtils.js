@@ -1,4 +1,5 @@
 // import DeviceInfo from 'react-native-device-info';
+import BackgroundGeolocation from "react-native-background-geolocation";
 import { LOG_URL, USER_ID } from './Constants';
 
 export function info(content) {
@@ -31,6 +32,11 @@ function doLog(level, content) {
         }),
 
     }).catch((error) => {
+        if (level === 'ERROR') {
+            BackgroundGeolocation.logger.error(content);
+        } else {
+            BackgroundGeolocation.logger.info(content);
+        }
         console.info(content);
     });
 }

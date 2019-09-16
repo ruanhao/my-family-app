@@ -2,6 +2,7 @@ import Geolocation from '@react-native-community/geolocation';
 import BackgroundFetch from "react-native-background-fetch";
 import {
     LOCATION_UPDATE_URL,
+    FETCH_FOOTPRINT_URL,
     USER_ID
 } from "./Constants";
 import { info, error } from "./LogUtils";
@@ -38,6 +39,23 @@ export function updateBackgroundFetchLocation() {
     }
     lastUpdate = current;
     updateLocation(BACKGROUND_FETCH_UPDATE_TYPE);
+}
+
+export async function latestFootprints() {
+    try {
+        let response = await fetch(FETCH_FOOTPRINT_URL + '?size=50',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'USER-ID': USER_ID,
+                },
+            });
+        return await response.json();
+    } catch (e) {
+        error("Error when fetching latest footprints: " + e.message);
+    }
+
 }
 
 export function updateBackgroundLocation(location) {
