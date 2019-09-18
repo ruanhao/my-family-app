@@ -4,12 +4,14 @@ import BackgroundGeolocation from "react-native-background-geolocation";
 import { info, latestFootprints } from '../utils/Utils';
 // import { NavigationEvents } from 'react-navigation';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
+import VersionNumber from 'react-native-version-number';
 
 const msg = {
     debugTitle: '选择调试信息',
     backgroundLocationInfo: '后台位置更新信息',
     backgroundLocationLog: '后台位置更新日志',
     latestFootprints: '我的足迹',
+    versionInfo: '版本信息',
 };
 
 export default class InfoScreen extends Component {
@@ -29,6 +31,15 @@ export default class InfoScreen extends Component {
                     ref={ref => { this._menu = ref }}
                     button={<Button onPress={() => { this._menu.show() }} title={msg.debugTitle} />}
                 >
+                    <MenuItem onPress={() => {
+                        this._menu.hide();
+                        this.setState({
+                            info: `App version: ${VersionNumber.appVersion}\nBuild version: ${VersionNumber.buildVersion}`
+                        });
+                    }}>
+                        {msg.versionInfo}
+                    </MenuItem>
+
                     <MenuItem onPress={() => {
                         this._menu.hide();
                         BackgroundGeolocation.getState(state => {
