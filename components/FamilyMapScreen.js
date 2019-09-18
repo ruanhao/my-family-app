@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, AppState, View, TouchableOpacity, Text } from 'react-native';
+import { StatusBar, ActivityIndicator, StyleSheet, Image, AppState, View, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { updateForgroundLocation } from '../utils/Utils';
 import { info } from "../utils/LogUtils";
@@ -16,6 +16,9 @@ const radarImage = require("../assets/radar.png");
 const friendsImage = require("../assets/friends.png");
 const refreshImage = require("../assets/refresh.png");
 
+const msg = {
+    mapLoading: '足记加载中...',
+};
 
 export default class FamilyMapScreen extends Component {
 
@@ -129,7 +132,15 @@ export default class FamilyMapScreen extends Component {
 
     render() {
         if (this.state.location === null) {
-            return <MapView style={styles.map} />;
+            // return <MapView style={styles.map} />;
+            return (
+                <View style={{
+                    flex: 1, justifyContent: 'center', alignItems: 'center'
+                }}>
+                    <ActivityIndicator />
+                    <Text>{msg.mapLoading}</Text>
+                </View>
+            );
         }
         return (
             <View style={styles.container}>
