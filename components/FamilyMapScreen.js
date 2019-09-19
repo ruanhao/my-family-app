@@ -6,6 +6,7 @@ import { info } from "../utils/LogUtils";
 import { NavigationEvents } from 'react-navigation';
 import Toast from 'react-native-root-toast';
 import { getDistance } from 'geolib';
+import SplashScreen from 'react-native-splash-screen'
 
 const DISTANCE_TOLERANCE = 15;
 
@@ -75,6 +76,7 @@ export default class FamilyMapScreen extends Component {
             }
         }, 5000);
         AppState.addEventListener('change', this._handleAppStateChange);
+        setTimeout(() => SplashScreen.hide(), 3000);
     }
 
     _handleAppStateChange = (nextState) => {
@@ -142,6 +144,7 @@ export default class FamilyMapScreen extends Component {
                 </View>
             );
         }
+
         return (
             <View style={styles.container}>
                 <NavigationEvents
