@@ -6,7 +6,7 @@ import { info } from "../utils/LogUtils";
 import { NavigationEvents } from 'react-navigation';
 import Toast from 'react-native-root-toast';
 import { getDistance } from 'geolib';
-import SplashScreen from 'react-native-splash-screen'
+// import SplashScreen from 'react-native-splash-screen'
 
 const DISTANCE_TOLERANCE = 15;
 
@@ -18,7 +18,7 @@ const friendsImage = require("../assets/friends.png");
 const refreshImage = require("../assets/refresh.png");
 
 const msg = {
-    mapLoading: '足记加载中...',
+    mapLoading: '加载中...',
 };
 
 export default class FamilyMapScreen extends Component {
@@ -76,7 +76,7 @@ export default class FamilyMapScreen extends Component {
             }
         }, 5000);
         AppState.addEventListener('change', this._handleAppStateChange);
-        setTimeout(() => SplashScreen.hide(), 3000);
+        // setTimeout(() => SplashScreen.hide(), 3000);
     }
 
     _handleAppStateChange = (nextState) => {

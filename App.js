@@ -18,11 +18,13 @@ import FriendsScreen from "./components/FriendsScreen";
 import InfoScreen from "./components/InfoScreen";
 import MeScreen from "./components/MeScreen";
 import SettingsScreen from "./components/SettingsScreen";
+import AuthLoadingScreen from './components/AuthLoadingScreen';
+import SignInScreen from './components/SignInScreen';
 import {
     configBackgroundFetch,
     configBackgroundGeoLocation
 } from "./utils/Utils";
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import SafeAreaView from 'react-native-safe-area-view';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -47,6 +49,10 @@ configBackgroundGeoLocation();
  * };
  * export default App;*/
 
+const AuthStack = createStackNavigator({
+    SignIn: SignInScreen,
+});
+
 const MenuTab = createBottomTabNavigator(
     {
         // Friends: FriendsScreen,
@@ -56,7 +62,7 @@ const MenuTab = createBottomTabNavigator(
     }
 );
 
-const RootStack = createStackNavigator(
+const AppStack = createStackNavigator(
     {
         Map: FamilyMapScreen,
         // Map: InfoScreen,
@@ -64,4 +70,17 @@ const RootStack = createStackNavigator(
     },
 );
 
-export default createAppContainer(RootStack);
+
+
+export default createAppContainer(
+    createSwitchNavigator(
+        {
+            AuthLoading: AuthLoadingScreen,
+            App: AppStack,
+            Auth: AuthStack,
+        },
+        {
+            initialRouteName: 'AuthLoading',
+        }
+    )
+);
