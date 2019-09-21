@@ -1,6 +1,7 @@
 // import DeviceInfo from 'react-native-device-info';
 import BackgroundGeolocation from "react-native-background-geolocation";
-import { LOG_URL, USER_ID } from './Constants';
+import { LOG_URL } from './Constants';
+import { getUserIdAsync } from './Utils';
 
 export function info(content) {
     doLog("INFO", content);
@@ -19,12 +20,22 @@ export function warn(content) {
     doLog("WARN", content);
 }
 
-function doLog(level, content) {
+async function doLog(level, content) {
+    const userId = await getUserIdAsync();
+    if (!userId) {
+        if (level === 'ERROR') {
+            BackgroundGeolocation.logger.error(content);
+        } else {
+            BackgroundGeolocation.logger.info(content);
+        }
+        console.info(content);
+        return;
+    }
     fetch(LOG_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "USER-ID": USER_ID,
+            "USER-ID": userId,
         },
         body: JSON.stringify({
             level: level,

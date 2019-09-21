@@ -3,11 +3,21 @@ import BackgroundFetch from "react-native-background-fetch";
 import {
     LOCATION_UPDATE_URL,
     FETCH_FOOTPRINT_URL,
-    USER_ID
 } from "./Constants";
 import { info, error } from "./LogUtils";
 import BackgroundGeolocation from "react-native-background-geolocation";
 import { AppState } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+
+let lastUserId = '';
+
+export async function getUserIdAsync() {
+    const userId = await AsyncStorage.getItem('userId');
+    if (userId) {
+        lastUserId = userId;
+    }
+    return userId;
+}
 
 const ACTIVITY_UPDATE_TYPE = '/activity';
 const FOREGROUND_UPDATE_TYPE = '/foreground';
@@ -48,7 +58,7 @@ export async function latestFootprints() {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'USER-ID': USER_ID,
+                    'USER-ID': await getUserIdAsync(),
                 },
             });
         return await response.json();
@@ -58,20 +68,24 @@ export async function latestFootprints() {
 
 }
 
-export function updateBackgroundLocation(location) {
+export async function updateBackgroundLocation(location) {
     let current = new Date().getTime();
     if (current - lastUpdate < UPDATE_INTERVAL) {
         return;
     }
     lastUpdate = current;
     if (location) {
+        const userId = await getUserIdAsync();
+        if (!userId) {
+            return;
+        }
         const { coords: { latitude, longitude, speed, altitude, heading } } = location;
         fetch(LOCATION_UPDATE_URL + BACKGROUND_UPDATE_TYPE,
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'USER-ID': USER_ID,
+                    'USER-ID': userId,
                 },
                 body: JSON.stringify({
                     latitude, longitude, speed, altitude, heading
@@ -88,7 +102,15 @@ export function updateBackgroundLocation(location) {
     }
 }
 
-function updateLocation(type = FOREGROUND_UPDATE_TYPE, callback = (_) => { }) {
+async function updateLocation(type = FOREGROUND_UPDATE_TYPE, callback = (_) => { }) {
+    const userId = await getUserIdAsync();
+    if (!userId) {
+        if (!lastUserId) {
+            return;
+        } else {
+            userId = lastUserId;
+        }
+    }
     const url = LOCATION_UPDATE_URL + type;
     Geolocation.getCurrentPosition(
         async (position) => {
@@ -102,7 +124,7 @@ function updateLocation(type = FOREGROUND_UPDATE_TYPE, callback = (_) => { }) {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "USER-ID": USER_ID
+                        "USER-ID": userId,
                     },
                     body: JSON.stringify(payload),
                 });
@@ -189,7 +211,7 @@ export function enableBackgroundGeoLocation(successFn = () => { }) {
 }
 
 export function disableBackgroundGeoLocation(successFn = () => { }) {
-    // BackgroundGeolocation.removeListeners();
+    BackgroundGeolocation.removeListeners();
     BackgroundGeolocation.stop(
         () => { // success
             info("BackgroundGeolocation DISABLED successfully");

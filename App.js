@@ -57,9 +57,9 @@ const AuthStack = createStackNavigator({
 const MenuTab = createBottomTabNavigator(
     {
         // Friends: FriendsScreen,
-        // Me: MeScreen,
         Info: InfoScreen,
         Settings: SettingsScreen,
+        Me: MeScreen,
     },
     {
         defaultNavigationOptions: ({ navigation }) => ({
@@ -104,7 +104,6 @@ export default createAppContainer(
 const _getTabBarIcon = (navigation, focused, tintColor) => {
 
     const { routeName } = navigation.state;
-    console.log(routeName);
     let IconComponent = Ionicons;
     let iconName = 'ios-options';
 
@@ -112,6 +111,8 @@ const _getTabBarIcon = (navigation, focused, tintColor) => {
         iconName = "ios-information-circle-outline";
     } else if (routeName === 'Settings') {
         iconName = "ios-settings";
+    } else if (routeName === 'Me') {
+        iconName = "ios-contact";
     }
 
     return <IconComponent name={iconName} size={25} color={tintColor} />;
