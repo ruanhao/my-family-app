@@ -10,8 +10,8 @@ import {
     TextInput,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { REGISTER_USER_URL } from '../utils/Constants';
-import { error } from '../utils/LogUtils';
+import { USER_REGISTER_URL, USER_LOGIN_URL } from '../utils/Constants';
+import { info, error } from '../utils/LogUtils';
 
 const msg = {
     heading: "👣",
@@ -115,7 +115,7 @@ export default class SignInScreen extends React.Component {
             return;
         }
         try {
-            let response = await fetch(REGISTER_USER_URL, {
+            let response = await fetch(USER_REGISTER_URL, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -158,8 +158,30 @@ export default class SignInScreen extends React.Component {
             return;
         }
 
-        // await AsyncStorage.setItem('userId', 'abc');
-        this.props.navigation.navigate('App');
+        try {
+            let response = await fetch(USER_LOGIN_URL, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: this.state.username,
+                    password: this.state.password,
+                }),
+            });
+            let responseJson = await response.json();
+            const userId = responseJson.id;
+            if (typeof userId === 'undefined') {
+                Alert.alert("用户名密码错误");
+            } else { // success
+                await AsyncStorage.setItem('userId', userId);
+                info("Logged in!");
+                this.props.navigation.navigate('App');
+            }
+        } catch (e) {
+            error(e.message);
+        }
     };
 }
 
