@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
+import { info, error } from '../utils/LogUtils';
 import {
+    Alert,
     StyleSheet,
+    TouchableOpacity,
     View,
     Text,
     Switch,
@@ -37,25 +41,64 @@ export default class SettingsScreen extends Component {
     render() {
         return (
             <View style={{ flex: 1, justifyContent: 'flex-start', paddingVertical: 30, backgroundColor: 'whitesmoke' }}>
-                <Text style={{ color: 'grey', marginLeft: 5 }}>{settingTitles.background}</Text>
-                <View style={{ ...styles.configSection }}>
-                    <Text style={{ ...styles.configSectionItemKey }}>
-                        📤 {' '} {settingTitles.geoLocationUpdate}
-                    </Text>
-                    <Switch style={{ alignSelf: 'flex-end' }}
-                        disabled={!('enableBackgroundGeoLocation' in this.state)}
-                        value={this.state.enableBackgroundGeoLocation}
-                        onValueChange={enabled => {
-                            if (enabled) {
-                                enableBackgroundGeoLocation(this._checkBackgroundGeoLocation);
-                            } else {
-                                disableBackgroundGeoLocation(this._checkBackgroundGeoLocation);
-                            }
-                        }}
-                    />
+                <View style={{ flex: 80 }}>
+                    <Text style={{ color: 'grey', marginLeft: 5 }}>{settingTitles.background}</Text>
+                    <View style={{ ...styles.configSection }}>
+                        <Text style={{ ...styles.configSectionItemKey }}>
+                            📤 {' '} {settingTitles.geoLocationUpdate}
+                        </Text>
+                        <Switch style={{ alignSelf: 'flex-end' }}
+                            disabled={!('enableBackgroundGeoLocation' in this.state)}
+                            value={this.state.enableBackgroundGeoLocation}
+                            onValueChange={enabled => {
+                                if (enabled) {
+                                    enableBackgroundGeoLocation(this._checkBackgroundGeoLocation);
+                                } else {
+                                    disableBackgroundGeoLocation(this._checkBackgroundGeoLocation);
+                                }
+                            }}
+                        />
+                    </View>
+                </View>
+
+                <View style={{ flex: 20, justifyContent: 'flex-end' }}>
+                    <TouchableOpacity onPress={this._signOutAsync}>
+                        <View style={{ ...styles.configSection, justifyContent: 'center', backgroundColor: 'lightpink' }}>
+                            <Text style={{ ...styles.configSectionItemKey }}>
+                                退出登陆
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
+    }
+
+    _signOutAsync = async () => {
+
+        Alert.alert(
+            '确定退出登陆',
+            '',
+            [
+                {
+                    text: '确定',
+                    onPress: () => {
+                        disableBackgroundGeoLocation(async () => {
+                            info("Signing out!");
+                            await AsyncStorage.clear();
+                            this.props.navigation.navigate('AuthLoading');
+                        });
+                    }
+                },
+                {
+                    text: '取消',
+                    onPress: () => { },
+                    style: 'cancel',
+                },
+            ],
+            { cancelable: false },
+        );
+
     }
 }
 
