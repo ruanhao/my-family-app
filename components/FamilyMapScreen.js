@@ -146,7 +146,7 @@ export default class FamilyMapScreen extends Component {
                     flex: 1, justifyContent: 'center', alignItems: 'center'
                 }}>
                     <ActivityIndicator />
-                    <Text>{msg.mapLoading}</Text>
+                    <Text style={{ top: 5 }}>{msg.mapLoading}</Text>
                 </View>
             );
         }

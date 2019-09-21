@@ -7,6 +7,7 @@ import {
     Button,
     StyleSheet,
     TouchableOpacity,
+    ActivityIndicator,
     TextInput,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -23,6 +24,7 @@ export default class SignInScreen extends React.Component {
     };
 
     state = {
+        loading: false,
         username: '',
         nickname: '',
         password: '',
@@ -93,6 +95,12 @@ export default class SignInScreen extends React.Component {
                     onPress={() => this.setState({ checked: !this.state.checked })}
                 />
 
+                {this.state.loading &&
+                    <View style={styles.loading}>
+                        <ActivityIndicator size='large' />
+                    </View>
+                }
+
             </View>
         );
     }
@@ -157,7 +165,7 @@ export default class SignInScreen extends React.Component {
             Alert.alert("请输入密码");
             return;
         }
-
+        this.setState({ loading: true });
         try {
             let response = await fetch(USER_LOGIN_URL, {
                 method: 'POST',
@@ -171,6 +179,7 @@ export default class SignInScreen extends React.Component {
                 }),
             });
             let responseJson = await response.json();
+            this.setState({ loading: false });
             const userId = responseJson.id;
             if (typeof userId === 'undefined') {
                 Alert.alert("用户名密码错误");
@@ -180,6 +189,7 @@ export default class SignInScreen extends React.Component {
                 this.props.navigation.navigate('App');
             }
         } catch (e) {
+            this.setState({ loading: false });
             error(e.message);
         }
     };
@@ -221,5 +231,16 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingHorizontal: 8,
         height: 50
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'lightgrey',
+        opacity: 0.6,
     }
 })

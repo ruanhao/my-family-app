@@ -103,7 +103,7 @@ export async function updateBackgroundLocation(location) {
 }
 
 async function updateLocation(type = FOREGROUND_UPDATE_TYPE, callback = (_) => { }) {
-    const userId = await getUserIdAsync();
+    let userId = await getUserIdAsync();
     if (!userId) {
         if (!lastUserId) {
             return;
