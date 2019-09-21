@@ -7,7 +7,7 @@ import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import VersionNumber from 'react-native-version-number';
 
 const msg = {
-    debugTitle: '选择调试信息',
+    debugTitle: '选择调试信息🔧',
     backgroundLocationInfo: '后台位置更新信息',
     backgroundLocationLog: '后台位置更新日志',
     latestFootprints: '我的足迹',

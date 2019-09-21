@@ -28,6 +28,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import SafeAreaView from 'react-native-safe-area-view';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // import BackgroundTimer from 'react-native-background-timer';
 // BackgroundTimer.runBackgroundTimer(() => {
@@ -59,6 +60,16 @@ const MenuTab = createBottomTabNavigator(
         // Me: MeScreen,
         Info: InfoScreen,
         Settings: SettingsScreen,
+    },
+    {
+        defaultNavigationOptions: ({ navigation }) => ({
+            tabBarIcon: ({ focused, horizontal, tintColor }) => _getTabBarIcon(navigation, focused, tintColor),
+        }),
+        tabBarOptions: {
+            activeTintColor: 'tomato',
+            inactiveTintColor: 'gray',
+            // style: { height: 50 }
+        }
     }
 );
 
@@ -84,3 +95,24 @@ export default createAppContainer(
         }
     )
 );
+
+
+/*
+   if you get error like 'Unrecognized font family ionicons'
+   please run react-native link react-native-vector-icons manually
+ */
+const _getTabBarIcon = (navigation, focused, tintColor) => {
+
+    const { routeName } = navigation.state;
+    console.log(routeName);
+    let IconComponent = Ionicons;
+    let iconName = 'ios-options';
+
+    if (routeName === 'Info') {
+        iconName = "ios-information-circle-outline";
+    } else if (routeName === 'Settings') {
+        iconName = "ios-settings";
+    }
+
+    return <IconComponent name={iconName} size={25} color={tintColor} />;
+};

@@ -28,7 +28,7 @@ export default class AuthLoadingScreen extends React.Component {
             <View style={styles.container}>
                 <ActivityIndicator />
                 <StatusBar barStyle="default" />
-                <Text>初始化中</Text>
+                <Text style={{ top: 10 }}>初始化中</Text>
             </View>
         );
     }
