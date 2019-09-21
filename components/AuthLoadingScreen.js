@@ -13,7 +13,7 @@ export default class AuthLoadingScreen extends React.Component {
         setTimeout(() => {
             SplashScreen.hide();
             this._bootstrapAsync();
-        }, 3000);
+        }, 100);
     }
 
 

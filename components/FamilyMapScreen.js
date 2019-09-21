@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { StatusBar, ActivityIndicator, StyleSheet, Image, AppState, View, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
-import { updateForgroundLocation } from '../utils/Utils';
+import {
+    updateForgroundLocation,
+    configBackgroundFetch,
+    configBackgroundGeoLocation
+} from '../utils/Utils';
 import { info } from "../utils/LogUtils";
 import { NavigationEvents } from 'react-navigation';
 import Toast from 'react-native-root-toast';
@@ -36,6 +40,8 @@ export default class FamilyMapScreen extends Component {
 
     constructor() {
         super();
+        configBackgroundFetch();
+        configBackgroundGeoLocation();
         this.updateSelfLocationAndThenRender();
     }
 

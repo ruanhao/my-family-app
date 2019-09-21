@@ -20,10 +20,10 @@ import MeScreen from "./components/MeScreen";
 import SettingsScreen from "./components/SettingsScreen";
 import AuthLoadingScreen from './components/AuthLoadingScreen';
 import SignInScreen from './components/SignInScreen';
-import {
-    configBackgroundFetch,
-    configBackgroundGeoLocation
-} from "./utils/Utils";
+/* import {
+ *     configBackgroundFetch,
+ *     configBackgroundGeoLocation
+ * } from "./utils/Utils";*/
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import SafeAreaView from 'react-native-safe-area-view';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
@@ -40,8 +40,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 info("Starting App... ");
 
-configBackgroundFetch();
-configBackgroundGeoLocation();
+/* configBackgroundFetch();
+ * configBackgroundGeoLocation();*/
 
 /* const App = () => {
  *     return (
