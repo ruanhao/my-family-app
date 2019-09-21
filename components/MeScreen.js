@@ -14,6 +14,10 @@ import BackgroundFetch from "react-native-background-fetch";
 
 export default class MeScreen extends Component {
 
+    static navigationOptions = {
+        tabBarLabel: '我'
+    };
+
     constructor() {
         super();
     }

@@ -16,6 +16,10 @@ const msg = {
 
 export default class InfoScreen extends Component {
 
+    static navigationOptions = {
+        tabBarLabel: '信息'
+    };
+
     state = {
         info: ""
     }

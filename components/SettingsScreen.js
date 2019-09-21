@@ -15,6 +15,10 @@ const settingTitles = {
 
 export default class SettingsScreen extends Component {
 
+    static navigationOptions = {
+        tabBarLabel: '设置'
+    };
+
     state = {
         // enableBackgroundGeoLocation: false,
     }
