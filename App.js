@@ -59,7 +59,7 @@ const MenuTab = createBottomTabNavigator(
         // Friends: FriendsScreen,
         Info: InfoScreen,
         Settings: SettingsScreen,
-        // Me: MeScreen,
+        Me: MeScreen,
     },
     {
         defaultNavigationOptions: ({ navigation }) => ({
