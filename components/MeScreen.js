@@ -18,8 +18,10 @@ import QRCode from 'react-native-qrcode-svg';
 
 export default class MeScreen extends Component {
 
-    static navigationOptions = {
-        tabBarLabel: '我'
+    static navigationOptions = ({ navigation }) => {
+        return {
+            tabBarLabel: '我',
+        };
     };
 
     constructor() {

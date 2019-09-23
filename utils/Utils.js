@@ -8,6 +8,8 @@ import { info, error } from "./LogUtils";
 import BackgroundGeolocation from "react-native-background-geolocation";
 import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Alert } from 'react-native';
+
 
 let lastUserId = '';
 
@@ -316,4 +318,29 @@ export function configBackgroundGeoLocation(successFn = () => { }) {
             });
         }
     });
+}
+
+export function logout(navigation) {
+    Alert.alert(
+        '确定退出登陆',
+        '',
+        [
+            {
+                text: '确定',
+                onPress: () => {
+                    disableBackgroundGeoLocation(async () => {
+                        info("Signing out!");
+                        await AsyncStorage.clear();
+                        navigation.navigate('Auth');
+                    });
+                }
+            },
+            {
+                text: '取消',
+                onPress: () => { },
+                style: 'cancel',
+            },
+        ],
+        { cancelable: false },
+    );
 }

@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import {
+    Button,
     Text,
     YellowBox,
     StyleSheet,
@@ -29,6 +30,7 @@ import SafeAreaView from 'react-native-safe-area-view';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { logout } from './utils/Utils';
 
 // import BackgroundTimer from 'react-native-background-timer';
 // BackgroundTimer.runBackgroundTimer(() => {
@@ -75,9 +77,25 @@ const MenuTab = createBottomTabNavigator(
 
 const AppStack = createStackNavigator(
     {
-        Map: FamilyMapScreen,
+        Map: {
+            screen: FamilyMapScreen,
+            navigationOptions: () => ({
+                headerBackTitle: "回到地图"
+            }),
+        },
         // Map: InfoScreen,
-        Menu: MenuTab,
+        Menu: {
+            screen: MenuTab,
+            navigationOptions: ({ navigation }) => ({
+                headerRight: (
+                    <Button
+                        onPress={() => logout(navigation)}
+                        title="退出登陆"
+                        color="red"
+                    />
+                )
+            }),
+        },
     },
 );
 

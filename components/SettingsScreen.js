@@ -41,26 +41,25 @@ export default class SettingsScreen extends Component {
     render() {
         return (
             <View style={{ flex: 1, justifyContent: 'flex-start', paddingVertical: 30, backgroundColor: 'whitesmoke' }}>
-                <View style={{ flex: 80 }}>
-                    <Text style={{ color: 'grey', marginLeft: 5 }}>{settingTitles.background}</Text>
-                    <View style={{ ...styles.configSection }}>
-                        <Text style={{ ...styles.configSectionItemKey }}>
-                            📤 {' '} {settingTitles.geoLocationUpdate}
-                        </Text>
-                        <Switch style={{ alignSelf: 'flex-end' }}
-                            disabled={!('enableBackgroundGeoLocation' in this.state)}
-                            value={this.state.enableBackgroundGeoLocation}
-                            onValueChange={enabled => {
-                                if (enabled) {
-                                    enableBackgroundGeoLocation(this._checkBackgroundGeoLocation);
-                                } else {
-                                    disableBackgroundGeoLocation(this._checkBackgroundGeoLocation);
-                                }
-                            }}
-                        />
-                    </View>
+                <Text style={{ color: 'grey', marginLeft: 5 }}>{settingTitles.background}</Text>
+                <View style={{ ...styles.configSection }}>
+                    <Text style={{ ...styles.configSectionItemKey }}>
+                        📤 {' '} {settingTitles.geoLocationUpdate}
+                    </Text>
+                    <Switch style={{ alignSelf: 'flex-end' }}
+                        disabled={!('enableBackgroundGeoLocation' in this.state)}
+                        value={this.state.enableBackgroundGeoLocation}
+                        onValueChange={enabled => {
+                            if (enabled) {
+                                enableBackgroundGeoLocation(this._checkBackgroundGeoLocation);
+                            } else {
+                                disableBackgroundGeoLocation(this._checkBackgroundGeoLocation);
+                            }
+                        }}
+                    />
                 </View>
 
+                {/*
                 <View style={{ flex: 20, justifyContent: 'flex-end' }}>
                     <TouchableOpacity onPress={this._signOutAsync}>
                         <View style={{ ...styles.configSection, justifyContent: 'center', backgroundColor: 'lightpink' }}>
@@ -70,6 +69,7 @@ export default class SettingsScreen extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>
+                */}
             </View>
         );
     }
