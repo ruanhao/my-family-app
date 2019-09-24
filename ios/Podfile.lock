@@ -59,6 +59,14 @@ PODS:
     - React-cxxreact (= 0.60.5)
     - React-jsi (= 0.60.5)
   - React-jsinspector (0.60.5)
+  - react-native-camera (3.4.0):
+    - React
+    - react-native-camera/RCT (= 3.4.0)
+    - react-native-camera/RN (= 3.4.0)
+  - react-native-camera/RCT (3.4.0):
+    - React
+  - react-native-camera/RN (3.4.0):
+    - React
   - react-native-geolocation (1.4.2):
     - React
   - react-native-maps (0.25.0):
@@ -90,6 +98,8 @@ PODS:
     - React-Core (= 0.60.5)
   - React-RCTWebSocket (0.60.5):
     - React-Core (= 0.60.5)
+  - ReactNativePermissions (1.2.1):
+    - React
   - RNBackgroundFetch (2.7.0):
     - React
   - RNBackgroundGeolocation (3.2.0):
@@ -120,6 +130,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -134,6 +145,7 @@ DEPENDENCIES:
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-RCTWebSocket (from `../node_modules/react-native/Libraries/WebSocket`)
+  - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
@@ -170,6 +182,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-camera:
+    :path: "../node_modules/react-native-camera"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
   react-native-maps:
@@ -198,6 +212,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   React-RCTWebSocket:
     :path: "../node_modules/react-native/Libraries/WebSocket"
+  ReactNativePermissions:
+    :path: "../node_modules/react-native-permissions"
   RNBackgroundFetch:
     :path: "../node_modules/react-native-background-fetch"
   RNBackgroundGeolocation:
@@ -230,6 +246,7 @@ SPEC CHECKSUMS:
   React-jsi: 4d8c9efb6312a9725b18d6fc818ffc103f60fec2
   React-jsiexecutor: 90ad2f9db09513fc763bc757fdc3c4ff8bde2a30
   React-jsinspector: e08662d1bf5b129a3d556eb9ea343a3f40353ae4
+  react-native-camera: 203091b4bf99d48b788a0682ad573e8718724893
   react-native-geolocation: 79c743ad7a2e86617811ef23f49308824e92520c
   react-native-maps: 190c02ca533fddac5bb49cf17bdece3644612107
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
@@ -244,6 +261,7 @@ SPEC CHECKSUMS:
   React-RCTText: b074d89033583d4f2eb5faf7ea2db3a13c7553a2
   React-RCTVibration: 2105b2e0e2b66a6408fc69a46c8a7fb5b2fdade0
   React-RCTWebSocket: cd932a16b7214898b6b7f788c8bddb3637246ac4
+  ReactNativePermissions: e7db6c38a2f3fb8f26dbfdcaeb5c5e9364657a6d
   RNBackgroundFetch: ca9c8740e944913474262b63022d95a2be5e003a
   RNBackgroundGeolocation: d3df8c4a8352a8ef4bcb0adc5b4eb9153b2a046c
   RNCAsyncStorage: 621bad7a889b5bf1583a52547f2dcd3a4d1ff15e

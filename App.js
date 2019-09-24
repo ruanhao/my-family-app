@@ -15,12 +15,13 @@ YellowBox.ignoreWarnings(
 import { info } from "./utils/LogUtils";
 import Geolocation from '@react-native-community/geolocation';
 import FamilyMapScreen from "./components/FamilyMapScreen.js";
-import FriendsScreen from "./components/FriendsScreen";
+import FriendsMainScreen from "./components/FriendsMainScreen";
 import InfoScreen from "./components/InfoScreen";
 import MeScreen from "./components/MeScreen";
 import SettingsScreen from "./components/SettingsScreen";
 import AuthLoadingScreen from './components/AuthLoadingScreen';
 import SignInScreen from './components/SignInScreen';
+import QRScannerScreen from './components/QRScannerScreen';
 /* import {
  *     configBackgroundFetch,
  *     configBackgroundGeoLocation
@@ -58,10 +59,24 @@ const AuthStack = createStackNavigator({
 
 const MenuTab = createBottomTabNavigator(
     {
-        // Friends: FriendsScreen,
         Info: InfoScreen,
         Settings: SettingsScreen,
         Me: MeScreen,
+        Friends: createStackNavigator({ FriendsMainScreen, QRScannerScreen },
+            {
+                navigationOptions: { tabBarLabel: '朋友' },
+                defaultNavigationOptions: ({ navigation }) => ({
+                    headerLeft: (
+                        <Button
+                            title="< 👬"
+                            onPress={() => {
+                                navigation.goBack();
+                            }}
+                        />
+                    )
+                }),
+
+            })
     },
     {
         defaultNavigationOptions: ({ navigation }) => ({
@@ -80,21 +95,37 @@ const AppStack = createStackNavigator(
         Map: {
             screen: FamilyMapScreen,
             navigationOptions: () => ({
-                headerBackTitle: "回到地图"
+                headerBackTitle: "地图"
             }),
         },
         // Map: InfoScreen,
         Menu: {
             screen: MenuTab,
-            navigationOptions: ({ navigation }) => ({
-                headerRight: (
+            navigationOptions: ({ navigation }) => {
+                let options = {};
+                let focusedRouteName = navigation.state.routes[navigation.state.index].routeName;
+                if (focusedRouteName === 'Me') {
+                    options.headerRight = (
+                        <Button
+                            onPress={() => logout(navigation)}
+                            title="退出"
+                            color="red"
+                        />
+                    );
+                } else if (focusedRouteName === 'Friends') {
+                    options.header = null;
+                }
+
+                options.headerLeft = (
                     <Button
-                        onPress={() => logout(navigation)}
-                        title="退出登陆"
-                        color="red"
+                        title="< 🌏"
+                        onPress={() => {
+                            navigation.navigate('Map');
+                        }}
                     />
-                )
-            }),
+                );
+                return options;
+            },
         },
     },
 );
