@@ -31,6 +31,7 @@ import SafeAreaView from 'react-native-safe-area-view';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { logout } from './utils/Utils';
 
 // import BackgroundTimer from 'react-native-background-timer';
@@ -162,6 +163,9 @@ const _getTabBarIcon = (navigation, focused, tintColor) => {
         iconName = "ios-settings";
     } else if (routeName === 'Me') {
         iconName = "ios-contact";
+    } else if (routeName === 'Friends') {
+        iconName = 'user-friends';
+        IconComponent = FontAwesome5;
     }
 
     return <IconComponent name={iconName} size={25} color={tintColor} />;

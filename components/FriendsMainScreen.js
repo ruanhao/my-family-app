@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import {
-    Picker,
     StyleSheet,
     Button,
     Image,
     View,
     TouchableOpacity,
     Text,
+    ScrollView,
     HeaderBackButton,
 } from 'react-native';
-
+import { NavigationEvents } from 'react-navigation';
+import { FETCH_USER_URL } from '../utils/Constants';
+import { getUserIdAsync } from '../utils/Utils';
+import { error } from '../utils/LogUtils';
 
 export default class FriendsMainScreen extends Component {
     static navigationOptions = ({ navigation, navigationOptions }) => ({
@@ -37,25 +40,39 @@ export default class FriendsMainScreen extends Component {
     });
 
     state = {
+        user: {}
     }
 
     constructor() {
         super();
     }
 
+    _onDidFocus = async () => {
+        try {
+            let userId = await getUserIdAsync();
+            let response = await fetch(`${FETCH_USER_URL}/${userId}`,
+                {
+                    method: 'GET',
+                }
+            );
+            let responseJson = await response.json();
+            this.setState({ user: responseJson });
+        } catch (e) {
+            error("Error when get user: " + e.message);
+        }
+    }
+
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Picker
-                    selectedValue={this.state.language}
-                    style={{ height: 50, width: 100 }}
-                    onValueChange={(itemValue, itemIndex) =>
-                        this.setState({ language: itemValue })
-                    }>
-                    <Picker.Item label="Java" value="java" />
-                    <Picker.Item label="JavaScript" value="js" />
-                    <Picker.Item label="Python" value="python" />
-                </Picker>
+                <NavigationEvents
+                    onDidFocus={payload => this._onDidFocus(payload)}
+                />
+                <ScrollView>
+                    <Text>
+                        {JSON.stringify(this.state.user, null, 2)}
+                    </Text>
+                </ScrollView>
             </View>
         );
     }

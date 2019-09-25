@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import {
-    ScrollView,
-    SafeAreaView,
     StyleSheet,
-    Image,
-    TouchableHighlight,
     View,
-    TouchableOpacity,
     Button,
     Clipboard,
     Text,
