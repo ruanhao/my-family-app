@@ -16,27 +16,28 @@ import { error } from '../utils/LogUtils';
 
 export default class FriendsMainScreen extends Component {
     static navigationOptions = ({ navigation, navigationOptions }) => ({
-        /* headerStyle: {
-         *     borderBottomWidth: 0,
-         * },*/
-        headerLeft: (
-            <Button
-                title="< 🌏"
-                onPress={() => {
-                    navigation.navigate('Map');
-                }}
-            />
-        ),
+        headerStyle: {
+            borderBottomWidth: 0,
+        },
+        /* headerLeft: (
+         *     <Button
+         *         title="< 🌏"
+         *         onPress={() => {
+         *             navigation.navigate('Map');
+         *         }}
+         *     />
+         * ),*/
+
         headerRight: (
             <Button
                 onPress={() => {
                     navigation.navigate('QRScannerScreen');
                 }}
-                title="[-]"
+                title="➕"
                 color="gray"
             />
         ),
-        // headerBackTitle: '朋友'
+        headerBackTitle: '👬'
     });
 
     state = {

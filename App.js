@@ -67,14 +67,15 @@ const MenuTab = createBottomTabNavigator(
             {
                 navigationOptions: { tabBarLabel: '朋友' },
                 defaultNavigationOptions: ({ navigation }) => ({
-                    headerLeft: (
-                        <Button
-                            title="< 👬"
-                            onPress={() => {
-                                navigation.goBack();
-                            }}
-                        />
-                    )
+                    headerBackTitle: null,
+                    /* headerLeft: (
+                     *     <Button
+                     *         title="< 👬"
+                     *         onPress={() => {
+                     *             navigation.goBack();
+                     *         }}
+                     *     />
+                     * )*/
                 }),
 
             })
@@ -96,7 +97,7 @@ const AppStack = createStackNavigator(
         Map: {
             screen: FamilyMapScreen,
             navigationOptions: () => ({
-                headerBackTitle: "地图"
+                headerBackTitle: "🌏"
             }),
         },
         // Map: InfoScreen,
@@ -117,14 +118,14 @@ const AppStack = createStackNavigator(
                     options.header = null;
                 }
 
-                options.headerLeft = (
-                    <Button
-                        title="< 🌏"
-                        onPress={() => {
-                            navigation.navigate('Map');
-                        }}
-                    />
-                );
+                /* options.headerLeft = (
+                 *     <Button
+                 *         title="< 🌏"
+                 *         onPress={() => {
+                 *             navigation.navigate('Map');
+                 *         }}
+                 *     />
+                 * );*/
                 return options;
             },
         },
