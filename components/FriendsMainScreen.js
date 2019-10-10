@@ -30,7 +30,7 @@ export default class FriendsMainScreen extends Component {
          *         }}
          *     />
          * ),*/
-
+        headerTitle: "朋友",
         headerRight: (
             <Button
                 onPress={() => {
@@ -81,6 +81,7 @@ export default class FriendsMainScreen extends Component {
                         borderWidth: 0,
                         flex: 1,
                         justifyContent: 'center',
+                        alignItems: 'center',
                         padding: 8,
                     }}
                 >
@@ -99,6 +100,9 @@ export default class FriendsMainScreen extends Component {
     _renderItem = ({ item }) => {
         return (
             <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('FriendScreen', {
+                    userId: item.id
+                })}
                 style={{
                     height: HEIGHT,
                     // backgroundColor: 'pink',
@@ -114,6 +118,7 @@ export default class FriendsMainScreen extends Component {
                 >
                     <View style={{
                         // backgroundColor: 'yellow'
+                        marginLeft: 10,
                     }}
                     >
                         <Avatar
@@ -134,6 +139,7 @@ export default class FriendsMainScreen extends Component {
                             justifyContent: 'center',
                             padding: 8,
                             marginLeft: 5,
+                            marginRight: 10,
                             height: HEIGHT,
                         }}
                     >
@@ -154,20 +160,6 @@ export default class FriendsMainScreen extends Component {
     }
 
     render() {
-        const data = [
-            { key: "1", label: 'Label 1', leftLabel: 'Left 1', rightLabel: 'Right 1' },
-            { key: "2", label: 'Label 2', leftLabel: 'Left 2', rightLabel: 'Right 2' },
-            { key: "3", label: 'Label 3', leftLabel: 'Left 3', rightLabel: 'Right 3' },
-            { key: "4", label: 'Label 4', leftLabel: 'Left 4', rightLabel: 'Right 4' },
-            { key: "5", label: 'Label 5', leftLabel: 'Left 5', rightLabel: 'Right 5' },
-            { key: "6", label: 'Label 5', leftLabel: 'Left 5', rightLabel: 'Right 5' },
-            { key: "7", label: 'Label 5', leftLabel: 'Left 5', rightLabel: 'Right 5' },
-            { key: "8", label: 'Label 5', leftLabel: 'Left 5', rightLabel: 'Right 5' },
-            { key: "9", label: 'Label 5', leftLabel: 'Left 5', rightLabel: 'Right 5' },
-            { key: "10", label: 'Label 5', leftLabel: 'Left 5', rightLabel: 'Right 5' },
-            { key: "11", label: 'Label 5', leftLabel: 'Left 5', rightLabel: 'Right 5' },
-            { key: "12", label: 'Label 5', leftLabel: 'Left 5', rightLabel: 'Right 5' },
-        ];
         return (
             <View style={styles.container}>
                 <NavigationEvents
@@ -203,6 +195,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         //alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        // backgroundColor: '#F5FCFF',
+        paddingTop: 20,
     },
 });

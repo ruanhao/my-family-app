@@ -22,6 +22,7 @@ import SettingsScreen from "./components/SettingsScreen";
 import AuthLoadingScreen from './components/AuthLoadingScreen';
 import SignInScreen from './components/SignInScreen';
 import QRScannerScreen from './components/QRScannerScreen';
+import FriendScreen from './components/FriendScreen';
 /* import {
  *     configBackgroundFetch,
  *     configBackgroundGeoLocation
@@ -63,7 +64,7 @@ const MenuTab = createBottomTabNavigator(
         Info: InfoScreen,
         Settings: SettingsScreen,
         Me: MeScreen,
-        Friends: createStackNavigator({ FriendsMainScreen, QRScannerScreen },
+        Friends: createStackNavigator({ FriendsMainScreen, QRScannerScreen, FriendScreen },
             {
                 navigationOptions: { tabBarLabel: '朋友' },
                 defaultNavigationOptions: ({ navigation }) => ({
