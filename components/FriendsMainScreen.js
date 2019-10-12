@@ -101,7 +101,7 @@ export default class FriendsMainScreen extends Component {
         return (
             <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('FriendScreen', {
-                    userId: item.id
+                    user: item
                 })}
                 style={{
                     height: HEIGHT,

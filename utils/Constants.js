@@ -23,6 +23,10 @@ export const FETCH_USER_URL = `${SERVER}/users`; // /users/<id>
 
 // const DEVICE_NAME = DeviceInfo.getDeviceName();
 
+export function getAvatarImageUri(imageId) {
+    return `${SERVER}/users/avatar/${imageId}`;
+}
+
 
 export {
     // FETCH_FRIENDS_URL,
