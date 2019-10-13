@@ -2,20 +2,27 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
+    TouchableOpacity,
     Button,
+    Image,
     Clipboard,
     Text,
 } from 'react-native';
-import { info } from '../utils/LogUtils';
+import { info, error } from '../utils/LogUtils';
 import Modal from "react-native-modal";
 import AsyncStorage from '@react-native-community/async-storage';
 import QRCode from 'react-native-qrcode-svg';
+import { Avatar } from 'react-native-elements';
+import { FETCH_USER_URL, UPLOAD_USER_AVATAR_URL, getAvatarImageUri } from '../utils/Constants';
+import PhotoUpload from 'react-native-photo-upload'
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+
+const DEFAULT_AVATAR_URI = 'https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/d/domestic-dog_thumb.jpg';
 
 export default class MeScreen extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            tabBarLabel: '我',
         };
     };
 
@@ -25,8 +32,33 @@ export default class MeScreen extends Component {
 
     state = {
         userId: null,
+        username: "",
+        nickname: "",
+        avatarImageId: "",
         visibleModalId: null,
     };
+
+    async componentDidMount() {
+        const userId = await AsyncStorage.getItem('userId');
+        this.setState({ username: userId }); // render userId at first when response is not return yet
+        try {
+            let response = await fetch(FETCH_USER_URL + "/" + userId, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            let responseJson = await response.json();
+            this.setState({
+                userId: responseJson.id,
+                username: responseJson.username,
+                nickname: responseJson.nickname,
+                avatarImageId: responseJson.avatarImageId,
+            });
+        } catch {
+            error("Error when fetch user info");
+        }
+    }
 
     showUserId = async () => {
         const userId = await AsyncStorage.getItem('userId');
@@ -38,18 +70,68 @@ export default class MeScreen extends Component {
         this.setState({ visibleModal: 'showQR', userId: userId });
     }
 
+    _uploadAvatar = async ({ uri, type, fileName }) => {
+        const userId = await AsyncStorage.getItem('userId');
+        const data = new FormData();
+        data.append('image', {
+            uri: uri,
+            type: type,
+            name: fileName,
+        });
+        fetch(UPLOAD_USER_AVATAR_URL, {
+            method: 'POST',
+            headers: {
+                'USER-ID': userId,
+            },
+            body: data,
+        }).then(res => {
+
+        }).catch(e => {
+            error("Error when uploading avatar: " + e.message);
+        });
+
+    }
+
     render() {
+        let imageSrc = {};
+        if (this.state.avatarImageId) {
+            imageSrc.uri = getAvatarImageUri(this.state.avatarImageId);
+        } else {
+            imageSrc.uri = DEFAULT_AVATAR_URI;
+        }
         return (
             <View style={styles.container}>
-                <Button
-                    onPress={this.showUserId}
-                    title="我的ID"
-                />
+                <View style={styles.title}>
+                    <View style={{ flex: 3 }}>
+                        <PhotoUpload
+                            onResponse={async (response) => this._uploadAvatar(response)}
+                        >
+                            <Image
+                                style={{
+                                    width: 100,
+                                    height: 100,
+                                    borderRadius: 75
+                                }}
+                                resizeMode='cover'
+                                source={imageSrc}
+                            />
+                        </PhotoUpload>
+                    </View>
+                    <View style={{ flex: 7, marginLeft: 10 }}>
+                        <Text style={styles.titleTextH1}>{this.state.nickname}</Text>
+                        <Text style={styles.titleTextH2}>足记号: {this.state.username}</Text>
+                    </View>
 
-                <Button
-                    onPress={this.showQR}
-                    title="我的二维码"
-                />
+                    <TouchableOpacity
+                        onPress={this.showQR}
+                    >
+                        <FontAwesome
+                            name="qrcode"
+                            size={30}
+                        />
+                    </TouchableOpacity>
+
+                </View>
 
                 <Modal
                     animationInTiming={500}
@@ -80,7 +162,7 @@ export default class MeScreen extends Component {
                             backgroundColor='white' />
                     </View>
                 </Modal>
-            </View>
+            </View >
         );
     }
 
@@ -91,10 +173,25 @@ export default class MeScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
+        justifyContent: 'flex-start',
+        backgroundColor: 'whitesmoke',
     },
+    title: {
+        backgroundColor: "white",
+        padding: 15,
+        flexDirection: 'row',
+        height: 120,
+    },
+    titleTextH1: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    titleTextH2: {
+        fontSize: 15,
+        color: "gray",
+    },
+
     content: {
         backgroundColor: 'white',
         padding: 22,

@@ -69,6 +69,10 @@ PODS:
     - React
   - react-native-geolocation (1.4.2):
     - React
+  - react-native-image-picker (1.1.0):
+    - React
+  - react-native-image-resizer (1.0.1):
+    - React
   - react-native-maps (0.25.0):
     - React
   - react-native-splash-screen (3.2.0):
@@ -107,6 +111,8 @@ PODS:
     - React
   - RNCAsyncStorage (1.6.1):
     - React
+  - RNFS (2.14.1):
+    - React
   - RNGestureHandler (1.4.1):
     - React
   - RNReanimated (1.2.0):
@@ -132,6 +138,8 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-image-resizer (from `../node_modules/react-native-image-resizer`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-version-number (from `../node_modules/react-native-version-number`)
@@ -149,6 +157,7 @@ DEPENDENCIES:
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -186,6 +195,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
+  react-native-image-resizer:
+    :path: "../node_modules/react-native-image-resizer"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
   react-native-splash-screen:
@@ -220,6 +233,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-background-geolocation"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -248,6 +263,8 @@ SPEC CHECKSUMS:
   React-jsinspector: e08662d1bf5b129a3d556eb9ea343a3f40353ae4
   react-native-camera: 203091b4bf99d48b788a0682ad573e8718724893
   react-native-geolocation: 79c743ad7a2e86617811ef23f49308824e92520c
+  react-native-image-picker: 3637d63fef7e32a230141ab4660d3ceb773c824f
+  react-native-image-resizer: ecae22b577b0425cd7803eb8145243038dd4b6bd
   react-native-maps: 190c02ca533fddac5bb49cf17bdece3644612107
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-version-number: 15563dc4145a94aabfc1faab2a9af10174a4204e
@@ -265,6 +282,7 @@ SPEC CHECKSUMS:
   RNBackgroundFetch: ca9c8740e944913474262b63022d95a2be5e003a
   RNBackgroundGeolocation: d3df8c4a8352a8ef4bcb0adc5b4eb9153b2a046c
   RNCAsyncStorage: 621bad7a889b5bf1583a52547f2dcd3a4d1ff15e
+  RNFS: a8fbe7060fa49157d819466404794ad9c58e58cf
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
   RNReanimated: 1b52415c4302f198cb581282a0166690bad62c43
   RNScreens: f28b48b8345f2f5f39ed6195518291515032a788

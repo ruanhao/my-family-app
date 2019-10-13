@@ -19,6 +19,7 @@ export const USER_REGISTER_URL = `${SERVER}/users/register`;
 export const USER_LOGIN_URL = `${SERVER}/users/login`;
 export const ADD_FRIEND_URL = `${SERVER}/friends`; // /friends/<id>
 export const FETCH_USER_URL = `${SERVER}/users`; // /users/<id>
+export const UPLOAD_USER_AVATAR_URL = `${SERVER}/users/avatar`;
 
 
 // const DEVICE_NAME = DeviceInfo.getDeviceName();

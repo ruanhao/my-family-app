@@ -63,12 +63,11 @@ const MenuTab = createBottomTabNavigator(
     {
         Info: InfoScreen,
         Settings: SettingsScreen,
-        Me: MeScreen,
         Friends: createStackNavigator({ FriendsMainScreen, QRScannerScreen, FriendScreen },
             {
                 navigationOptions: { tabBarLabel: '朋友' },
                 defaultNavigationOptions: ({ navigation }) => ({
-                    headerBackTitle: null,
+                    // headerBackTitle: null,
                     /* headerLeft: (
                      *     <Button
                      *         title="< 👬"
@@ -79,7 +78,15 @@ const MenuTab = createBottomTabNavigator(
                      * )*/
                 }),
 
-            })
+            }),
+        Me: createStackNavigator({ MeScreen },
+            {
+                navigationOptions: { tabBarLabel: '我' },
+                defaultNavigationOptions: ({ navigation }) => ({
+                    // headerBackTitle: null,
+                    header: null,
+                }),
+            }),
     },
     {
         defaultNavigationOptions: ({ navigation }) => ({
@@ -98,7 +105,8 @@ const AppStack = createStackNavigator(
         Map: {
             screen: FamilyMapScreen,
             navigationOptions: () => ({
-                headerBackTitle: "🌏"
+                // headerBackTitle: "🌏",
+                headerBackTitle: null,
             }),
         },
         // Map: InfoScreen,
@@ -106,8 +114,12 @@ const AppStack = createStackNavigator(
             screen: MenuTab,
             navigationOptions: ({ navigation }) => {
                 let options = {};
+                options.headerStyle = {
+                    borderBottomWidth: 0
+                };
                 let focusedRouteName = navigation.state.routes[navigation.state.index].routeName;
                 if (focusedRouteName === 'Me') {
+                    // options.headerTitle = "我";
                     options.headerRight = (
                         <Button
                             onPress={() => logout(navigation)}

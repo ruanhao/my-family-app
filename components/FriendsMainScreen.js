@@ -9,7 +9,7 @@ import {
     ScrollView,
 } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
-import { FETCH_USER_URL } from '../utils/Constants';
+import { FETCH_USER_URL, getAvatarImageUri } from '../utils/Constants';
 import { getUserIdAsync } from '../utils/Utils';
 import { error } from '../utils/LogUtils';
 import { SwipeableFlatList } from 'react-native-swipeable-flat-list';
@@ -98,6 +98,10 @@ export default class FriendsMainScreen extends Component {
     }
 
     _renderItem = ({ item }) => {
+        let avatarSource = {};
+        if (item.avatarImageId) {
+            avatarSource.uri = getAvatarImageUri(item.avatarImageId);
+        }
         return (
             <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('FriendScreen', {
@@ -126,6 +130,7 @@ export default class FriendsMainScreen extends Component {
                             icon={{ name: 'user', type: 'font-awesome' }}
                             rounded
                             onPress={() => console.log("Works!")}
+                            source={avatarSource}
                             activeOpacity={0.7}
                         />
                     </View>
