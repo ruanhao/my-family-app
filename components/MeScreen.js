@@ -16,6 +16,8 @@ import { Avatar } from 'react-native-elements';
 import { FETCH_USER_URL, UPLOAD_USER_AVATAR_URL, getAvatarImageUri } from '../utils/Constants';
 import PhotoUpload from 'react-native-photo-upload'
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Feather from "react-native-vector-icons/Feather";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const DEFAULT_AVATAR_URI = 'https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/d/domestic-dog_thumb.jpg';
 
@@ -133,6 +135,31 @@ export default class MeScreen extends Component {
 
                 </View>
 
+                <TouchableOpacity
+                    onPress={() => { this.props.navigation.navigate('SettingsScreen') }}
+                >
+                    <View style={styles.sectionContainer} >
+
+                        <View>
+                            <Feather
+                                name="settings"
+                                size={25}
+                                color="dodgerblue"
+                            />
+                        </View>
+                        <View style={styles.sectionMiddle}>
+                            <Text style={styles.sectionText}>设置</Text>
+                        </View>
+                        <View>
+                            <Ionicons
+                                name="ios-arrow-forward"
+                                size={25}
+                                color="gray"
+                            />
+                        </View>
+                    </View>
+                </TouchableOpacity>
+
                 <Modal
                     animationInTiming={500}
                     animationOutTiming={1000}
@@ -191,7 +218,6 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: "gray",
     },
-
     content: {
         backgroundColor: 'white',
         padding: 22,
@@ -240,4 +266,27 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 17,
     },
+    sectionContainer: {
+        padding: 10,
+        paddingHorizontal: 20,
+        marginTop: 10,
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        // justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    sectionLeft: {
+        flex: 2,
+    },
+    sectionRight: {
+        flex: 2,
+    },
+    sectionMiddle: {
+        flex: 6,
+    },
+    sectionText: {
+        fontSize: 18,
+        // fontWeight: 'bold',
+        marginLeft: 20,
+    }
 });

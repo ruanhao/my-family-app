@@ -62,7 +62,6 @@ const AuthStack = createStackNavigator({
 const MenuTab = createBottomTabNavigator(
     {
         Info: InfoScreen,
-        Settings: SettingsScreen,
         Friends: createStackNavigator({ FriendsMainScreen, QRScannerScreen, FriendScreen },
             {
                 navigationOptions: { tabBarLabel: '朋友' },
@@ -79,7 +78,7 @@ const MenuTab = createBottomTabNavigator(
                 }),
 
             }),
-        Me: createStackNavigator({ MeScreen },
+        Me: createStackNavigator({ MeScreen, SettingsScreen },
             {
                 navigationOptions: { tabBarLabel: '我' },
                 defaultNavigationOptions: ({ navigation }) => ({
@@ -105,8 +104,8 @@ const AppStack = createStackNavigator(
         Map: {
             screen: FamilyMapScreen,
             navigationOptions: () => ({
-                // headerBackTitle: "🌏",
-                headerBackTitle: null,
+                headerBackTitle: "🌏",
+                // headerBackTitle: null,
             }),
         },
         // Map: InfoScreen,
