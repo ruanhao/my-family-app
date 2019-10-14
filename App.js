@@ -62,10 +62,11 @@ const AuthStack = createStackNavigator({
 const MenuTab = createBottomTabNavigator(
     {
         // Info: InfoScreen,
-        Friends: createStackNavigator({ FriendsMainScreen, QRScannerScreen, FriendScreen },
+        Friends: createStackNavigator({ FriendsMainScreen, FriendScreen },
             {
                 navigationOptions: { tabBarLabel: '朋友' },
                 defaultNavigationOptions: ({ navigation }) => ({
+                    header: null
                     // headerBackTitle: null,
                     /* headerLeft: (
                      *     <Button
@@ -78,7 +79,7 @@ const MenuTab = createBottomTabNavigator(
                 }),
 
             }),
-        Me: createStackNavigator({ MeScreen, SettingsScreen, InfoScreen },
+        Me: createStackNavigator({ MeScreen, SettingsScreen, InfoScreen, QRScannerScreen },
             {
                 navigationOptions: { tabBarLabel: '我' },
                 defaultNavigationOptions: ({ navigation }) => ({
@@ -104,7 +105,7 @@ const AppStack = createStackNavigator(
         Map: {
             screen: FamilyMapScreen,
             navigationOptions: () => ({
-                headerBackTitle: "🌏",
+                headerBackTitle: "地图",
                 // headerBackTitle: null,
             }),
         },
@@ -127,7 +128,7 @@ const AppStack = createStackNavigator(
                         />
                     );
                 } else if (focusedRouteName === 'Friends') {
-                    options.header = null;
+                    // options.header = null;
                 }
 
                 /* options.headerLeft = (

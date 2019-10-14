@@ -191,6 +191,30 @@ export default class MeScreen extends Component {
                     </View>
                 </TouchableOpacity>
 
+                <TouchableOpacity
+                    onPress={() => { this.props.navigation.navigate('QRScannerScreen') }}
+                >
+                    <View style={styles.sectionContainer} >
+                        <View>
+                            <Ionicons
+                                name="md-qr-scanner"
+                                size={25}
+                                color="chocolate"
+                            />
+                        </View>
+                        <View style={styles.sectionMiddle}>
+                            <Text style={styles.sectionText}>扫码加好友</Text>
+                        </View>
+                        <View>
+                            <Ionicons
+                                name="ios-arrow-forward"
+                                size={25}
+                                color="gray"
+                            />
+                        </View>
+                    </View>
+                </TouchableOpacity>
+
                 <Modal
                     animationInTiming={500}
                     animationOutTiming={1000}

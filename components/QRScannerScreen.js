@@ -79,7 +79,8 @@ export default class QRScannerScreen extends Component {
                 );
                 return;
             }
-            this.props.navigation.goBack();
+            // this.props.navigation.goBack();
+            this.props.navigation.navigate("FriendsMainScreen");
         } catch (e) {
             error(`Error when add friend ${data}: ${e.message}`);
             Alert.alert(

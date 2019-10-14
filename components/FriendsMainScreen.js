@@ -19,9 +19,9 @@ const HEIGHT = 70;
 
 export default class FriendsMainScreen extends Component {
     static navigationOptions = ({ navigation, navigationOptions }) => ({
-        headerStyle: {
-            borderBottomWidth: 0,
-        },
+        /* headerStyle: {
+         *     borderBottomWidth: 0,
+         * },*/
         /* headerLeft: (
          *     <Button
          *         title="< 🌏"
@@ -30,17 +30,17 @@ export default class FriendsMainScreen extends Component {
          *         }}
          *     />
          * ),*/
-        headerTitle: "朋友",
-        headerRight: (
-            <Button
-                onPress={() => {
-                    navigation.navigate('QRScannerScreen');
-                }}
-                title="➕"
-                color="gray"
-            />
-        ),
-        headerBackTitle: '👬'
+        // headerTitle: "朋友",
+        /* headerRight: (
+         *     <Button
+         *         onPress={() => {
+         *             navigation.navigate('QRScannerScreen');
+         *         }}
+         *         title="➕"
+         *         color="gray"
+         *     />
+         * ),
+         * headerBackTitle: '👬'*/
     });
 
     state = {
