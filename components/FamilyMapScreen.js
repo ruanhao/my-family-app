@@ -40,9 +40,6 @@ export default class FamilyMapScreen extends Component {
 
     constructor() {
         super();
-        configBackgroundFetch();
-        configBackgroundGeoLocation();
-        this.updateSelfLocationAndThenRender();
     }
 
     updateSelfLocationAndThenRender = (force = false) => {
@@ -75,12 +72,15 @@ export default class FamilyMapScreen extends Component {
      * }*/
 
     componentDidMount() {
+        configBackgroundFetch();
+        configBackgroundGeoLocation();
         this.timoutInterval = setInterval(() => {
             if (AppState.currentState === 'active') {
                 const { navigation } = this.props;
                 navigation.isFocused() && this.updateSelfLocationAndThenRender();
             }
         }, 5000);
+        this.updateSelfLocationAndThenRender();
         AppState.addEventListener('change', this._handleAppStateChange);
         // setTimeout(() => SplashScreen.hide(), 3000);
     }

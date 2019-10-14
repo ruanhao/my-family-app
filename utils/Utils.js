@@ -200,16 +200,16 @@ export function configBackgroundFetch() {
 }
 
 export function enableBackgroundGeoLocation(successFn = () => { }) {
-    BackgroundGeolocation.start(
-        () => {
-            info("BackgroundGeolocation ENABLED successfully");
-            successFn();
-        },
-        e => {
-            error("Failed to ENABLE BackgroundGeoLocation: " + e.message);
-        }
-    );
-    // configBackgroundGeoLocation(successFn);
+    /* BackgroundGeolocation.start(
+     *     () => {
+     *         info("BackgroundGeolocation ENABLED successfully");
+     *         successFn();
+     *     },
+     *     e => {
+     *         error("Failed to ENABLE BackgroundGeoLocation: " + e.message);
+     *     }
+     * );*/
+    configBackgroundGeoLocation(successFn);
 }
 
 export function disableBackgroundGeoLocation(successFn = () => { }) {
@@ -225,7 +225,11 @@ export function disableBackgroundGeoLocation(successFn = () => { }) {
     );
 }
 
-export function configBackgroundGeoLocation(successFn = () => { }) {
+export async function configBackgroundGeoLocation(successFn = () => { }) {
+    const backgroundGeoLocationEnabled = await AsyncStorage.getItem("backgroundGeoLocationEnabled");
+    if (backgroundGeoLocationEnabled === 'false') {
+        return;
+    }
     BackgroundGeolocation.on('location',
         location => {
             updateBackgroundLocation(location);

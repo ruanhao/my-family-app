@@ -49,10 +49,12 @@ export default class SettingsScreen extends Component {
                     <Switch style={{ alignSelf: 'flex-end' }}
                         disabled={!('enableBackgroundGeoLocation' in this.state)}
                         value={this.state.enableBackgroundGeoLocation}
-                        onValueChange={enabled => {
+                        onValueChange={async (enabled) => {
                             if (enabled) {
+                                await AsyncStorage.setItem("backgroundGeoLocationEnabled", "true");
                                 enableBackgroundGeoLocation(this._checkBackgroundGeoLocation);
                             } else {
+                                await AsyncStorage.setItem("backgroundGeoLocationEnabled", "false");
                                 disableBackgroundGeoLocation(this._checkBackgroundGeoLocation);
                             }
                         }}
