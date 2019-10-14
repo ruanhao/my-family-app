@@ -43,7 +43,7 @@ export default class FriendScreen extends Component {
     }
 
     render() {
-        const avatarSource = {};
+        const avatarSource = { cache: 'force-cache' };
         if (this.state.avatarImageId) {
             avatarSource.uri = getAvatarImageUri(this.state.avatarImageId);
         }

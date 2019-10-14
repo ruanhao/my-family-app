@@ -43,6 +43,7 @@ export default class InfoScreen extends Component {
                     }}>
                         {msg.versionInfo}
                     </MenuItem>
+                    <MenuDivider />
 
                     <MenuItem onPress={() => {
                         this._menu.hide();

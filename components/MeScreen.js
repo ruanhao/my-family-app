@@ -73,6 +73,10 @@ export default class MeScreen extends Component {
     }
 
     _uploadAvatar = async ({ uri, type, fileName }) => {
+        console.log("avatar uri: ", uri);
+        if (!uri) {
+            return;
+        }
         const userId = await AsyncStorage.getItem('userId');
         const data = new FormData();
         data.append('image', {
@@ -95,7 +99,7 @@ export default class MeScreen extends Component {
     }
 
     render() {
-        let imageSrc = {};
+        let imageSrc = { cache: 'force-cache' };
         if (this.state.avatarImageId) {
             imageSrc.uri = getAvatarImageUri(this.state.avatarImageId);
         } else {
@@ -149,6 +153,30 @@ export default class MeScreen extends Component {
                         </View>
                         <View style={styles.sectionMiddle}>
                             <Text style={styles.sectionText}>设置</Text>
+                        </View>
+                        <View>
+                            <Ionicons
+                                name="ios-arrow-forward"
+                                size={25}
+                                color="gray"
+                            />
+                        </View>
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => { this.props.navigation.navigate('InfoScreen') }}
+                >
+                    <View style={styles.sectionContainer} >
+                        <View>
+                            <Feather
+                                name="info"
+                                size={25}
+                                color="lightcoral"
+                            />
+                        </View>
+                        <View style={styles.sectionMiddle}>
+                            <Text style={styles.sectionText}>调试信息</Text>
                         </View>
                         <View>
                             <Ionicons

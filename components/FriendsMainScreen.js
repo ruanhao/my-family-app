@@ -98,7 +98,7 @@ export default class FriendsMainScreen extends Component {
     }
 
     _renderItem = ({ item }) => {
-        let avatarSource = {};
+        let avatarSource = { cache: 'force-cache' };
         if (item.avatarImageId) {
             avatarSource.uri = getAvatarImageUri(item.avatarImageId);
         }
