@@ -19,7 +19,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const DEFAULT_AVATAR_URI = 'https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/d/domestic-dog_thumb.jpg';
+// const DEFAULT_AVATAR_URI = 'https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/d/domestic-dog_thumb.jpg';
+const DEFAULT_AVATAR = require('../assets/default_avatar.jpg');
 
 export default class MeScreen extends Component {
 
@@ -104,7 +105,7 @@ export default class MeScreen extends Component {
         if (this.state.avatarImageId) {
             imageSrc.uri = getAvatarImageUri(this.state.avatarImageId);
         } else {
-            imageSrc.uri = DEFAULT_AVATAR_URI;
+            imageSrc = DEFAULT_AVATAR;
         }
         return (
             <View style={styles.container}>
