@@ -72,8 +72,9 @@ export default class MeScreen extends Component {
         this.setState({ visibleModal: 'showQR', userId: userId });
     }
 
-    _uploadAvatar = async ({ uri, type, fileName }) => {
-        console.log("avatar uri: ", uri);
+    _uploadAvatar = async (response) => {
+        console.log("avatar response: ", response);
+        const { uri, type, name } = response;
         if (!uri) {
             return;
         }
@@ -82,7 +83,7 @@ export default class MeScreen extends Component {
         data.append('image', {
             uri: uri,
             type: type,
-            name: fileName,
+            name: name,
         });
         fetch(UPLOAD_USER_AVATAR_URL, {
             method: 'POST',
@@ -110,7 +111,8 @@ export default class MeScreen extends Component {
                 <View style={styles.title}>
                     <View style={{ flex: 3 }}>
                         <PhotoUpload
-                            onResponse={async (response) => this._uploadAvatar(response)}
+                            onResizedImageUri={async (response) => this._uploadAvatar(response)}
+                            quality={10}
                         >
                             <Image
                                 style={{
