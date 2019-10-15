@@ -21,7 +21,8 @@ import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 // const DEFAULT_AVATAR_URI = 'https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/d/domestic-dog_thumb.jpg';
-const DEFAULT_AVATAR = require('../assets/default_avatar.jpg');
+// const DEFAULT_AVATAR = require('../assets/default_avatar.jpg');
+const DEFAULT_AVATAR = require('../assets/default-avatar.png');
 
 export default class MeScreen extends Component {
 
