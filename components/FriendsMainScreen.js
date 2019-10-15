@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import { FETCH_USER_URL, getAvatarImageUri } from '../utils/Constants';
-import { getUserIdAsync } from '../utils/Utils';
+import { getUserIdAsync, downloadAndGetImageUrl } from '../utils/Utils';
 import { error } from '../utils/LogUtils';
 import { SwipeableFlatList } from 'react-native-swipeable-flat-list';
 import { Avatar } from 'react-native-elements';
@@ -52,7 +52,9 @@ export default class FriendsMainScreen extends Component {
         super();
     }
 
-    _onDidFocus = async () => {
+    _onDidFocus = () => { }
+
+    componentDidMount = async () => {
         try {
             let userId = await getUserIdAsync();
             let response = await fetch(`${FETCH_USER_URL}/${userId}`,
@@ -61,6 +63,16 @@ export default class FriendsMainScreen extends Component {
                 }
             );
             let responseJson = await response.json();
+            if (responseJson.friends) {
+                for (let friend of responseJson.friends) {
+                    if (friend.avatarImageId) {
+                        let imageUri = getAvatarImageUri(friend.avatarImageId);
+                        let { uri } = await downloadAndGetImageUrl(friend.avatarImageId, imageUri);
+                        friend.avatarImageUri = uri;
+                    }
+                }
+            }
+            // console.log(responseJson.friends);
             this.setState({ user: responseJson });
         } catch (e) {
             error("Error when get user: " + e.message);
@@ -99,8 +111,8 @@ export default class FriendsMainScreen extends Component {
 
     _renderItem = ({ item }) => {
         let avatarSource = { cache: 'force-cache' };
-        if (item.avatarImageId) {
-            avatarSource.uri = getAvatarImageUri(item.avatarImageId);
+        if (item.avatarImageUri) {
+            avatarSource.uri = item.avatarImageUri;
         }
         return (
             <TouchableOpacity
@@ -129,7 +141,6 @@ export default class FriendsMainScreen extends Component {
                             size="medium"
                             icon={{ name: 'user', type: 'font-awesome' }}
                             rounded
-                            onPress={() => console.log("Works!")}
                             source={avatarSource}
                             activeOpacity={0.7}
                         />

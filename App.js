@@ -32,7 +32,7 @@ import SafeAreaView from 'react-native-safe-area-view';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+// import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { logout } from './utils/Utils';
 
 // import BackgroundTimer from 'react-native-background-timer';
@@ -61,7 +61,14 @@ const AuthStack = createStackNavigator({
 
 const MenuTab = createBottomTabNavigator(
     {
-        // Info: InfoScreen,
+        Me: createStackNavigator({ MeScreen, SettingsScreen, InfoScreen, QRScannerScreen },
+            {
+                navigationOptions: { tabBarLabel: '我' },
+                defaultNavigationOptions: ({ navigation }) => ({
+                    // headerBackTitle: null,
+                    header: null,
+                }),
+            }),
         Friends: createStackNavigator({ FriendsMainScreen, FriendScreen },
             {
                 navigationOptions: { tabBarLabel: '朋友' },
@@ -79,14 +86,7 @@ const MenuTab = createBottomTabNavigator(
                 }),
 
             }),
-        Me: createStackNavigator({ MeScreen, SettingsScreen, InfoScreen, QRScannerScreen },
-            {
-                navigationOptions: { tabBarLabel: '我' },
-                defaultNavigationOptions: ({ navigation }) => ({
-                    // headerBackTitle: null,
-                    header: null,
-                }),
-            }),
+
     },
     {
         defaultNavigationOptions: ({ navigation }) => ({
@@ -169,17 +169,14 @@ const _getTabBarIcon = (navigation, focused, tintColor) => {
 
     const { routeName } = navigation.state;
     let IconComponent = Ionicons;
-    let iconName = 'ios-options';
+    let iconName = '';
 
-    if (routeName === 'Info') {
-        iconName = "ios-information-circle-outline";
-    } else if (routeName === 'Settings') {
-        iconName = "ios-settings";
-    } else if (routeName === 'Me') {
+    if (routeName === 'Me') {
         iconName = "ios-contact";
     } else if (routeName === 'Friends') {
-        iconName = 'user-friends';
-        IconComponent = FontAwesome5;
+        iconName = 'ios-contacts';
+    } else {
+        iconName = 'md-help';
     }
 
     return <IconComponent name={iconName} size={25} color={tintColor} />;

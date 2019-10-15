@@ -6,9 +6,10 @@ import {
 } from "./Constants";
 import { info, error } from "./LogUtils";
 import BackgroundGeolocation from "react-native-background-geolocation";
-import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Alert } from 'react-native';
+import { Alert, AppState, Platform } from 'react-native';
+import RNFS from "react-native-fs";
+
 
 
 let lastUserId = '';
@@ -347,4 +348,32 @@ export function logout(navigation) {
         ],
         { cancelable: false },
     );
+}
+
+export function getFileName(name) {
+    const FILE = Platform.OS === 'ios' ? '' : 'file://';
+    return FILE + RNFS.DocumentDirectoryPath + '/' + name;
+}
+
+export function downloadAndGetImageUrl(name, source_url) {
+    let fileName = getFileName(name);
+    return RNFS.exists(fileName)
+        .then(response => {
+            if (response) {
+                return { uri: fileName }
+            } else {
+                let destination_path = '/' + name;
+                return RNFS.downloadFile({
+                    fromUrl: source_url,
+                    toFile: RNFS.DocumentDirectoryPath + destination_path
+                }).promise.then(response => {
+                    return { uri: fileName }
+                }).catch((error) => {
+                    return { uri: source_url }
+                });
+            }
+        })
+        .catch((error) => {
+            return { uri: source_url }
+        });
 }

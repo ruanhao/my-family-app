@@ -8,6 +8,7 @@ import {
     Clipboard,
     Text,
 } from 'react-native';
+import { getFileName, downloadAndGetImageUrl } from '../utils/Utils';
 import { info, error } from '../utils/LogUtils';
 import Modal from "react-native-modal";
 import AsyncStorage from '@react-native-community/async-storage';
@@ -37,7 +38,7 @@ export default class MeScreen extends Component {
         userId: null,
         username: "",
         nickname: "",
-        avatarImageId: "",
+        avatarImageUri: "",
         visibleModalId: null,
     };
 
@@ -52,11 +53,18 @@ export default class MeScreen extends Component {
                 },
             });
             let responseJson = await response.json();
+            let avatarImageUri = '';
+            if (responseJson.avatarImageId) {
+                let imageUri = getAvatarImageUri(responseJson.avatarImageId);
+                let { uri } = await downloadAndGetImageUrl(responseJson.avatarImageId, imageUri);
+                avatarImageUri = uri;
+                // console.log("image uri: ", avatarImageUri);
+            }
             this.setState({
                 userId: responseJson.id,
                 username: responseJson.username,
                 nickname: responseJson.nickname,
-                avatarImageId: responseJson.avatarImageId,
+                avatarImageUri,
             });
         } catch {
             error("Error when fetch user info");
@@ -102,8 +110,9 @@ export default class MeScreen extends Component {
 
     render() {
         let imageSrc = { cache: 'force-cache' };
-        if (this.state.avatarImageId) {
-            imageSrc.uri = getAvatarImageUri(this.state.avatarImageId);
+        if (this.state.avatarImageUri) {
+            // imageSrc.uri = getAvatarImageUri(this.state.avatarImageId);
+            imageSrc.uri = this.state.avatarImageUri;
         } else {
             imageSrc = DEFAULT_AVATAR;
         }
