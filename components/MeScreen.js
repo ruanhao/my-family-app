@@ -41,6 +41,7 @@ export default class MeScreen extends Component {
         nickname: "",
         avatarImageUri: "",
         visibleModalId: null,
+        address: "",
     };
 
     async componentDidMount() {
@@ -66,6 +67,7 @@ export default class MeScreen extends Component {
                 username: responseJson.username,
                 nickname: responseJson.nickname,
                 avatarImageUri,
+                address: responseJson.address,
             });
         } catch {
             error("Error when fetch user info");
@@ -139,6 +141,7 @@ export default class MeScreen extends Component {
                     <View style={{ flex: 7, marginLeft: 10 }}>
                         <Text style={styles.titleTextH1}>{this.state.nickname}</Text>
                         <Text style={styles.titleTextH2}>足记号: {this.state.username}</Text>
+                        <Text style={styles.titleTextH2}>当前位置: {this.state.address}</Text>
                     </View>
 
                     <TouchableOpacity
@@ -280,8 +283,9 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     titleTextH2: {
-        fontSize: 15,
+        fontSize: 16,
         color: "gray",
+        marginBottom: 5,
     },
     content: {
         backgroundColor: 'white',

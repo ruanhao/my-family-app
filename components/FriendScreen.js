@@ -33,13 +33,14 @@ export default class FriendScreen extends Component {
         nickname: "",
         avatarImageId: "",
         username: "",
+        address: "",
     }
 
     componentDidMount() {
         const { navigation } = this.props;
         const user = navigation.getParam('user');
-        const { id, nickname, avatarImageId, username } = user;
-        this.setState({ userId: id, nickname, avatarImageId, username });
+        const { id, nickname, avatarImageId, username, address } = user;
+        this.setState({ userId: id, nickname, avatarImageId, username, address });
     }
 
     render() {
@@ -61,7 +62,7 @@ export default class FriendScreen extends Component {
                     <View>
                         <Text style={styles.titleTextH1}>{this.state.nickname}</Text>
                         <Text style={styles.titleTextH2}>足记号: {this.state.username}</Text>
-
+                        <Text style={styles.titleTextH2}>当前位置: {this.state.address}</Text>
                     </View>
                 </View>
             </View>
@@ -91,5 +92,6 @@ const styles = StyleSheet.create({
     titleTextH2: {
         fontSize: 15,
         color: "gray",
+        marginBottom: 5,
     }
 });
