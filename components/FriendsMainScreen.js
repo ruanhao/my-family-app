@@ -14,6 +14,7 @@ import { getUserIdAsync, downloadAndGetImageUrl } from '../utils/Utils';
 import { error } from '../utils/LogUtils';
 import { SwipeableFlatList } from 'react-native-swipeable-flat-list';
 import { Avatar } from 'react-native-elements';
+import Octicons from "react-native-vector-icons/Octicons";
 
 const HEIGHT = 70;
 
@@ -148,26 +149,50 @@ export default class FriendsMainScreen extends Component {
                     <View
                         style={{
                             backgroundColor: 'transparent',
-                            // backgroundColor: 'green',
+                            flex: 1,
                             borderColor: 'grey',
                             borderBottomWidth: 0.5,
-                            flex: 1,
-                            justifyContent: 'center',
+                            alignItems: 'center',
                             padding: 8,
                             marginLeft: 5,
                             marginRight: 10,
                             height: HEIGHT,
+                            flexDirection: 'row',
                         }}
                     >
+
                         <Text
                             style={{
-                                backgroundColor: 'transparent',
-                                color: 'black',
+                                flex: 5,
                                 fontSize: 20,
                             }}
                         >
                             {item.nickname}
                         </Text>
+                        {item.address && (
+                            <View style={{ flex: 5, flexDirection: 'row', }}>
+                                <Text style={{
+                                    color: 'lightgray',
+                                    fontSize: 15,
+                                    flex: 9,
+                                    textAlign: 'right',
+                                    marginRight: 10,
+                                }}
+                                >
+                                    {item.address}
+                                </Text>
+
+                                <Octicons
+                                    style={{ alignSelf: 'flex-end' }}
+                                    name="location"
+                                    size={15}
+                                    color="lightgray"
+                                />
+
+                            </View>
+                        )}
+
+
                     </View>
                 </View>
             </TouchableOpacity>
