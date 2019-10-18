@@ -16,6 +16,8 @@ import { info } from "./utils/LogUtils";
 import Geolocation from '@react-native-community/geolocation';
 import FamilyMapScreen from "./components/FamilyMapScreen.js";
 import FriendsMainScreen from "./components/FriendsMainScreen";
+import HousesMainScreen from "./components/HousesMainScreen";
+import HouseScreen from "./components/HouseScreen";
 import InfoScreen from "./components/InfoScreen";
 import MeScreen from "./components/MeScreen";
 import SettingsScreen from "./components/SettingsScreen";
@@ -87,6 +89,16 @@ const MenuTab = createBottomTabNavigator(
 
             }),
 
+        Houses: createStackNavigator({ HousesMainScreen, HouseScreen },
+            {
+                navigationOptions: { tabBarLabel: '房源' },
+                defaultNavigationOptions: ({ navigation }) => ({
+                    // header: null
+                    headerBackTitle: "所有房源",
+                }),
+
+            }),
+
     },
     {
         defaultNavigationOptions: ({ navigation }) => ({
@@ -129,6 +141,8 @@ const AppStack = createStackNavigator(
                     );
                 } else if (focusedRouteName === 'Friends') {
                     // options.header = null;
+                } else if (focusedRouteName == 'Houses') {
+                    options.header = null;
                 }
 
                 /* options.headerLeft = (
@@ -175,6 +189,8 @@ const _getTabBarIcon = (navigation, focused, tintColor) => {
         iconName = "ios-contact";
     } else if (routeName === 'Friends') {
         iconName = 'ios-contacts';
+    } else if (routeName === 'Houses') {
+        iconName = 'ios-home';
     } else {
         iconName = 'md-help';
     }

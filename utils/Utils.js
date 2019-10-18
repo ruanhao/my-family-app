@@ -7,7 +7,7 @@ import {
 import { info, error } from "./LogUtils";
 import BackgroundGeolocation from "react-native-background-geolocation";
 import AsyncStorage from '@react-native-community/async-storage';
-import { Alert, AppState, Platform } from 'react-native';
+import { Alert, AppState, Platform, PixelRatio, Dimensions } from 'react-native';
 import RNFS from "react-native-fs";
 
 
@@ -376,4 +376,21 @@ export function downloadAndGetImageUrl(name, source_url) {
         .catch((error) => {
             return { uri: source_url }
         });
+}
+
+const {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+// based on iphone 5s's scale
+const scale = SCREEN_WIDTH / 320;
+
+export function normalize(size) {
+    const newSize = size * scale
+    if (Platform.OS === 'ios') {
+        return Math.round(PixelRatio.roundToNearestPixel(newSize))
+    } else {
+        return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+    }
 }
