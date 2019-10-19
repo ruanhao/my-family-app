@@ -8,6 +8,7 @@ import {
 YellowBox.ignoreWarnings(
     [
         'Remote debugger',
+        'Warning: componentWillUpdate is deprecated',
         'Warning: componentWillMount is deprecated', /* caused by react-native-reanimated */
         'Accessing view manager configs directly off UIManager via UIManager', /* caused by react-native-root-toast */
         'componentWillReceiveProps is deprecated and will be removed in the next major version', /* caused by react-native-root-toast */
@@ -93,8 +94,13 @@ const MenuTab = createBottomTabNavigator(
             {
                 navigationOptions: { tabBarLabel: '房源' },
                 defaultNavigationOptions: ({ navigation }) => ({
-                    // header: null
+                    headerStyle: {
+                        height: 40,
+                    },
                     headerBackTitle: "所有房源",
+                    headerStyle: {
+                        borderBottomWidth: 0,
+                    },
                 }),
 
             }),
