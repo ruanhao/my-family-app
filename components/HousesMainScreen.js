@@ -5,6 +5,7 @@ import {
     Image,
     View,
     TouchableOpacity,
+    ActivityIndicator,
     FlatList,
     Text,
     ScrollView,
@@ -29,6 +30,7 @@ export default class HousesMainScreen extends Component {
     });
 
     state = {
+        loading: false,
         checked: false,
         houses: [],
         params: {
@@ -36,7 +38,8 @@ export default class HousesMainScreen extends Component {
             areaName: '',
         },
         sort: 'areaName,asc',
-        distinctAreaNames: [],
+        areasInfo: [],
+        total: 0, // 在售房源总数
     }
 
     _fetchHouses = async () => {
@@ -53,7 +56,7 @@ export default class HousesMainScreen extends Component {
                 url += `sort=${sort}`;
             }
             console.log("fetch houses url: ", url);
-
+            this.setState({ loading: true })
             let response = await fetch(url,
                 {
                     method: 'GET',
@@ -64,10 +67,12 @@ export default class HousesMainScreen extends Component {
                 return;
             }
             let responseJson = await response.json();
-            let distinctAreaNames = responseJson.areaNames;
+            let areasInfo = responseJson.areasInfo; // [{name: "xxx", count: 3}]
             let houses = responseJson.houses;
+            let total = responseJson.total;
+            console.log("total: ", total);
             console.log("HouseMainScreen.houses: ", houses);
-            this.setState({ houses, distinctAreaNames });
+            this.setState({ houses, areasInfo, total, loading: false });
         } catch (e) {
             error("Error when get houses: " + e.message);
         }
@@ -118,6 +123,7 @@ export default class HousesMainScreen extends Component {
                         dropdownOffset={{ top: 20, left: 5 }}
                         label='排序'
                         value=""
+                        fontSize={15}
                         dropdownPosition={0}
                         itemCount={10}
                         onChangeText={this._sort}
@@ -133,21 +139,22 @@ export default class HousesMainScreen extends Component {
                     />
                 </View>
 
-                <View style={{ flex: 3 }}>
+                <View style={{ flex: 4 }}>
                     <Dropdown
                         dropdownOffset={{ top: 20, left: 5 }}
                         label='小区'
                         value=""
+                        fontSize={15}
                         dropdownPosition={0}
                         itemCount={10}
                         onChangeText={this._selectAreaName}
                         data={[
-                            { label: '所有小区', value: "" },
-                            ...this.state.distinctAreaNames.map(name => { return { label: name, value: name } })
+                            { label: `所有小区 (${this.state.total})`, value: "" },
+                            ...this.state.areasInfo.map(({ name, count }) => { return { label: `${name} (${count})`, value: name } })
                         ]}
                     />
                 </View>
-                <View style={{ flex: 4 }}>
+                <View style={{ flex: 3 }}>
                     <CheckBox
                         left
                         iconRight
@@ -157,7 +164,7 @@ export default class HousesMainScreen extends Component {
                             paddingTop: 20,
                             alignSelf: 'flex-end'
                         }}
-                        title='包含下架房源'
+                        title='包含下架'
                         checked={this.state.checked}
                         onPress={() => this.setState({
                             checked: !this.state.checked,
@@ -219,8 +226,12 @@ export default class HousesMainScreen extends Component {
                     keyExtractor={(item, index) => item.houseCode}
                     ListHeaderComponent={this._renderHeader}
                     stickyHeaderIndices={[0]}
-
                 />
+                {this.state.loading &&
+                    <View style={styles.loading}>
+                        <ActivityIndicator size='large' />
+                    </View>
+                }
             </View>
         );
     }
@@ -276,5 +287,15 @@ const styles = StyleSheet.create({
         fontSize: normalize(9),
         color: 'gray',
         marginLeft: 10,
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
     }
 });

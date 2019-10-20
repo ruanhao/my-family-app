@@ -54,7 +54,7 @@ export default class HouseScreen extends Component {
         console.log("HouseScreen.render().house: ", house);
         const { url, houseCode, gallery, info: { summary }, areaName, title, price, priceHistory } = house;
         let sources = [{ source: NO_IMAGE, dimensions: IMAGE_DIMENSION }];
-        if (gallery.length > 0) {
+        if (gallery && gallery.length > 0) {
             sources = gallery.map(url => ({
                 source: { uri: url },
                 dimensions: IMAGE_DIMENSION,
