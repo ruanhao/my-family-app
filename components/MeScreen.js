@@ -138,7 +138,7 @@ export default class MeScreen extends Component {
                             />
                         </PhotoUpload>
                     </View>
-                    <View style={{ flex: 7, marginLeft: 10 }}>
+                    <View style={{ flex: 7, paddingLeft: 10 }}>
                         <Text style={styles.titleTextH1}>{this.state.nickname}</Text>
                         <Text style={styles.titleTextH2}>足记号: {this.state.username}</Text>
                         <Text style={styles.titleTextH2}>当前位置: {this.state.address}</Text>
@@ -278,12 +278,12 @@ const styles = StyleSheet.create({
         height: 120,
     },
     titleTextH1: {
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 5,
     },
     titleTextH2: {
-        fontSize: 16,
+        fontSize: 12,
         color: "gray",
         marginBottom: 5,
     },

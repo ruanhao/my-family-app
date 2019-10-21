@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     Dimensions,
     View,
+    ScrollView,
     Alert,
     Linking,
 } from 'react-native';
@@ -70,17 +71,19 @@ export default class HouseScreen extends Component {
                 </View>
 
                 <View style={{ flex: 6, marginTop: 30, padding: 10 }}>
-                    <Text style={styles.h1}>{areaName} ({price}万)</Text>
-                    <Text style={{ ...styles.h2, fontWeight: 'bold', marginBottom: 30, }}>{title}</Text>
-                    <Text style={{ fontWeight: 'bold', color: 'blue', fontSize: 20 }}>房源编号:</Text>
-                    <Text selectable style={styles.h2}>{houseCode}</Text>
-                    <Text style={{ fontWeight: 'bold', color: 'blue', fontSize: 20 }}>基本信息:</Text>
-                    <Text style={styles.h2}>{summary}</Text>
-                    <Text style={{ fontWeight: 'bold', color: 'blue', fontSize: 20 }}>历史价格:</Text>
-                    <Text style={styles.h2}>{priceHistory.map(({ date, price }) => `${date} => ${price}`).join('\n')}</Text>
-                    <TouchableOpacity onPress={() => this._openUrl(url)}>
-                        <Text style={{ fontWeight: 'bold', color: 'orange', fontSize: 22 }}>👉 点击获取详细信息</Text>
-                    </TouchableOpacity>
+                    <ScrollView>
+                        <Text style={styles.h1}>{areaName} ({price}万)</Text>
+                        <Text style={{ ...styles.h2, fontWeight: 'bold', marginBottom: 30, }}>{title}</Text>
+                        <Text style={{ fontWeight: 'bold', color: 'blue', fontSize: 20 }}>房源编号:</Text>
+                        <Text selectable style={styles.h2}>{houseCode}</Text>
+                        <Text style={{ fontWeight: 'bold', color: 'blue', fontSize: 20 }}>基本信息:</Text>
+                        <Text style={styles.h2}>{summary}</Text>
+                        <Text style={{ fontWeight: 'bold', color: 'blue', fontSize: 20 }}>历史价格:</Text>
+                        <Text style={styles.h2}>{priceHistory.map(({ date, price }) => `${date} => ${price}`).join('\n')}</Text>
+                        <TouchableOpacity onPress={() => this._openUrl(url)}>
+                            <Text style={{ fontWeight: 'bold', color: 'orange', fontSize: 22 }}>👉 点击获取详细信息</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
                 </View>
             </View>
         );

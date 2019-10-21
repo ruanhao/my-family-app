@@ -163,17 +163,17 @@ export default class FriendsMainScreen extends Component {
 
                         <Text
                             style={{
-                                flex: 5,
-                                fontSize: 20,
+                                flex: 3,
+                                fontSize: 18,
                             }}
                         >
                             {item.nickname}
                         </Text>
                         {item.address && (
-                            <View style={{ flex: 5, flexDirection: 'row', }}>
+                            <View style={{ flex: 7, flexDirection: 'row', }}>
                                 <Text style={{
                                     color: 'lightgray',
-                                    fontSize: 15,
+                                    fontSize: 12,
                                     flex: 9,
                                     textAlign: 'right',
                                     marginRight: 10,

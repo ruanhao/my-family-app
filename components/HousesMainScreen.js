@@ -74,6 +74,7 @@ export default class HousesMainScreen extends Component {
             console.log("HouseMainScreen.houses: ", houses);
             this.setState({ houses, areasInfo, total, loading: false });
         } catch (e) {
+            this.setState({ loading: false });
             error("Error when get houses: " + e.message);
         }
     }
@@ -116,9 +117,9 @@ export default class HousesMainScreen extends Component {
                 justifyContent: 'flex-start',
                 backgroundColor: 'white',
                 alignItems: 'center',
-                paddingLeft: 5
+                paddingLeft: 10
             }}>
-                <View style={{ flex: 3, marginRight: 3, }}>
+                <View style={{ flex: 30, marginRight: 3, }}>
                     <Dropdown
                         dropdownOffset={{ top: 20, left: 5 }}
                         label='排序'
@@ -139,7 +140,7 @@ export default class HousesMainScreen extends Component {
                     />
                 </View>
 
-                <View style={{ flex: 4 }}>
+                <View style={{ flex: 45 }}>
                     <Dropdown
                         dropdownOffset={{ top: 20, left: 5 }}
                         label='小区'
@@ -154,17 +155,19 @@ export default class HousesMainScreen extends Component {
                         ]}
                     />
                 </View>
-                <View style={{ flex: 3 }}>
+                <View style={{ flex: 30, }}>
                     <CheckBox
                         left
-                        iconRight
+                        size={15}
+                        iconRight={false}
                         containerStyle={{
                             backgroundColor: 'transparent',
                             borderWidth: 0,
                             paddingTop: 20,
                             alignSelf: 'flex-end'
                         }}
-                        title='包含下架'
+                        title='下架'
+                        textStyle={{ fontSize: 12 }}
                         checked={this.state.checked}
                         onPress={() => this.setState({
                             checked: !this.state.checked,
