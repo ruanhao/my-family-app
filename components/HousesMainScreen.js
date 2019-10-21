@@ -18,6 +18,8 @@ import { SwipeableFlatList } from 'react-native-swipeable-flat-list';
 import { Avatar, SearchBar, CheckBox } from 'react-native-elements';
 import Octicons from "react-native-vector-icons/Octicons";
 import { Dropdown } from 'react-native-material-dropdown';
+import FixedText from "./FixedText";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const HEIGHT = 100;
 const WIDTH = 120;
@@ -124,7 +126,7 @@ export default class HousesMainScreen extends Component {
                         dropdownOffset={{ top: 20, left: 5 }}
                         label='排序'
                         value=""
-                        fontSize={15}
+                        fontSize={RFValue(10)}
                         dropdownPosition={0}
                         itemCount={10}
                         onChangeText={this._sort}
@@ -140,12 +142,12 @@ export default class HousesMainScreen extends Component {
                     />
                 </View>
 
-                <View style={{ flex: 45 }}>
+                <View style={{ flex: 40 }}>
                     <Dropdown
                         dropdownOffset={{ top: 20, left: 5 }}
                         label='小区'
                         value=""
-                        fontSize={15}
+                        fontSize={RFValue(10)}
                         dropdownPosition={0}
                         itemCount={10}
                         onChangeText={this._selectAreaName}
@@ -166,8 +168,8 @@ export default class HousesMainScreen extends Component {
                             paddingTop: 20,
                             alignSelf: 'flex-end'
                         }}
-                        title='下架'
-                        textStyle={{ fontSize: 12 }}
+                        title='包含下架'
+                        textStyle={{ fontSize: RFValue(8) }}
                         checked={this.state.checked}
                         onPress={() => this.setState({
                             checked: !this.state.checked,
@@ -204,13 +206,13 @@ export default class HousesMainScreen extends Component {
                         {this._avatar(avatarSource)}
                     </View>
                     <View style={styles.infoContainer} >
-                        <Text style={styles.title}>{house.title}</Text>
-                        <Text style={styles.subtitle}>
+                        <FixedText style={styles.title}>{house.title}</FixedText>
+                        <FixedText style={styles.subtitle}>
                             {`${areaName}/${type}/${area}/${direction}/${floor}`}
-                        </Text>
+                        </FixedText>
                         <View style={styles.priceContainer}>
-                            <Text style={styles.price}>{price}万</Text>
-                            <Text style={styles.priceAverage}>{priceAverage}元/平</Text>
+                            <FixedText style={styles.price}>{price}万</FixedText>
+                            <FixedText style={styles.priceAverage}>{priceAverage}元/平</FixedText>
                         </View>
                     </View>
                 </View>
@@ -267,11 +269,11 @@ const styles = StyleSheet.create({
         // flexDirection: 'row',
     },
     title: {
-        fontSize: normalize(10),
+        fontSize: RFValue(12),
         fontWeight: 'bold',
     },
     subtitle: {
-        fontSize: normalize(9),
+        fontSize: RFValue(10),
         color: 'gray',
         marginTop: 3,
     },
@@ -282,12 +284,12 @@ const styles = StyleSheet.create({
         marginTop: 3,
     },
     price: {
-        fontSize: normalize(10),
+        fontSize: RFValue(11),
         color: 'orange',
         fontWeight: 'bold'
     },
     priceAverage: {
-        fontSize: normalize(9),
+        fontSize: RFValue(9),
         color: 'gray',
         marginLeft: 10,
     },

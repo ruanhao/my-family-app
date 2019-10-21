@@ -19,6 +19,8 @@ import PhotoUpload from 'react-native-photo-upload'
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import FixedText from "./FixedText";
+import { RFValue } from "react-native-responsive-fontsize";
 
 // const DEFAULT_AVATAR_URI = 'https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/d/domestic-dog_thumb.jpg';
 // const DEFAULT_AVATAR = require('../assets/default_avatar.jpg');
@@ -129,8 +131,8 @@ export default class MeScreen extends Component {
                         >
                             <Image
                                 style={{
-                                    width: 100,
-                                    height: 100,
+                                    width: RFValue(80),
+                                    height: RFValue(80),
                                     borderRadius: 75
                                 }}
                                 resizeMode='cover'
@@ -139,9 +141,9 @@ export default class MeScreen extends Component {
                         </PhotoUpload>
                     </View>
                     <View style={{ flex: 7, paddingLeft: 10 }}>
-                        <Text style={styles.titleTextH1}>{this.state.nickname}</Text>
-                        <Text style={styles.titleTextH2}>足记号: {this.state.username}</Text>
-                        <Text style={styles.titleTextH2}>当前位置: {this.state.address}</Text>
+                        <FixedText style={styles.titleTextH1}>{this.state.nickname}</FixedText>
+                        <FixedText style={styles.titleTextH2}>足记号: {this.state.username}</FixedText>
+                        <FixedText style={styles.titleTextH2}>当前位置: {this.state.address}</FixedText>
                     </View>
 
                     <TouchableOpacity
@@ -163,12 +165,12 @@ export default class MeScreen extends Component {
                         <View>
                             <Feather
                                 name="settings"
-                                size={25}
+                                size={RFValue(20)}
                                 color="dodgerblue"
                             />
                         </View>
                         <View style={styles.sectionMiddle}>
-                            <Text style={styles.sectionText}>设置</Text>
+                            <FixedText style={styles.sectionText}>设置</FixedText>
                         </View>
                         <View>
                             <Ionicons
@@ -192,7 +194,7 @@ export default class MeScreen extends Component {
                             />
                         </View>
                         <View style={styles.sectionMiddle}>
-                            <Text style={styles.sectionText}>调试信息</Text>
+                            <FixedText style={styles.sectionText}>调试信息</FixedText>
                         </View>
                         <View>
                             <Ionicons
@@ -216,7 +218,7 @@ export default class MeScreen extends Component {
                             />
                         </View>
                         <View style={styles.sectionMiddle}>
-                            <Text style={styles.sectionText}>扫码加好友</Text>
+                            <FixedText style={styles.sectionText}>扫码加好友</FixedText>
                         </View>
                         <View>
                             <Ionicons
@@ -235,7 +237,7 @@ export default class MeScreen extends Component {
                     onBackdropPress={() => this.setState({ visibleModal: null })}
                 >
                     <View style={styles.content} >
-                        <Text style={styles.contentTitle}>{this.state.userId}</Text>
+                        <FixedText style={styles.contentTitle}>{this.state.userId}</FixedText>
                         <Button
                             onPress={() => { Clipboard.setString(this.state.userId) }}
                             title="复制"
@@ -278,12 +280,12 @@ const styles = StyleSheet.create({
         height: 120,
     },
     titleTextH1: {
-        fontSize: 20,
+        fontSize: RFValue(20),
         fontWeight: 'bold',
         marginBottom: 5,
     },
     titleTextH2: {
-        fontSize: 12,
+        fontSize: RFValue(12),
         color: "gray",
         marginBottom: 5,
     },
@@ -296,7 +298,7 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(0, 0, 0, 0.1)',
     },
     contentTitle: {
-        fontSize: 20,
+        fontSize: RFValue(20),
         marginBottom: 12,
     },
     bottomModal: {
@@ -313,7 +315,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     scrollableModalText1: {
-        fontSize: 20,
+        fontSize: RFValue(20),
         color: 'white',
     },
     scrollableModalContent2: {
@@ -323,17 +325,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     scrollableModalText2: {
-        fontSize: 20,
+        fontSize: RFValue(20),
         color: 'white',
     },
     customBackdrop: {
         flex: 1,
         backgroundColor: '#87BBE0',
         alignItems: 'center',
-    },
-    customBackdropText: {
-        marginTop: 10,
-        fontSize: 17,
     },
     sectionContainer: {
         padding: 10,
@@ -354,7 +352,7 @@ const styles = StyleSheet.create({
         flex: 6,
     },
     sectionText: {
-        fontSize: 18,
+        fontSize: RFValue(15),
         // fontWeight: 'bold',
         marginLeft: 20,
     }

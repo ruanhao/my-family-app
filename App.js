@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 import {
+    TouchableOpacity,
+    View,
     Button,
     Text,
     YellowBox,
@@ -37,6 +39,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { logout } from './utils/Utils';
+import FixedText from './components/FixedText';
+import { RFValue } from "react-native-responsive-fontsize";
 
 // import BackgroundTimer from 'react-native-background-timer';
 // BackgroundTimer.runBackgroundTimer(() => {
@@ -139,11 +143,13 @@ const AppStack = createStackNavigator(
                 if (focusedRouteName === 'Me') {
                     // options.headerTitle = "我";
                     options.headerRight = (
-                        <Button
-                            onPress={() => logout(navigation)}
-                            title="退出"
-                            color="red"
-                        />
+                        <View style={{ marginRight: 10 }}>
+                            <TouchableOpacity onPress={() => logout(navigation)}>
+                                <FixedText style={{ color: 'red', fontSize: RFValue(15) }}>
+                                    退出
+                            </FixedText>
+                            </TouchableOpacity>
+                        </View>
                     );
                 } else if (focusedRouteName === 'Friends') {
                     // options.header = null;

@@ -15,6 +15,8 @@ import { error } from '../utils/LogUtils';
 import { SwipeableFlatList } from 'react-native-swipeable-flat-list';
 import { Avatar } from 'react-native-elements';
 import Octicons from "react-native-vector-icons/Octicons";
+import FixedText from "./FixedText";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const HEIGHT = 70;
 
@@ -98,13 +100,13 @@ export default class FriendsMainScreen extends Component {
                         padding: 8,
                     }}
                 >
-                    <Text
+                    <FixedText
                         style={{
-                            fontSize: 20,
+                            fontSize: RFValue(20),
                         }}
                     >
                         删除
-                    </Text>
+                    </FixedText>
                 </View>
             </TouchableOpacity>
         );
@@ -161,26 +163,26 @@ export default class FriendsMainScreen extends Component {
                         }}
                     >
 
-                        <Text
+                        <FixedText
                             style={{
                                 flex: 3,
-                                fontSize: 18,
+                                fontSize: RFValue(18),
                             }}
                         >
                             {item.nickname}
-                        </Text>
+                        </FixedText>
                         {item.address && (
                             <View style={{ flex: 7, flexDirection: 'row', }}>
-                                <Text style={{
+                                <FixedText style={{
                                     color: 'lightgray',
-                                    fontSize: 12,
+                                    fontSize: RFValue(12),
                                     flex: 9,
                                     textAlign: 'right',
                                     marginRight: 10,
                                 }}
                                 >
                                     {item.address}
-                                </Text>
+                                </FixedText>
 
                                 <Octicons
                                     style={{ alignSelf: 'flex-end' }}

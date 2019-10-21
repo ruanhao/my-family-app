@@ -15,6 +15,8 @@ import { info, error } from '../utils/LogUtils';
 import { getAvatarImageUri } from '../utils/Constants';
 import { Avatar } from 'react-native-elements';
 import Gallery from 'react-native-image-gallery';
+import FixedText from "./FixedText";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const NO_IMAGE = require('../assets/no-image.png');
 const IMAGE_DIMENSION = { width: 400, height: 300 }
@@ -72,16 +74,16 @@ export default class HouseScreen extends Component {
 
                 <View style={{ flex: 6, marginTop: 30, padding: 10 }}>
                     <ScrollView>
-                        <Text style={styles.h1}>{areaName} ({price}万)</Text>
-                        <Text style={{ ...styles.h2, fontWeight: 'bold', marginBottom: 30, }}>{title}</Text>
-                        <Text style={{ fontWeight: 'bold', color: 'blue', fontSize: 20 }}>房源编号:</Text>
-                        <Text selectable style={styles.h2}>{houseCode}</Text>
-                        <Text style={{ fontWeight: 'bold', color: 'blue', fontSize: 20 }}>基本信息:</Text>
-                        <Text style={styles.h2}>{summary}</Text>
-                        <Text style={{ fontWeight: 'bold', color: 'blue', fontSize: 20 }}>历史价格:</Text>
-                        <Text style={styles.h2}>{priceHistory.map(({ date, price }) => `${date} => ${price}`).join('\n')}</Text>
+                        <FixedText style={styles.h1}>{areaName} ({price}万)</FixedText>
+                        <FixedText style={{ ...styles.h2, fontWeight: 'bold', marginBottom: 30, }}>{title}</FixedText>
+                        <FixedText style={{ fontWeight: 'bold', color: 'blue', fontSize: RFValue(18) }}>房源编号:</FixedText>
+                        <FixedText selectable style={styles.h2}>{houseCode}</FixedText>
+                        <FixedText style={{ fontWeight: 'bold', color: 'blue', fontSize: RFValue(18) }}>基本信息:</FixedText>
+                        <FixedText style={styles.h2}>{summary}</FixedText>
+                        <FixedText style={{ fontWeight: 'bold', color: 'blue', fontSize: RFValue(18) }}>历史价格:</FixedText>
+                        <FixedText style={styles.h2}>{priceHistory.map(({ date, price }) => `${date} => ${price}`).join('\n')}</FixedText>
                         <TouchableOpacity onPress={() => this._openUrl(url)}>
-                            <Text style={{ fontWeight: 'bold', color: 'orange', fontSize: 22 }}>👉 点击获取详细信息</Text>
+                            <FixedText style={{ fontWeight: 'bold', color: 'orange', fontSize: RFValue(20) }}>👉 点击获取详细信息</FixedText>
                         </TouchableOpacity>
                     </ScrollView>
                 </View>
@@ -97,12 +99,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     h1: {
-        fontSize: 25,
+        fontSize: RFValue(23),
         fontWeight: 'bold',
         marginBottom: 5,
     },
     h2: {
-        fontSize: 18,
+        fontSize: RFValue(15),
         color: "gray",
         marginBottom: 5,
     },
