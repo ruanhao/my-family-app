@@ -3,5 +3,5 @@
 #
 # Description:
 
-rm -rf ios/build
+rm -rf build
 xcodebuild clean

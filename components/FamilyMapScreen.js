@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { StatusBar, ActivityIndicator, StyleSheet, Image, AppState, View, TouchableOpacity, Text } from 'react-native';
+import {
+    StatusBar,
+    ActivityIndicator,
+    StyleSheet,
+    Image,
+    AppState,
+    View,
+    TouchableOpacity,
+    Alert,
+    Text
+} from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import {
     updateForgroundLocation,
@@ -10,6 +20,7 @@ import { info } from "../utils/LogUtils";
 import { NavigationEvents } from 'react-navigation';
 import Toast from 'react-native-root-toast';
 import { getDistance } from 'geolib';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 // import SplashScreen from 'react-native-splash-screen'
 
 const DISTANCE_TOLERANCE = 15;
@@ -83,7 +94,51 @@ export default class FamilyMapScreen extends Component {
         this.updateSelfLocationAndThenRender();
         AppState.addEventListener('change', this._handleAppStateChange);
         // setTimeout(() => SplashScreen.hide(), 3000);
+        PushNotificationIOS.addEventListener('register', this._onRegistered);
+        PushNotificationIOS.addEventListener('registrationError', this._onRegistrationError);
+        PushNotificationIOS.addEventListener('notification', this._onRemoteNotification);
+        PushNotificationIOS.requestPermissions();
     }
+
+    componentWillUnmount() {
+        PushNotificationIOS.removeEventListener('register', this._onRegistered);
+        PushNotificationIOS.removeEventListener('registrationError', this._onRegistrationError);
+        PushNotificationIOS.removeEventListener('notification', this._onRemoteNotification);
+    }
+
+    _onRegistered = (deviceToken) => {
+        console.log("token: ", deviceToken);
+        info("token: " + JSON.stringify(deviceToken));
+    }
+
+    _onRegistrationError = (error) => {
+        Alert.alert(
+            'Failed To Register For Remote Push',
+            `Error (${error.code}): ${error.message}`,
+            [
+                {
+                    text: 'OK',
+                    onPress: null,
+                },
+            ],
+        );
+    }
+
+    _onRemoteNotification = (notification) => {
+        const result = `Message: ${notification.getMessage()};\n
+      badge: ${notification.getBadgeCount()};\n
+      sound: ${notification.getSound()};\n
+      category: ${notification.getCategory()};\n
+      content-available: ${notification.getContentAvailable()}.`;
+
+        Alert.alert('Push Notification Received', result, [
+            {
+                text: 'OK',
+                onPress: null,
+            },
+        ]);
+    }
+
 
     _handleAppStateChange = (nextState) => {
         if (nextState === 'active') {
