@@ -95,6 +95,7 @@
 		B356617FB9FC85EBAF02E605 /* Pods-MyFamilyApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyFamilyApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-MyFamilyApp-tvOS/Pods-MyFamilyApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		B43F427140DC8BB911E9D406 /* libPods-MyFamilyApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyFamilyApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5BE1917233C7E3A00214644 /* MyFamilyApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MyFamilyApp.entitlements; path = MyFamilyApp/MyFamilyApp.entitlements; sourceTree = "<group>"; };
+		B5E30F7123642C4B00D33EB4 /* MyFamilyAppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MyFamilyAppRelease.entitlements; path = MyFamilyApp/MyFamilyAppRelease.entitlements; sourceTree = "<group>"; };
 		B5EE878C230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
 		B5EE8795230D190100E64F75 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE2F0EF8AD7F4AAD8E73B089 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
@@ -176,6 +177,7 @@
 		13B07FAE1A68108700A75B9A /* MyFamilyApp */ = {
 			isa = PBXGroup;
 			children = (
+				B5E30F7123642C4B00D33EB4 /* MyFamilyAppRelease.entitlements */,
 				B5BE1917233C7E3A00214644 /* MyFamilyApp.entitlements */,
 				B5EE878C230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -761,7 +763,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MyFamilyApp/MyFamilyApp.entitlements;
-				CURRENT_PROJECT_VERSION = 20191021;
+				CURRENT_PROJECT_VERSION = 20191026;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7LQ6QANL4M;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -784,8 +786,8 @@
 			baseConfigurationReference = A762125935518106E1ADDE8B /* Pods-MyFamilyApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = MyFamilyApp/MyFamilyApp.entitlements;
-				CURRENT_PROJECT_VERSION = 20191021;
+				CODE_SIGN_ENTITLEMENTS = MyFamilyApp/MyFamilyAppRelease.entitlements;
+				CURRENT_PROJECT_VERSION = 20191026;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7LQ6QANL4M;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";

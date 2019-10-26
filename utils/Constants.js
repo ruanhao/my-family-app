@@ -23,6 +23,8 @@ export const UPLOAD_USER_AVATAR_URL = `${SERVER}/users/avatar`;
 
 export const FETCH_HOUSES_URL = `${SERVER}/houses`;
 
+export const UPDATE_DEVICE_TOKEN_URL = `${SERVER}/users/deviceToken`; // /users/deviceToken/<token>
+
 
 // const DEVICE_NAME = DeviceInfo.getDeviceName();
 

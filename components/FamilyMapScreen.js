@@ -4,7 +4,8 @@ import MapView, { Marker, Callout } from 'react-native-maps';
 import {
     updateForgroundLocation,
     configBackgroundFetch,
-    configBackgroundGeoLocation
+    configBackgroundGeoLocation,
+    configPushNotification,
 } from '../utils/Utils';
 import { info } from "../utils/LogUtils";
 import { NavigationEvents } from 'react-navigation';
@@ -40,6 +41,7 @@ export default class FamilyMapScreen extends Component {
 
     constructor() {
         super();
+        configPushNotification();
     }
 
     updateSelfLocationAndThenRender = (force = false) => {
@@ -82,6 +84,7 @@ export default class FamilyMapScreen extends Component {
         }, 5000);
         this.updateSelfLocationAndThenRender();
         AppState.addEventListener('change', this._handleAppStateChange);
+
         // setTimeout(() => SplashScreen.hide(), 3000);
     }
 
