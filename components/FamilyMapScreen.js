@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StatusBar, ActivityIndicator, StyleSheet, Image, AppState, View, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import {
+    refreshAllLocation,
     updateForgroundLocation,
     configBackgroundFetch,
     configBackgroundGeoLocation,
@@ -44,11 +45,22 @@ export default class FamilyMapScreen extends Component {
         configPushNotification();
     }
 
-    updateSelfLocationAndThenRender = (force = false) => {
+    refreshAllAndThenRender = () => {
+        refreshAllLocation((userLocations) => {
+            let myLastLocation = this.state.location;
+            let myCurrentLocation = userLocations[0].location;
+            this.setState({
+                location: myCurrentLocation,
+                friends: userLocations.slice(1),
+            });
+        });
+    }
+
+    updateSelfLocationAndThenRender = () => {
         updateForgroundLocation((userLocations) => {
             let myLastLocation = this.state.location;
             let myCurrentLocation = userLocations[0].location;
-            if (!force && myLastLocation) {
+            if (myLastLocation) {
                 if (getDistance(myLastLocation, myCurrentLocation) < DISTANCE_TOLERANCE) {
                     myCurrentLocation = myLastLocation;
                 }
@@ -246,7 +258,7 @@ export default class FamilyMapScreen extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={() => { this.updateSelfLocationAndThenRender(true) }}
+                        onPress={this.refreshAllAndThenRender}
                         style={[styles.bubble, styles.button]}
                     >
                         <Image

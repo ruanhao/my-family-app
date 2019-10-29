@@ -26,6 +26,7 @@ export async function getUserIdAsync() {
 
 const ACTIVITY_UPDATE_TYPE = '/activity';
 const FOREGROUND_UPDATE_TYPE = '/foreground';
+const REFRESH_ALL_UPDATE_TYPE = '/refresh-all';
 const BACKGROUND_UPDATE_TYPE = '/background';
 const BACKGROUND_FETCH_UPDATE_TYPE = '/background-fetch';
 const AD_HOC_UPDATE_TYPE = '/ad-hoc';
@@ -42,6 +43,10 @@ export function updateActivityLocation(activity, confidence) {
     lastUpdate = current;
     let url = `${ACTIVITY_UPDATE_TYPE}/${activity}/${confidence}`;
     updateLocation(url);
+}
+
+export function refreshAllLocation(callback) {
+    updateLocation(REFRESH_ALL_UPDATE_TYPE, callback);
 }
 
 export function updateForgroundLocation(callback) {
@@ -145,7 +150,7 @@ async function updateLocation(type = FOREGROUND_UPDATE_TYPE, callback = (_) => {
                     body: JSON.stringify(payload),
                 });
                 // lastUpdate = new Date().getTime();
-                if (type === FOREGROUND_UPDATE_TYPE) {
+                if (type === FOREGROUND_UPDATE_TYPE || type === REFRESH_ALL_UPDATE_TYPE) {
                     let adjustedUserLocations = await response.json();
                     callback(adjustedUserLocations);
                 }
