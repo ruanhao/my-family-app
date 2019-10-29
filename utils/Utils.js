@@ -85,14 +85,19 @@ export async function updateBackgroundLocation(location) {
         if (!userId) {
             return;
         }
+        let headers = {
+            "Content-Type": "application/json",
+            "USER-ID": userId,
+        };
+        let deviceToken = await AsyncStorage.getItem('deviceToken');
+        if (deviceToken) {
+            headers['DEVICE-TOKEN'] = deviceToken;
+        }
         const { coords: { latitude, longitude, speed, altitude, heading } } = location;
         fetch(LOCATION_UPDATE_URL + BACKGROUND_UPDATE_TYPE,
             {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'USER-ID': userId,
-                },
+                headers: headers,
                 body: JSON.stringify({
                     latitude, longitude, speed, altitude, heading
                 }),
@@ -434,17 +439,17 @@ export function configPushNotification() {
     info("Configuating push notificaion...");
     PushNotification.configure({
         // Called when Token is generated (iOS and Android)
-        onRegister: function({ token }) {
+        onRegister: async function({ token }) {
             console.log("TOKEN:", token);
-            AsyncStorage.setItem('deviceToken', token);
-            updateDeviceToken(token);
+            await AsyncStorage.setItem('deviceToken', token);
+            await updateDeviceToken(token);
         },
 
         // Called when a remote or local notification is opened or received
-        onNotification: function(notification) {
-            console.log("NOTIFICATION:", notification);
-            info("Receive notification" + JSON.stringify(notification));
+        onNotification: async function(notification) {
+            // console.log("NOTIFICATION:", notification);
             updateLocation(AD_HOC_UPDATE_TYPE);
+            info("Receive notification" + JSON.stringify(notification));
             // process the notification
             // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios
             notification.finish(PushNotificationIOS.FetchResult.NoData);
