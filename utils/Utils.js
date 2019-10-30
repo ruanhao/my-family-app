@@ -451,10 +451,10 @@ export function configPushNotification() {
         },
 
         // Called when a remote or local notification is opened or received
-        onNotification: async function(notification) {
+        onNotification: function(notification) {
             // console.log("NOTIFICATION:", notification);
+            info("Receive notification: " + JSON.stringify(notification));
             updateLocation(AD_HOC_UPDATE_TYPE);
-            info("Receive notification" + JSON.stringify(notification));
             // process the notification
             // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios
             notification.finish(PushNotificationIOS.FetchResult.NoData);
