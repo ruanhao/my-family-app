@@ -124,15 +124,15 @@ export default class MeScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.title}>
-                    <View style={{ flex: 3 }}>
+                    <View style={{ flex: 5 }}>
                         <PhotoUpload
                             onResizedImageUri={async (response) => this._uploadAvatar(response)}
                             quality={10}
                         >
                             <Image
                                 style={{
-                                    width: RFValue(80),
-                                    height: RFValue(80),
+                                    width: RFValue(120),
+                                    height: RFValue(120),
                                     borderRadius: 75
                                 }}
                                 resizeMode='cover'
