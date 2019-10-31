@@ -154,6 +154,9 @@ async function updateLocation(type = FOREGROUND_UPDATE_TYPE, callback = (_) => {
                     let adjustedUserLocations = await response.json();
                     callback(adjustedUserLocations);
                 }
+                if (type === AD_HOC_UPDATE_TYPE) {
+                    callback();
+                }
             } catch (e) {
                 error(`Error when updating location(${type}): ${e.message}`);
             }
@@ -454,10 +457,8 @@ export function configPushNotification() {
         onNotification: function(notification) {
             // console.log("NOTIFICATION:", notification);
             info("Receive notification: " + JSON.stringify(notification));
-            updateLocation(AD_HOC_UPDATE_TYPE);
-            // process the notification
-            // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios
-            notification.finish(PushNotificationIOS.FetchResult.NoData);
+            // see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios
+            updateLocation(AD_HOC_UPDATE_TYPE, () => { notification.finish(PushNotificationIOS.FetchResult.NewData); });
         },
 
         // IOS ONLY (optional): default: all - Permissions to register.
