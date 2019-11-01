@@ -44,6 +44,7 @@ export default class MeScreen extends Component {
         avatarImageUri: "",
         visibleModalId: null,
         address: "",
+        aqi: null,
     };
 
     async componentDidMount() {
@@ -70,6 +71,7 @@ export default class MeScreen extends Component {
                 nickname: responseJson.nickname,
                 avatarImageUri,
                 address: responseJson.address,
+                aqi: responseJson.aqi,
             });
         } catch {
             error("Error when fetch user info");
@@ -113,6 +115,27 @@ export default class MeScreen extends Component {
 
     }
 
+    _getAirQualityLevel = (aqi) => {
+        if (aqi <= 50) {
+            return (<FixedText style={{ ...styles.titleTextH2, backgroundColor: 'green', color: 'white' }}>一级 (优)</FixedText>);
+        }
+        if (aqi <= 100) {
+            return (<FixedText style={{ ...styles.titleTextH2, backgroundColor: 'gold', color: 'black' }}>二级 (良)</FixedText>);
+        }
+        if (aqi <= 150) {
+            return (<FixedText style={{ ...styles.titleTextH2, backgroundColor: 'orange', color: 'white' }}>轻度污染</FixedText>);
+        }
+        if (aqi <= 200) {
+            return (<FixedText style={{ ...styles.titleTextH2, backgroundColor: 'red', color: 'white' }}>中度污染</FixedText>);
+        }
+        if (aqi <= 300) {
+            return (<FixedText style={{ ...styles.titleTextH2, backgroundColor: 'purple', color: 'white' }}>重度污染</FixedText>);
+        }
+        return (<FixedText style={{ ...styles.titleTextH2, backgroundColor: 'firebrick', color: 'white' }}>严重污染</FixedText>);
+
+
+    }
+
     render() {
         let imageSrc = { cache: 'force-cache' };
         if (this.state.avatarImageUri) {
@@ -131,8 +154,8 @@ export default class MeScreen extends Component {
                         >
                             <Image
                                 style={{
-                                    width: RFValue(120),
-                                    height: RFValue(120),
+                                    width: RFValue(100),
+                                    height: RFValue(100),
                                     borderRadius: 75
                                 }}
                                 resizeMode='cover'
@@ -144,6 +167,12 @@ export default class MeScreen extends Component {
                         <FixedText style={styles.titleTextH1}>{this.state.nickname}</FixedText>
                         <FixedText style={styles.titleTextH2}>足记号: {this.state.username}</FixedText>
                         <FixedText style={styles.titleTextH2}>当前位置: {this.state.address}</FixedText>
+                        {this.state.aqi && (
+                            <View style={{ flexDirection: 'row' }}>
+                                <FixedText style={styles.titleTextH2}>空气质量: {this.state.aqi}</FixedText>
+                                <FixedText style={styles.titleTextH2}>{this._getAirQualityLevel(this.state.aqi)}</FixedText>
+                            </View>
+                        )}
                     </View>
 
                     <TouchableOpacity
@@ -288,6 +317,7 @@ const styles = StyleSheet.create({
         fontSize: RFValue(12),
         color: "gray",
         marginBottom: 5,
+        marginRight: 10,
     },
     content: {
         backgroundColor: 'white',
