@@ -8,7 +8,11 @@ import {
     Clipboard,
     Text,
 } from 'react-native';
-import { getFileName, downloadAndGetImageUrl } from '../utils/Utils';
+import {
+    getFileName,
+    downloadAndGetImageUrl,
+    ackAllNotification,
+} from '../utils/Utils';
 import { info, error } from '../utils/LogUtils';
 import Modal from "react-native-modal";
 import AsyncStorage from '@react-native-community/async-storage';
@@ -186,6 +190,23 @@ export default class MeScreen extends Component {
                     </TouchableOpacity>
 
                 </View>
+
+                <TouchableOpacity
+                    onPress={ackAllNotification}
+                >
+                    <View style={styles.sectionContainer} >
+                        <View>
+                            <FontAwesome
+                                name="check"
+                                size={25}
+                                color="salmon"
+                            />
+                        </View>
+                        <View style={styles.sectionMiddle}>
+                            <FixedText style={styles.sectionText}>清空通知</FixedText>
+                        </View>
+                    </View>
+                </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => { this.props.navigation.navigate('SettingsScreen') }}

@@ -27,6 +27,9 @@ export const UPDATE_DEVICE_TOKEN_URL = `${SERVER}/users/deviceToken`; // /users/
 
 export const FETCH_AQ_URL = `${SERVER}/aq`;
 
+export const ACK_NOTIFICATION_URL = `${SERVER}/notification/ack`;
+export const ACK_ALL_NOTIFICATION_URL = `${SERVER}/notification/ack-all`;
+
 
 // const DEVICE_NAME = DeviceInfo.getDeviceName();
 

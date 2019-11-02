@@ -4,6 +4,8 @@ import {
     LOCATION_UPDATE_URL,
     FETCH_FOOTPRINT_URL,
     UPDATE_DEVICE_TOKEN_URL,
+    ACK_NOTIFICATION_URL,
+    ACK_ALL_NOTIFICATION_URL,
 } from "./Constants";
 import { info, error } from "./LogUtils";
 import BackgroundGeolocation from "react-native-background-geolocation";
@@ -447,6 +449,44 @@ async function updateDeviceToken(deviceToken) {
     }
 }
 
+async function ackNotification() {
+    try {
+        await fetch(ACK_NOTIFICATION_URL,
+            {
+                method: 'POST',
+                headers: {
+                    'USER-ID': await getUserIdAsync(),
+                },
+            });
+    } catch (e) {
+        error("Error when ack notificatino: " + e.message);
+    }
+    PushNotificationIOS.getApplicationIconBadgeNumber((num) => { // get current number
+        if (num >= 1) {
+            PushNotificationIOS.setApplicationIconBadgeNumber(num - 1); //set number to 0
+        }
+    });
+}
+
+export async function ackAllNotification() {
+    try {
+        await fetch(ACK_ALL_NOTIFICATION_URL,
+            {
+                method: 'POST',
+                headers: {
+                    'USER-ID': await getUserIdAsync(),
+                },
+            });
+    } catch (e) {
+        error("Error when ack all notificatino: " + e.message);
+    }
+    PushNotificationIOS.getApplicationIconBadgeNumber((num) => { // get current number
+        if (num >= 1) {
+            PushNotificationIOS.setApplicationIconBadgeNumber(0); //set number to 0
+        }
+    });
+}
+
 export function configPushNotification() {
     info("Configuating push notificaion...");
     PushNotification.configure({
@@ -462,7 +502,12 @@ export function configPushNotification() {
             // console.log("NOTIFICATION:", notification);
             info("Receive notification: " + JSON.stringify(notification));
             // see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios
-            updateLocation(AD_HOC_UPDATE_TYPE, () => { notification.finish(PushNotificationIOS.FetchResult.NewData); });
+            if (notification.message && !notification.foreground) {
+                ackNotification();
+            } else { // silent
+                updateLocation(AD_HOC_UPDATE_TYPE, () => { notification.finish(PushNotificationIOS.FetchResult.NewData); });
+            }
+
         },
 
         // IOS ONLY (optional): default: all - Permissions to register.
