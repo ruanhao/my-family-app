@@ -38,7 +38,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { logout } from './utils/Utils';
+import { logout, updateLocationOnStartup } from './utils/Utils';
 import FixedText from './components/FixedText';
 import { RFValue } from "react-native-responsive-fontsize";
 
@@ -51,6 +51,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 // BackgroundTimer.start();
 
 info("Starting App... ");
+updateLocationOnStartup();
 
 /* configBackgroundFetch();
  * configBackgroundGeoLocation();*/

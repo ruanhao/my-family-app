@@ -118,6 +118,10 @@ export async function updateBackgroundLocation(location) {
     }
 }
 
+export function updateLocationOnStartup() {
+    updateLocation(AD_HOC_UPDATE_TYPE);
+}
+
 async function updateLocation(type = FOREGROUND_UPDATE_TYPE, callback = (_) => { }) {
     let userId = await getUserIdAsync();
     if (!userId) {
