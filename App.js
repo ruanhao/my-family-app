@@ -28,6 +28,7 @@ import AuthLoadingScreen from './components/AuthLoadingScreen';
 import SignInScreen from './components/SignInScreen';
 import QRScannerScreen from './components/QRScannerScreen';
 import FriendScreen from './components/FriendScreen';
+import CitiesAirQualityScreen from './components/CitiesAirQualityScreen';
 /* import {
  *     configBackgroundFetch,
  *     configBackgroundGeoLocation
@@ -69,7 +70,7 @@ const AuthStack = createStackNavigator({
 
 const MenuTab = createBottomTabNavigator(
     {
-        Me: createStackNavigator({ MeScreen, SettingsScreen, InfoScreen, QRScannerScreen },
+        Me: createStackNavigator({ MeScreen, SettingsScreen, InfoScreen, QRScannerScreen, CitiesAirQualityScreen },
             {
                 navigationOptions: { tabBarLabel: '我' },
                 defaultNavigationOptions: ({ navigation }) => ({

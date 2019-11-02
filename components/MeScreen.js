@@ -19,6 +19,7 @@ import PhotoUpload from 'react-native-photo-upload'
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FixedText from "./FixedText";
 import { RFValue } from "react-native-responsive-fontsize";
 
@@ -256,6 +257,31 @@ export default class MeScreen extends Component {
                                 color="gray"
                             />
                         </View>
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => { this.props.navigation.navigate('CitiesAirQualityScreen') }}
+                >
+                    <View style={styles.sectionContainer} >
+                        <View>
+                            <MaterialCommunityIcons
+                                name="air-filter"
+                                size={25}
+                                color="green"
+                            />
+                        </View>
+                        <View style={styles.sectionMiddle}>
+                            <FixedText style={styles.sectionText}>城市空气质量</FixedText>
+                        </View>
+                        <View>
+                            <Ionicons
+                                name="ios-arrow-forward"
+                                size={25}
+                                color="gray"
+                            />
+                        </View>
+
                     </View>
                 </TouchableOpacity>
 

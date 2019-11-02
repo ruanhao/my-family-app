@@ -25,6 +25,8 @@ export const FETCH_HOUSES_URL = `${SERVER}/houses`;
 
 export const UPDATE_DEVICE_TOKEN_URL = `${SERVER}/users/deviceToken`; // /users/deviceToken/<token>
 
+export const FETCH_AQ_URL = `${SERVER}/aq`;
+
 
 // const DEVICE_NAME = DeviceInfo.getDeviceName();
 
