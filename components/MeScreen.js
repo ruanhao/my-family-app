@@ -8,18 +8,21 @@ import {
     Clipboard,
     Text,
 } from 'react-native';
-import { getFileName, downloadAndGetImageUrl } from '../utils/Utils';
+import { NavigationEvents } from 'react-navigation';
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import { logout, getFileName, downloadAndGetImageUrl } from '../utils/Utils';
 import { info, error } from '../utils/LogUtils';
 import Modal from "react-native-modal";
 import AsyncStorage from '@react-native-community/async-storage';
 import QRCode from 'react-native-qrcode-svg';
-import { Avatar } from 'react-native-elements';
+import { Badge, Avatar } from 'react-native-elements';
 import { FETCH_USER_URL, UPLOAD_USER_AVATAR_URL, getAvatarImageUri } from '../utils/Constants';
 import PhotoUpload from 'react-native-photo-upload'
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FixedText from "./FixedText";
 import { RFValue } from "react-native-responsive-fontsize";
 
@@ -46,6 +49,7 @@ export default class MeScreen extends Component {
         visibleModalId: null,
         address: "",
         aqi: null,
+        badgeNumber: 0,
     };
 
     async componentDidMount() {
@@ -147,6 +151,13 @@ export default class MeScreen extends Component {
         }
         return (
             <View style={styles.container}>
+                <NavigationEvents
+                    onDidFocus={payload => {
+                        PushNotificationIOS.getApplicationIconBadgeNumber(number => {
+                            this.setState({ badgeNumber: number });
+                        })
+                    }}
+                />
                 <View style={styles.title}>
                     <View style={{ flex: 5 }}>
                         <PhotoUpload
@@ -186,6 +197,35 @@ export default class MeScreen extends Component {
                     </TouchableOpacity>
 
                 </View>
+
+                <TouchableOpacity
+                    onPress={() => { this.props.navigation.navigate('NotificationScreen') }}
+                >
+                    <View style={styles.sectionContainer} >
+
+                        <View>
+                            <MaterialIcons
+                                name="notifications"
+                                size={RFValue(20)}
+                                color="lightsalmon"
+                            />
+                        </View>
+                        <View style={{ ...styles.sectionMiddle, flexDirection: 'row' }}>
+                            <FixedText style={styles.sectionText}>消息</FixedText>
+                            {this.state.badgeNumber > 0 &&
+                                <Badge value={this.state.badgeNumber}
+                                    status="error"
+                                    containerStyle={{ position: 'absolute', top: 0, right: 0, marginRight: RFValue(20) }} />}
+                        </View>
+                        <View>
+                            <Ionicons
+                                name="ios-arrow-forward"
+                                size={25}
+                                color="gray"
+                            />
+                        </View>
+                    </View>
+                </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => { this.props.navigation.navigate('SettingsScreen') }}
@@ -282,6 +322,14 @@ export default class MeScreen extends Component {
                             />
                         </View>
 
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => { logout(this.props.navigation) }}
+                >
+                    <View style={styles.logoutSectionContainer} >
+                        <FixedText style={styles.logoutSectionText}>退出登陆</FixedText>
                     </View>
                 </TouchableOpacity>
 
@@ -398,6 +446,15 @@ const styles = StyleSheet.create({
         // justifyContent: 'flex-start',
         alignItems: 'center',
     },
+    logoutSectionContainer: {
+        padding: 10,
+        paddingHorizontal: 20,
+        marginTop: 50,
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     sectionLeft: {
         flex: 2,
     },
@@ -406,6 +463,11 @@ const styles = StyleSheet.create({
     },
     sectionMiddle: {
         flex: 6,
+    },
+    logoutSectionText: {
+        fontSize: RFValue(15),
+        color: 'red',
+        marginLeft: 20,
     },
     sectionText: {
         fontSize: RFValue(15),

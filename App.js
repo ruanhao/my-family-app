@@ -28,6 +28,7 @@ import AuthLoadingScreen from './components/AuthLoadingScreen';
 import SignInScreen from './components/SignInScreen';
 import QRScannerScreen from './components/QRScannerScreen';
 import FriendScreen from './components/FriendScreen';
+import NotificationScreen from './components/NotificationScreen';
 import CitiesAirQualityScreen from './components/CitiesAirQualityScreen';
 /* import {
  *     configBackgroundFetch,
@@ -39,7 +40,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { logout, updateLocationOnStartup } from './utils/Utils';
+import { updateLocationOnStartup } from './utils/Utils';
 import FixedText from './components/FixedText';
 import { RFValue } from "react-native-responsive-fontsize";
 
@@ -70,7 +71,7 @@ const AuthStack = createStackNavigator({
 
 const MenuTab = createBottomTabNavigator(
     {
-        Me: createStackNavigator({ MeScreen, SettingsScreen, InfoScreen, QRScannerScreen, CitiesAirQualityScreen },
+        Me: createStackNavigator({ MeScreen, NotificationScreen, SettingsScreen, InfoScreen, QRScannerScreen, CitiesAirQualityScreen },
             {
                 navigationOptions: { tabBarLabel: '我' },
                 defaultNavigationOptions: ({ navigation }) => ({
@@ -144,15 +145,15 @@ const AppStack = createStackNavigator(
                 let focusedRouteName = navigation.state.routes[navigation.state.index].routeName;
                 if (focusedRouteName === 'Me') {
                     // options.headerTitle = "我";
-                    options.headerRight = (
-                        <View style={{ marginRight: 10 }}>
-                            <TouchableOpacity onPress={() => logout(navigation)}>
-                                <FixedText style={{ color: 'red', fontSize: RFValue(15) }}>
-                                    退出
-                            </FixedText>
-                            </TouchableOpacity>
-                        </View>
-                    );
+                    /* options.headerRight = (
+                     *     <View style={{ marginRight: 10 }}>
+                     *         <TouchableOpacity onPress={() => logout(navigation)}>
+                     *             <FixedText style={{ color: 'red', fontSize: RFValue(15) }}>
+                     *                 退出
+                     *         </FixedText>
+                     *         </TouchableOpacity>
+                     *     </View>
+                     * );*/
                 } else if (focusedRouteName === 'Friends') {
                     // options.header = null;
                 } else if (focusedRouteName == 'Houses') {
