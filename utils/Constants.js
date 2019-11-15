@@ -27,9 +27,11 @@ export const UPDATE_DEVICE_TOKEN_URL = `${SERVER}/users/deviceToken`; // /users/
 
 export const FETCH_AQ_URL = `${SERVER}/aq`;
 
-export const FETCH_NOTIFICAIONS_URL = `${SERVER}/notification`;
-export const ACK_ALL_NOTIFICAIONS_URL = `${SERVER}/notification/ack-all`;
-export const ACK_NOTIFICAIONS_URL = `${SERVER}/notification/ack`;
+export const FETCH_NOTIFICATIONS_URL = `${SERVER}/notification`;
+export const ACK_ALL_NOTIFICATIONS_URL = `${SERVER}/notification/ack-all`;
+export const ACK_NOTIFICATIONS_URL = `${SERVER}/notification/ack`;
+export const DEL_NOTIFICATIONS_URL = `${SERVER}/notification/delete`;
+export const DEL_ALL_NOTIFICATIONS_URL = `${SERVER}/notification/delete-all`;
 
 
 

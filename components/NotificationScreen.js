@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
+    Alert,
     Image,
     View,
     TouchableOpacity,
@@ -8,11 +9,18 @@ import {
     ScrollView,
     FlatList,
 } from 'react-native';
-import { Button, CheckBox } from 'react-native-elements';
 import {
-    FETCH_NOTIFICAIONS_URL,
-    ACK_NOTIFICAIONS_URL,
-    ACK_ALL_NOTIFICAIONS_URL,
+    Button,
+    CheckBox,
+    Divider,
+    Badge,
+} from 'react-native-elements';
+import {
+    FETCH_NOTIFICATIONS_URL,
+    ACK_NOTIFICATIONS_URL,
+    ACK_ALL_NOTIFICATIONS_URL,
+    DEL_ALL_NOTIFICATIONS_URL,
+    DEL_NOTIFICATIONS_URL,
 } from '../utils/Constants';
 import { error, info } from '../utils/LogUtils';
 import Octicons from "react-native-vector-icons/Octicons";
@@ -27,10 +35,12 @@ export default class NotificationScreen extends Component {
 
     state = {
         page: 0,
+        totalPages: 0,
         ack: false,
         isRefreshing: false,
         isLoading: false,
-        notifications: []
+        notifications: [],
+        changed: 1,
     }
 
     constructor() {
@@ -39,7 +49,7 @@ export default class NotificationScreen extends Component {
 
     _ackAll = async () => {
         try {
-            let response = await fetch(ACK_ALL_NOTIFICAIONS_URL,
+            let response = await fetch(ACK_ALL_NOTIFICATIONS_URL,
                 {
                     method: 'POST',
                     headers: {
@@ -49,10 +59,10 @@ export default class NotificationScreen extends Component {
                 });
             if (response.ok) {
                 PushNotificationIOS.setApplicationIconBadgeNumber(0);
-                this.setState({
-                    notifications: [],
-                    page: 0,
-                }, this._loadNotifications);
+                for (let notification of this.state.notifications) {
+                    notification.ack = true;
+                }
+                this.setState({ changed: this.state.changed + 1 });
             }
         } catch (e) {
             error("Error when acking all notificaitons: " + e.message);
@@ -60,9 +70,9 @@ export default class NotificationScreen extends Component {
     }
 
     _loadNotifications = async () => {
-        const { notifications, page, ack } = this.state;
+        const { notifications, page, ack, totalPages } = this.state;
         this.setState({ isLoading: true });
-        let url = FETCH_NOTIFICAIONS_URL + "?page=" + page;
+        let url = FETCH_NOTIFICATIONS_URL + "?page=" + page;
         /* if (ack != null) {
          *     url += ("&ack=" + ack);
          * }*/
@@ -78,9 +88,10 @@ export default class NotificationScreen extends Component {
                 });
             let responseJson = await response.json();
             this.setState({
-                notifications: page === 1 ? responseJson.content : [...notifications, ...responseJson.content],
+                notifications: page === 0 ? responseJson.content : [...notifications, ...responseJson.content],
                 totalPages: responseJson.totalPages,
                 totalElements: responseJson.totalElements,
+                page: (page >= totalPages) ? totalPages - 1 : page,
             });
         } catch (e) {
             error("Error when fetching notificaitons: " + e.message);
@@ -94,29 +105,153 @@ export default class NotificationScreen extends Component {
         this._loadNotifications();
     }
 
+    _deleteNotification = async (notificationId) => {
+        try {
+            let response = await fetch(DEL_NOTIFICATIONS_URL + "/" + notificationId,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'USER-ID': await getUserIdAsync(),
+                    }
+
+                });
+            if (response.ok) {
+                let responseJson = await response.json();
+                let badgeNumber = responseJson.badgeCount;
+                PushNotificationIOS.setApplicationIconBadgeNumber(badgeNumber);
+                let newNotifications = [];
+                for (let notification of this.state.notifications) {
+                    if (notification.id != notificationId) {
+                        newNotifications.push(notification);
+                    }
+                }
+                this.setState({ changed: this.state.changed + 1, notifications: newNotifications });
+            }
+        } catch (e) {
+            error(`Error when delete notificaiton ${notificationId}: ${e.message}`);
+        }
+    }
+
+    _ackNotification = async (notificationId) => {
+        try {
+            let response = await fetch(ACK_NOTIFICATIONS_URL + "/" + notificationId,
+                {
+                    method: 'POST',
+                    headers: {
+                        'USER-ID': await getUserIdAsync(),
+                    }
+
+                });
+            if (response.ok) {
+                let responseJson = await response.json();
+                let badgeNumber = responseJson.badgeCount;
+                PushNotificationIOS.setApplicationIconBadgeNumber(badgeNumber);
+                for (let notification of this.state.notifications) {
+                    if (notification.id === notificationId) {
+                        notification.ack = true;
+                        break;
+                    }
+                }
+                this.setState({ changed: this.state.changed + 1 });
+            }
+        } catch (e) {
+            error(`Error when ack notificaiton ${notificationId}: ${e.message}`);
+        }
+    }
+
+    _deleteAll = () => {
+        Alert.alert(
+            '确定删除所有消息？',
+            '',
+            [
+                {
+                    text: '确定',
+                    onPress: async () => {
+                        try {
+                            let response = await fetch(DEL_ALL_NOTIFICATIONS_URL,
+                                {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'USER-ID': await getUserIdAsync(),
+                                    }
+                                });
+                            if (response.ok) {
+                                PushNotificationIOS.setApplicationIconBadgeNumber(0);
+                                this.setState({ changed: this.state.changed + 1, notifications: [], page: 0 });
+                            }
+                        } catch (e) {
+                            error(`Error when delete all notificaitons: ${e.message}`);
+                        }
+                    },
+                },
+                {
+                    text: "取消",
+                    style: 'cancel',
+                },
+            ],
+            { cancelable: false },
+        );
+    }
+
+    _handlePress = (notificationId, ack) => {
+        let readAction = [];
+        if (!ack) {
+            readAction = [
+                {
+                    text: '已阅',
+                    onPress: () => this._ackNotification(notificationId)
+                }
+            ];
+        }
+        Alert.alert(
+            '选择你的操作',
+            '',
+            [
+                ...readAction,
+                {
+                    text: '删除',
+                    onPress: () => { this._deleteNotification(notificationId) },
+                },
+                {
+                    text: "返回",
+                    style: 'cancel',
+                },
+            ],
+            { cancelable: false },
+        );
+    }
+
     _renderItem = ({ item: { id, title, body, ack, createdDate } }) => {
         return (
-            <View style={{
-                flex: 1,
-                // flexDirection: 'row',
-                // alignItems: 'center',
-                // justifyContent: 'center',
-                marginHorizontal: 20,
-                marginVertical: 10,
-                // paddingLeft: 20,
+            <View style={{ flexDirection: 'row', marginVertical: 5, alignItems: 'center' }}>
+                <View style={{ marginLeft: 5, flex: 1 }}>
+                    {ack ||
+                        <Badge status="primary" containerStyle={{}} />
+                    }
+                </View>
+                <View style={{
+                    borderBottomColor: 'lightgray',
+                    borderBottomWidth: 1,
+                    marginRight: 10,
+                    paddingBottom: 5,
+                    flex: 10,
+                }}
+                >
+                    <TouchableOpacity
+                        onPress={() => this._handlePress(id, ack)}
+                    >
+                        <View style={{ flex: 1 }}>
+                            <FixedText style={{ ...styles.notificationTitle }}>{title}</FixedText>
+                        </View>
+                        <View style={{ flex: 1 }}>
+                            <FixedText style={{ ...styles.notificationDate }}>{createdDate}</FixedText>
+                        </View>
+                        <View style={{ flex: 1 }}>
+                            <FixedText style={styles.notificationBody}>{body}</FixedText>
+                        </View>
+                    </TouchableOpacity>
+                </View>
 
-
-            }}
-            >
-                <View style={{ flex: 1 }}>
-                    <FixedText style={{ ...styles.notificationTitle, fontWeight: ack ? "normal" : "bold" }}>{title}</FixedText>
-                </View>
-                <View style={{ flex: 1 }}>
-                    <FixedText style={{ ...styles.notificationDate }}>{createdDate}</FixedText>
-                </View>
-                <View style={{ flex: 1 }}>
-                    <FixedText style={styles.notificationBody}>{body}</FixedText>
-                </View>
             </View>
         );
     }
@@ -140,6 +275,7 @@ export default class NotificationScreen extends Component {
                     <Button
                         onPress={this._ackAll}
                         title="全部已读"
+                        disabled={this.state.notifications.length === 0}
                         buttonStyle={{ backgroundColor: 'green' }}
                         titleStyle={{ fontSize: RFValue(10) }}
                     />
@@ -147,8 +283,9 @@ export default class NotificationScreen extends Component {
                 <View style={{ flex: 1 }} />
                 <View style={{ flex: 3 }}>
                     <Button
-                        onPress={() => { }}
+                        onPress={this._deleteAll}
                         title="清空消息"
+                        disabled={this.state.notifications.length === 0}
                         buttonStyle={{ backgroundColor: 'red' }}
                         titleStyle={{ fontSize: RFValue(10) }}
                     />
@@ -182,6 +319,7 @@ export default class NotificationScreen extends Component {
     _handleRefresh = () => {
         this.setState({
             isRefreshing: true,
+            page: 0,
         }, () => {
             this._loadNotifications();
         });
@@ -189,6 +327,9 @@ export default class NotificationScreen extends Component {
     }
 
     _handleLoadMore = () => {
+        if (this.state.isLoading) {
+            return;
+        }
         this.setState({
             page: this.state.page + 1
         }, () => {
@@ -202,8 +343,10 @@ export default class NotificationScreen extends Component {
 
                 {this._renderHeader()}
 
+                <Divider style={{ backgroundColor: 'lightgray' }} />
 
                 <FlatList
+                    extraData={this.state}
                     data={this.state.notifications || []}
                     renderItem={this._renderItem}
                     keyExtractor={(item, index) => index.toString()}
@@ -212,7 +355,7 @@ export default class NotificationScreen extends Component {
                     refreshing={this.state.isRefreshing}
                     onRefresh={this._handleRefresh}
                     onEndReached={this._handleLoadMore}
-                    onEndReachedThreshold={1}
+                    onEndReachedThreshold={0.3}
                 />
             </View>
         );
@@ -226,7 +369,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         //alignItems: 'center',
         // backgroundColor: '#F5FCFF',
-        paddingTop: 20,
+        // paddingTop: 20,
     },
     notificationTitle: {
         fontSize: RFValue(15),
