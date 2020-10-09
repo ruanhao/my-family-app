@@ -4,4 +4,4 @@
 # Description:
 
 rm -rf ios/build
-xcodebuild clean
+(cd ios; xcodebuild clean)

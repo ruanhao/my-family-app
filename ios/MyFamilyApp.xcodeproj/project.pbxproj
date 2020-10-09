@@ -31,6 +31,7 @@
 		7D3DE090E4914E9792894B6D /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4945397370D74F3CA0BA90E0 /* Ionicons.ttf */; };
 		933572A0BBB34D69BE63AEBD /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00DAD2D072074BFD8401AF1C /* Octicons.ttf */; };
 		986018D38C3C4E38DE350571 /* libPods-MyFamilyApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F2A7D4875B73B4D9903720 /* libPods-MyFamilyApp.a */; };
+		B5D4B5E524FCF874005D2414 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = B5D4B5E424FCF874005D2414 /* main.jsbundle */; };
 		B5EE878D230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5EE878C230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m */; };
 		C79DDC613CD2450BAF1F7B76 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 336DC62D01424A56A3BFB087 /* Entypo.ttf */; };
 		D10B177773264C9A94C874CC /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD1F8BC4815746A1AD893C1E /* MaterialCommunityIcons.ttf */; };
@@ -95,6 +96,7 @@
 		B356617FB9FC85EBAF02E605 /* Pods-MyFamilyApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyFamilyApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-MyFamilyApp-tvOS/Pods-MyFamilyApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		B43F427140DC8BB911E9D406 /* libPods-MyFamilyApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyFamilyApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5BE1917233C7E3A00214644 /* MyFamilyApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MyFamilyApp.entitlements; path = MyFamilyApp/MyFamilyApp.entitlements; sourceTree = "<group>"; };
+		B5D4B5E424FCF874005D2414 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = MyFamilyApp/main.jsbundle; sourceTree = "<group>"; };
 		B5E30F7123642C4B00D33EB4 /* MyFamilyAppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MyFamilyAppRelease.entitlements; path = MyFamilyApp/MyFamilyAppRelease.entitlements; sourceTree = "<group>"; };
 		B5EE878C230A92D400E64F75 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
 		B5EE8795230D190100E64F75 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -215,6 +217,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B5D4B5E424FCF874005D2414 /* main.jsbundle */,
 				13B07FAE1A68108700A75B9A /* MyFamilyApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MyFamilyAppTests */,
@@ -405,6 +408,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5D4B5E524FCF874005D2414 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				0F8F9F8207D244DA9F1D94FD /* AntDesign.ttf in Resources */,

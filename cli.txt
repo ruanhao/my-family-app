@@ -1,1 +1,21 @@
-react-native run-ios --device --configuration Release
+react-native run-ios --device --configuration Release ## install on real device
+# react-native run-ios --simulator 'iPhone 11' # run on simulator
+
+
+# 使用 legacy build system
+# File => Workspace Settings => Shared Workspace Settings => Build System => "Legacy Build System"
+# File => Workspace Settings => Per-User Workspace Settings => Build System => "Legacy Build System"
+
+# clean
+# ./ios/clean.sh
+
+# Duplicated Mocks 解决：
+# --- a/metro.config.js
+# +++ b/metro.config.js
+# @@ -11,7 +11,7 @@ module.exports = {
+#      resolver: {
+#          blacklistRE: blacklist([
+#              /node_modules\/.*\/node_modules\/react-native\/.*/,
+# -            // /assets\/node_modules\/.*/,
+# +            /assets\/node_modules\/.*/,
+#          ])
